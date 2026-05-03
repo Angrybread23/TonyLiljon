@@ -95,13 +95,19 @@
     }
     .hero-layout {
       display: grid;
-      grid-template-columns: 1fr 420px;
+      grid-template-columns: 1fr 440px;
       gap: 4rem;
       align-items: center;
       width: 100%;
-      max-width: 1300px;
+      max-width: 100%;
     }
-    .hero-inner {}
+    .hero-inner { max-width: 680px; }
+    .hero-visual {
+      position: relative;
+      height: 520px;
+      /* On large screens push the stack flush to the right edge */
+      margin-right: -5vw;
+    }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -181,15 +187,15 @@
     .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
 
     /* ─── HERO IMAGE STACK ─── */
-    .hero-visual {
-      position: relative;
-      height: 520px;
-      cursor: pointer;
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
     }
     .hero-stack {
       position: relative;
       width: 100%;
       height: 100%;
+      cursor: pointer;
     }
     .stack-card {
       position: absolute;
@@ -1382,18 +1388,20 @@
 
       <!-- 3. Ourbet — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">🎲</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/bd554a203109901.Y3JvcCwxMDc5LDg0NCwwLDA.png" alt="Ourbet" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">🎲</div>
         <div class="project-body">
           <p class="project-category">Sports Betting, UI/UX, Brand</p>
           <h3 class="project-title">Ourbet</h3>
           <p class="project-desc">Brand identity and product UI design for a sports betting platform — covering logo, design language, and core app screens.</p>
-          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+          <a href="https://www.behance.net/gallery/203109901/Sukuri-Product-Design" target="_blank" class="project-link">View on Behance →</a>
         </div>
       </div>
 
       <!-- 4. Diyo Aviation — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">✈️</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Diyo Aviation" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">✈️</div>
         <div class="project-body">
           <p class="project-category">Aviation, Brand, UI</p>
           <h3 class="project-title">Diyo Aviation</h3>
@@ -1404,7 +1412,8 @@
 
       <!-- 5. Swisat Tech — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">💡</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Swisat Tech" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">💡</div>
         <div class="project-body">
           <p class="project-category">Tech, SaaS, Brand</p>
           <h3 class="project-title">Swisat Tech</h3>
@@ -1415,7 +1424,8 @@
 
       <!-- 6. Lotto27 — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">🎯</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Lotto27" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">🎯</div>
         <div class="project-body">
           <p class="project-category">Gaming, Lottery, UI/UX</p>
           <h3 class="project-title">Lotto27</h3>
@@ -1426,7 +1436,8 @@
 
       <!-- 7. PluggXtra — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">🔌</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/fabbe1176048121.Y3JvcCwxOTk5LDE1NjQsMCww.jpg" alt="PluggXtra" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">🔌</div>
         <div class="project-body">
           <p class="project-category">E-commerce, Brand, UI</p>
           <h3 class="project-title">PluggXtra</h3>
@@ -1437,12 +1448,13 @@
 
       <!-- 8. Transcend Case Study — Behance -->
       <div class="project-card">
-        <div class="placeholder-img">🏥</div>
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Health App" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="placeholder-img" style="display:none">🏥</div>
         <div class="project-body">
           <p class="project-category">HealthTech, Mobile, Case Study</p>
           <h3 class="project-title">Transcend Health App</h3>
           <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — covering research, flows, and high-fidelity UI.</p>
-          <a href="https://tonyliljon.webflow.io/project/transcend-mobile-app-case-study" target="_blank" class="project-link">View case study →</a>
+          <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" class="project-link">View on Behance →</a>
         </div>
       </div>
 
