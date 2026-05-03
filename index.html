@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthony Littlejohn — Product Designer & Ops</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8f23a;
+      --accent2: #f2e13a;
+      --text: #f0ede8;
+      --muted: #888;
+      --tag-bg: #1f1f1f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 5vw;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #000;
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5vw 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,242,58,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1300px;
+    }
+    .hero-inner {}
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .highlight {
+      color: var(--accent);
+      display: inline;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 500; }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
+
+    /* ─── HERO IMAGE STACK ─── */
+    .hero-visual {
+      position: relative;
+      height: 520px;
+      cursor: pointer;
+    }
+    .hero-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .stack-card {
+      position: absolute;
+      width: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease, border-color 0.3s;
+      will-change: transform;
+    }
+    .stack-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .stack-card-label {
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--border);
+    }
+    /* default stacked positions */
+    .stack-card:nth-child(1) {
+      top: 20px; left: 50%;
+      transform: translateX(-50%) rotate(-4deg);
+      z-index: 1;
+      border-color: rgba(200,242,58,0.3);
+    }
+    .stack-card:nth-child(2) {
+      top: 60px; left: 50%;
+      transform: translateX(-50%) rotate(2deg);
+      z-index: 2;
+    }
+    .stack-card:nth-child(3) {
+      top: 100px; left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      z-index: 3;
+      border-color: var(--border);
+    }
+    /* hover — fan out vertically */
+    .hero-visual:hover .stack-card:nth-child(1) {
+      transform: translateX(-50%) translateY(-160px) rotate(-6deg);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+      border-color: rgba(200,242,58,0.5);
+      z-index: 3;
+    }
+    .hero-visual:hover .stack-card:nth-child(2) {
+      transform: translateX(-50%) translateY(0px) rotate(0deg);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border-color: rgba(200,242,58,0.25);
+      z-index: 2;
+    }
+    .hero-visual:hover .stack-card:nth-child(3) {
+      transform: translateX(-50%) translateY(160px) rotate(5deg);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+    .hero-visual-hint {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+    .hero-visual-hint::before,
+    .hero-visual-hint::after { content: ''; display: block; width: 16px; height: 1px; background: var(--border); }
+
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 6rem 5vw; }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+    .section-title .dim { color: var(--muted); }
+
+    /* ─── WORK / TIMELINE ─── */
+    #work { background: var(--surface); }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+    .timeline-item:last-child { border-bottom: none; }
+
+    .tl-meta {}
+    .tl-year {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .tl-company {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .tl-content {}
+    .tl-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .tl-summary {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+    .impact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .impact-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .impact-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(200,242,58,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ─── VISUAL GALLERY — Interactive Masonry ─── */
+    #gallery { background: var(--bg); padding: 6rem 5vw; }
+    .mosaic {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .mosaic-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: var(--surface2);
+    }
+    /* layout spanning */
+    .mosaic-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+    .mosaic-item:nth-child(2) { grid-column: span 5; }
+    .mosaic-item:nth-child(3) { grid-column: span 5; }
+    .mosaic-item:nth-child(4) { grid-column: span 4; }
+    .mosaic-item:nth-child(5) { grid-column: span 4; }
+    .mosaic-item:nth-child(6) { grid-column: span 4; }
+
+    .mosaic-item img {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .mosaic-item:nth-child(4) img,
+    .mosaic-item:nth-child(5) img,
+    .mosaic-item:nth-child(6) img { object-position: center; }
+
+    .mosaic-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 55%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.25rem;
+    }
+    .mosaic-item:hover .mosaic-overlay { opacity: 1; }
+    .mosaic-item:hover img { transform: scale(1.05); }
+    .mosaic-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .mosaic-sub { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+    .mosaic-expand {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      width: 32px; height: 32px;
+      background: rgba(200,242,58,0.15);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .mosaic-item:hover .mosaic-expand { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-img {
+      max-width: 88vw;
+      max-height: 84vh;
+      border-radius: 12px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    .lightbox-label {
+      position: absolute;
+      bottom: 2rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: rgba(0,0,0,0.6);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 40px; height: 40px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── FIGMA EMBEDS ─── */
+    #figma { background: var(--surface); padding: 6rem 5vw; }
+    .figma-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .figma-tab {
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .figma-tab:hover { border-color: var(--accent); color: var(--text); }
+    .figma-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+    .figma-panel { display: none; }
+    .figma-panel.active { display: block; }
+    .figma-frame-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .figma-frame-wrap iframe {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+    }
+    .figma-label {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .figma-label span { font-size: 0.85rem; color: var(--muted); }
+    .figma-label a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .mosaic { grid-template-columns: 1fr 1fr; }
+      .mosaic-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+      .mosaic-item:nth-child(2),
+      .mosaic-item:nth-child(3) { grid-column: span 1; }
+      .mosaic-item:nth-child(4),
+      .mosaic-item:nth-child(5),
+      .mosaic-item:nth-child(6) { grid-column: span 1; }
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--surface); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+    }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card:hover { border-color: rgba(200,242,58,0.3); transform: translateY(-4px); }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: top;
+      background: var(--surface2);
+      display: block;
+    }
+    .project-body { padding: 1.5rem; }
+    .project-category {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .project-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .project-link:hover { opacity: 0.75; }
+
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--surface); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .skill-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .about-text p strong { color: var(--text); }
+    .about-certs { margin-top: 2rem; }
+    .about-certs h4 { font-family: 'Syne', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .cert-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+    .about-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .about-stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .about-stat-row:last-child { border-bottom: none; }
+    .about-stat-row span:first-child { color: var(--muted); }
+    .about-stat-row span:last-child { color: var(--text); font-weight: 500; }
+
+    /* ─── CONTACT / FOOTER ─── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+      padding: 7rem 5vw;
+    }
+    #contact .section-title { margin-bottom: 1rem; }
+    #contact p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.7rem 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .tl-meta { margin-bottom: 0.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">TonyLiljon.</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#figma">Figma</a></li>
+    <li><a href="#work">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a href="mailto:tonyliljon@gmail.com" class="nav-cta">Hire me →</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-layout">
+
+    <!-- LEFT: Text -->
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span></span>
+        Open to work · Remote / Relocation
+      </div>
+      <h1>
+        Senior Product Designer <span class="highlight">&amp; Ops Manager that ships and scales.</span>
+      </h1>
+      <p class="hero-desc">
+        I design <strong>digital products that work</strong> and build the operations behind them.
+        10+ years shipping across Web3, gaming, SaaS, and B2B. I bridge the gap between
+        <strong>user experience, business goals, and execution.</strong>
+      </p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary">See my work</a>
+        <a href="mailto:tonyliljon@gmail.com" class="btn-ghost">Get in touch</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years of experience</div>
+        </div>
+        <div>
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Businesses served</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Products shipped</div>
+        </div>
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Industries</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Image Stack -->
+    <div class="hero-visual">
+      <div class="hero-stack">
+        <div class="stack-card">
+          <img src="hero_img1.webp" alt="Sukuri Flow Design" />
+          <div class="stack-card-label">Sukuri, User Flow</div>
+        </div>
+        <div class="stack-card">
+          <img src="hero_img2.webp" alt="Afrofans Prototype" />
+          <div class="stack-card-label">Afrofans, Prototype</div>
+        </div>
+        <div class="stack-card">
+          <img src="hero_img3.webp" alt="WeivSync Flow" />
+          <div class="stack-card-label">WeivSync, App Flow</div>
+        </div>
+      </div>
+      <div class="hero-visual-hint">hover to explore</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── WORK EXPERIENCE ── -->
+<section id="work">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title">Where I've <span class="dim">made an impact.</span></h2>
+
+  <div class="timeline">
+
+    <!-- Ronin Radio -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">Apr 2025, Present</div>
+        <div class="tl-company">RONIN RADIO</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">Designer &amp; Operations Lead</div>
+        <p class="tl-summary">
+          Wearing two hats: leading brand design and running daily social and sponsorship operations.
+          Built the visual identity from scratch and created video content driving consistent audience growth.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Grew engagement and impressions by over <strong>70%</strong> by defining the full brand identity from scratch, creating a distinct visual language that elevated Ronin Radio's market presence.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Managed day-to-day social operations, driving consistent brand output across all channels.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Led sponsorship campaigns that generated revenue and strategic partnerships, directly funding operations.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">Brand Identity</span>
+          <span class="tag">Operations</span>
+          <span class="tag">After Effects</span>
+          <span class="tag">Sponsorships</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WeivSync -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">Sep 2024, Nov 2025</div>
+        <div class="tl-company">WEIVSYNC</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">Senior Product Designer (Contract)</div>
+        <p class="tl-summary">
+          Contract role focused on delivering polished, end-to-end product design for a travel application,
+          working closely with engineering and product stakeholders in a fast-paced environment.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Designed end-to-end user flows and high-fidelity interfaces for a travel app, from discovery to booking.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Collaborated directly with engineering and product stakeholders to iterate rapidly, reducing review cycles through clear documentation and interactive prototypes.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">UI Design</span>
+          <span class="tag">User Flows</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Prototyping</span>
+          <span class="tag">Travel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloom Studio -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">Aug 2024, Nov 2025</div>
+        <div class="tl-company">BLOOM STUDIO</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">UI/UX Designer, Web3 Game Studio</div>
+        <p class="tl-summary">
+          Owned end-to-end product design for a Web3 game studio, delivering UI, marketing assets,
+          and pitch materials while advising leadership on strategy and market positioning.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Increased pitch efficiency by <strong>30-40%</strong> by redesigning and consolidating pitch deck content, enabling faster investor conversations with less material.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Designed UI screens, in-game guides, and landing pages supporting multiple product launches and investor pitches.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Advised leadership on market positioning and product ideation, influencing strategic decisions that shaped the studio's go-to-market approach.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">UI Design</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Web3</span>
+          <span class="tag">Strategy</span>
+          <span class="tag">Pitch Decks</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sukuri Protocol -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">Sep 2021, Nov 2022</div>
+        <div class="tl-company">SUKURI PROTOCOL</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">Product Designer</div>
+        <p class="tl-summary">
+          Sole designer on two complex Web3 SaaS products: a crypto subscription platform
+          and an all-in-one business tooling app. Owned the full design process from research to final handoff.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Cut design review cycles by <strong>~30%</strong> through interactive prototyping and clear documentation, enabling faster feedback loops with engineering and stakeholders.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Designed an end-to-end web application for on-chain subscriptions and business dashboards, covering wireframes through high-fidelity prototypes and a scalable design system.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Built UI for a business suite covering invoicing, payroll, product listings, and a customer database, reducing workflow friction for crypto-native businesses.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">UX Research</span>
+          <span class="tag">Design Systems</span>
+          <span class="tag">Prototyping</span>
+          <span class="tag">Web3</span>
+          <span class="tag">SaaS</span>
+          <span class="tag">Figma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nestcoin -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">2020, 2021</div>
+        <div class="tl-company">NESTCOIN</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">Business Operations Manager</div>
+        <p class="tl-summary">
+          Hybrid role straddling product and operations at one of Africa's most prominent Web3 startups.
+          Drove growth strategy, UX quality, and developer acquisition on a gaming platform.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Drove growth in a Web3 gaming platform by leading product strategy, UX research, and competitive analysis, contributing to measurable gains in weekly active users (WAU).</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Conducted UX research and user testing to optimize in-app experiences and improve engagement.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Acquired game developers and integrated titles into the platform, expanding the product catalog.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">Business Ops</span>
+          <span class="tag">Growth Strategy</span>
+          <span class="tag">UX Research</span>
+          <span class="tag">Gaming</span>
+          <span class="tag">Web3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TLjGraphics -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-year">2015, Apr 2020</div>
+        <div class="tl-company">TLJGRAPHICS STUDIO</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-role">Freelance Product Designer &amp; Business Consultant</div>
+        <p class="tl-summary">
+          Founded and ran my own design studio for 5 years, delivering brand design, product strategy,
+          and operational consulting for over 100 businesses ranging from startups to established B2B and SaaS companies.
+        </p>
+        <div class="impact-list">
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Delivered <strong>100+ brand identities</strong> across B2B and SaaS, building repeatable brand systems that reduced client onboarding time and ensured cross-team consistency.</span>
+          </div>
+          <div class="impact-item">
+            <div class="impact-icon">▲</div>
+            <span>Partnered with early-stage startups to translate product ideas into launch-ready designs, directly contributing to go-to-market timelines.</span>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">Brand Design</span>
+          <span class="tag">B2B, SaaS</span>
+          <span class="tag">Product Strategy</span>
+          <span class="tag">100+ Clients</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+  <div class="lightbox-label" id="lightboxLabel"></div>
+</div>
+
+<!-- ── VISUAL GALLERY — Interactive Mosaic ── -->
+<section id="gallery">
+  <p class="section-label">Visual Work</p>
+  <h2 class="section-title">A glimpse of <span class="dim">what I've shipped.</span></h2>
+
+  <div class="mosaic">
+    <div class="mosaic-item" onclick="openLightbox('sukuri_thumb.webp','Sukuri Protocol, Dashboard UI')">
+      <img src="sukuri_thumb.webp" alt="Sukuri Protocol Dashboard" loading="lazy" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">Sukuri Protocol</div>
+        <div class="mosaic-sub">Dashboard UI, Web3 SaaS</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+    <div class="mosaic-item" onclick="openLightbox('weivsync_thumb.webp','WeivSync, Travel App Onboarding')">
+      <img src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">WeivSync</div>
+        <div class="mosaic-sub">Travel App, Onboarding Flow</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+    <div class="mosaic-item" onclick="openLightbox('purrcoin_thumb.webp','Purrcoin, Web3 Landing Page')">
+      <img src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">Purrcoin ($PURR)</div>
+        <div class="mosaic-sub">Web3 Landing Page</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+    <div class="mosaic-item" onclick="openLightbox('xnaira_thumb.webp','XNaira, Crypto Exchange')">
+      <img src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">XNaira</div>
+        <div class="mosaic-sub">Crypto Exchange</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+    <div class="mosaic-item" onclick="openLightbox('ronke_thumb.webp','Ronke Rice Farmers, Web3 Gaming UI')">
+      <img src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" style="object-position:top;" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">Ronke Rice Farmers</div>
+        <div class="mosaic-sub">Web3 Game UI</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+    <div class="mosaic-item" onclick="openLightbox('logofolio_thumb.webp','Logofolio, 30+ Brand Identities')">
+      <img src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
+      <div class="mosaic-overlay">
+        <div class="mosaic-label">Logofolio</div>
+        <div class="mosaic-sub">30+ Brand Identities</div>
+      </div>
+      <div class="mosaic-expand">⤢</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FIGMA EMBEDS ── -->
+<section id="figma">
+  <p class="section-label">Live Design Files</p>
+  <h2 class="section-title">Explore my work <span class="dim">in Figma.</span></h2>
+
+  <div class="figma-tabs">
+    <button class="figma-tab active" onclick="switchFigma(0)">WeivSync</button>
+    <button class="figma-tab" onclick="switchFigma(1)">GrootSwap</button>
+    <button class="figma-tab" onclick="switchFigma(2)">Skateverse</button>
+    <button class="figma-tab" onclick="switchFigma(3)">MegaPurr</button>
+    <button class="figma-tab" onclick="switchFigma(4)">Sukuri</button>
+    <button class="figma-tab" onclick="switchFigma(5)">XNaira</button>
+    <button class="figma-tab" onclick="switchFigma(6)">Sukuri Wireframe</button>
+  </div>
+
+  <div class="figma-panel active" id="figma-0">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>WeivSync — Travel App</span><a href="https://embed.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-1">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>GrootSwap — DeFi Exchange</span><a href="https://embed.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-2">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Skateverse — Web3 Game</span><a href="https://embed.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-3">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>MegaPurr — Website</span><a href="https://embed.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-4">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Sukuri Protocol — Full Design</span><a href="https://embed.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-5">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>XNaira — Website Design</span><a href="https://embed.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+  <div class="figma-panel" id="figma-6">
+    <div class="figma-frame-wrap">
+      <iframe src="https://embed.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Sukuri.io — Wireframe</span><a href="https://embed.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <p class="section-label">Selected Work</p>
+  <h2 class="section-title">Projects that <span class="dim">speak for themselves.</span></h2>
+
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
+      <div class="project-body">
+        <p class="project-category">Web3, SaaS, UI/UX</p>
+        <h3 class="project-title">Sukuri Protocol</h3>
+        <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a business tooling app with invoicing, payroll, and customer management.</p>
+        <a href="https://tonyliljon.webflow.io/project/sukuri-protocol" target="_blank" class="project-link">View project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync Travel App" loading="lazy" />
+      <div class="project-body">
+        <p class="project-category">Mobile, Travel, UI/UX</p>
+        <h3 class="project-title">WeivSync — Travel App</h3>
+        <p class="project-desc">End-to-end user flows and high-fidelity onboarding experience for a travel app, from splash through personalisation quiz to account creation.</p>
+        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
+      <div class="project-body">
+        <p class="project-category">Web3, Landing Page, UI</p>
+        <h3 class="project-title">Purrcoin ($PURR)</h3>
+        <p class="project-desc">Playful, high-energy Web3 landing page for a meme coin. Designed the desktop and mobile experience with custom illustrations and a bold visual language.</p>
+        <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
+      <div class="project-body">
+        <p class="project-category">Web3, Landing Page, UI</p>
+        <h3 class="project-title">XNaira — Crypto Exchange</h3>
+        <p class="project-desc">Landing page design for a cryptocurrency, gift card, and e-wallet trading platform, focused on trust, clarity, and conversion.</p>
+        <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
+      <div class="project-body">
+        <p class="project-category">Web3, Gaming, UI/UX</p>
+        <h3 class="project-title">Ronke Rice Farmers</h3>
+        <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, bluecoin mechanics, and an isometric canvas view designed for on-chain gameplay.</p>
+        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
+      <div class="project-body">
+        <p class="project-category">Brand Identity, Logo Design</p>
+        <h3 class="project-title">Logofolio — 30+ Brands</h3>
+        <p class="project-desc">A selection of brand identities designed for clients across gaming, fintech, food, real estate, and media industries over 10 years of freelance work.</p>
+        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <p class="section-label">Capabilities</p>
+  <h2 class="section-title">What I <span class="dim">bring to the table.</span></h2>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h4>AI &amp; Emerging Tools</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Generative AI</span>
+        <span class="skill-pill">AI-assisted Design</span>
+        <span class="skill-pill">Prompt Engineering</span>
+        <span class="skill-pill">AI Workflows</span>
+        <span class="skill-pill">ChatGPT, Claude, Midjourney</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Design</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">UI Design</span>
+        <span class="skill-pill">UX Research</span>
+        <span class="skill-pill">Wireframing</span>
+        <span class="skill-pill">Prototyping</span>
+        <span class="skill-pill">Design Systems</span>
+        <span class="skill-pill">Brand Identity</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Tools</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">Webflow</span>
+        <span class="skill-pill">Adobe Illustrator</span>
+        <span class="skill-pill">Photoshop</span>
+        <span class="skill-pill">After Effects</span>
+        <span class="skill-pill">WordPress</span>
+        <span class="skill-pill">Corel Draw</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Business Ops</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Growth Strategy</span>
+        <span class="skill-pill">Competitive Analysis</span>
+        <span class="skill-pill">OKRs & Planning</span>
+        <span class="skill-pill">Stakeholder Mgmt</span>
+        <span class="skill-pill">Partnership Dev</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>No-Code & Dev</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Webflow Dev</span>
+        <span class="skill-pill">WordPress</span>
+        <span class="skill-pill">No-Code Tools</span>
+        <span class="skill-pill">HTML / CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Domains</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Web3 / DeFi</span>
+        <span class="skill-pill">Gaming</span>
+        <span class="skill-pill">SaaS / B2B</span>
+        <span class="skill-pill">HealthTech</span>
+        <span class="skill-pill">Creator Economy</span>
+        <span class="skill-pill">Fintech</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Soft Skills</h4>
+      <div class="skill-pills">
+        <span class="skill-pill">Leadership</span>
+        <span class="skill-pill">Cross-functional Collab</span>
+        <span class="skill-pill">Problem Solving</span>
+        <span class="skill-pill">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <p class="section-label">About</p>
+  <h2 class="section-title">The person <span class="dim">behind the work.</span></h2>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm <strong>Anthony Littlejohn</strong>, a Senior Product Designer and Business Operations Manager with over <strong>10 years of experience</strong> across Web3, gaming, SaaS, and B2B industries.</p>
+      <p>My edge isn't just good design. It's that I understand <strong>how businesses operate</strong>. I've run ops, acquired partners, built growth strategies, and shipped full products, not just handed over files. I also leverage <strong>generative AI</strong> to accelerate workflows and prototype faster.</p>
+      <p>I'm looking to bring this blend of design thinking and operational experience to a <strong>world-class product team</strong>, wherever great work is being done.</p>
+      <p>Outside of work: gaming, boxing, and watching food recipes on YouTube.</p>
+
+      <div class="about-certs">
+        <h4>Certifications</h4>
+        <div class="cert-item"><span class="cert-dot"></span> Google UX Design Professional Certificate</div>
+        <div class="cert-item"><span class="cert-dot"></span> Google AI Professional Certificate</div>
+        <div class="cert-item"><span class="cert-dot"></span> Complete Web Design: Figma to Webflow</div>
+        <div class="cert-item"><span class="cert-dot"></span> UI/UX Design — Verified</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="about-card">
+        <p class="about-card-title">Quick Profile</p>
+        <div class="about-stat-row"><span>Location</span><span>Remote / Open to Relocation</span></div>
+        <div class="about-stat-row"><span>Availability</span><span>Open to opportunities</span></div>
+        <div class="about-stat-row"><span>Experience</span><span>10+ years</span></div>
+        <div class="about-stat-row"><span>Education</span><span>BSc. Social Sciences (Economics), Babcock University</span></div>
+        <div class="about-stat-row"><span>Languages</span><span>English (fluent)</span></div>
+        <div class="about-stat-row"><span>Email</span><span><a href="mailto:tonyliljon@gmail.com" style="color:var(--accent);text-decoration:none">tonyliljon@gmail.com</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <p class="section-label">Let's talk</p>
+  <h2 class="section-title">Ready when <span class="dim">you are.</span></h2>
+  <p>I'm actively looking for UI/UX or Product Design roles globally. If you're building something great, let's connect.</p>
+  <div class="contact-links">
+    <a href="mailto:tonyliljon@gmail.com" class="contact-link">✉ tonyliljon@gmail.com</a>
+    <a href="https://tonyliljon.webflow.io" target="_blank" class="contact-link">🌐 Portfolio</a>
+    <a href="https://www.linkedin.com/in/tonyliljon" target="_blank" class="contact-link">💼 LinkedIn</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span>© 2025 Anthony Littlejohn</span>
+  <span>I get shit done.</span>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to top</a>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.timeline-item, .project-card').forEach(el => observer.observe(el));
+
+  // Lightbox
+  function openLightbox(src, label) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxLabel').textContent = label;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Figma tabs
+  function switchFigma(index) {
+    document.querySelectorAll('.figma-tab').forEach((t, i) => t.classList.toggle('active', i === index));
+    document.querySelectorAll('.figma-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+  }
+</script>
+</body>
+</html>
