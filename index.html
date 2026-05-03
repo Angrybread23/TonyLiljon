@@ -561,13 +561,75 @@
       .mosaic-item:nth-child(6) { grid-column: span 1; }
     }
 
-    /* ─── PROJECTS ─── */
-    #projects { background: var(--surface); }
-    .projects-grid {
+    /* ─── CASE STUDY ─── */
+    #case-study { background: var(--bg); padding: 6rem 5vw; }
+    .cs-hero {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 5rem;
+      padding-bottom: 5rem;
+      border-bottom: 1px solid var(--border);
     }
+    .cs-tag {
+      display: inline-block;
+      background: rgba(200,242,58,0.1);
+      border: 1px solid rgba(200,242,58,0.3);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+    .cs-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .cs-subtitle { font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+    .cs-meta-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .cs-meta-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .cs-meta-value { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .cs-img-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .cs-img-wrap img { width: 100%; display: block; object-fit: cover; }
+    .cs-blocks { display: flex; flex-direction: column; gap: 4rem; }
+    .cs-block-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.75rem; }
+    .cs-block h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+    .cs-block p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
+    .cs-block p + p { margin-top: 0.75rem; }
+    .cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .cs-metric { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .cs-metric-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
+    .cs-metric-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .cs-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .cs-list-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--text); }
+    .cs-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    @media(max-width:768px) {
+      .cs-hero { grid-template-columns: 1fr; }
+      .cs-two-col { grid-template-columns: 1fr; }
+      .cs-metrics { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── PROJECTS CAROUSEL ─── */
+    #projects { background: var(--surface); }
+    .projects-carousel-wrap { position: relative; padding: 0 2rem; }
+    .projects-carousel {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding-bottom: 1rem;
+    }
+    .projects-carousel::-webkit-scrollbar { display: none; }
     .project-card {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -576,46 +638,51 @@
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+      flex: 0 0 310px;
     }
     .project-card.visible { opacity: 1; transform: translateY(0); }
     .project-card:hover { border-color: rgba(200,242,58,0.3); transform: translateY(-4px); }
-
     .project-img {
       width: 100%;
-      height: 200px;
+      height: 190px;
       object-fit: cover;
       object-position: top;
       background: var(--surface2);
       display: block;
     }
-    .project-body { padding: 1.5rem; }
-    .project-category {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .project-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-    .project-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
-    .project-link {
-      display: inline-flex;
+    .placeholder-img {
+      width: 100%;
+      height: 190px;
+      background: linear-gradient(135deg, var(--surface2), #2a2a2a);
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
+      justify-content: center;
+      font-size: 2rem;
     }
+    .project-body { padding: 1.4rem; }
+    .project-category { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .project-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .project-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--accent); text-decoration: none; }
     .project-link:hover { opacity: 0.75; }
-
+    .carousel-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-60%);
+      width: 42px; height: 42px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .carousel-btn.prev { left: -8px; }
+    .carousel-btn.next { right: -8px; }
+    .carousel-btn:disabled { opacity: 0.2; cursor: default; }
 
     /* ─── SKILLS ─── */
     #skills { background: var(--surface); }
@@ -753,6 +820,7 @@
   <ul class="nav-links">
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#figma">Figma</a></li>
+    <li><a href="#case-study">Case Study</a></li>
     <li><a href="#work">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -1165,73 +1233,264 @@
   </div>
 </section>
 
+<!-- ── CASE STUDY: SUKURI PROTOCOL ── -->
+<section id="case-study">
+  <p class="section-label">Case Study</p>
+  <h2 class="section-title">Deep dive: <span class="dim">Sukuri Protocol.</span></h2>
+
+  <!-- Overview -->
+  <div class="cs-hero">
+    <div>
+      <div class="cs-tag">Web3 · SaaS · Product Design</div>
+      <h2 class="cs-title">Designing a business operating system for the on-chain economy</h2>
+      <p class="cs-subtitle">Sukuri Protocol needed two things at once: a crypto subscription platform for creators and businesses, and a full-featured business dashboard. I was the sole designer, owning everything from research to final handoff.</p>
+      <div class="cs-meta-row">
+        <div><div class="cs-meta-label">Role</div><div class="cs-meta-value">Senior Product Designer</div></div>
+        <div><div class="cs-meta-label">Duration</div><div class="cs-meta-value">Sep 2021 – Nov 2022</div></div>
+        <div><div class="cs-meta-label">Platform</div><div class="cs-meta-value">Web App</div></div>
+        <div><div class="cs-meta-label">Tools</div><div class="cs-meta-value">Figma, FigJam</div></div>
+      </div>
+    </div>
+    <div class="cs-img-wrap">
+      <img src="sukuri_thumb.webp" alt="Sukuri Protocol Dashboard" />
+    </div>
+  </div>
+
+  <div class="cs-blocks">
+
+    <!-- Problem -->
+    <div class="cs-block">
+      <div class="cs-block-label">01 — The Problem</div>
+      <h3>Crypto businesses had no infrastructure built for them</h3>
+      <p>Web3 businesses were stitching together Web2 tools that weren't built for on-chain payments, wallet-based identities, or token-gated access. They couldn't invoice in crypto, manage subscribers on-chain, or track business performance in one place.</p>
+      <p>The brief was clear: design a product suite that lets any business operate entirely on-chain — subscriptions, invoicing, payroll, customer management — with a UI that feels familiar and trustworthy, not intimidating.</p>
+    </div>
+
+    <!-- Research -->
+    <div class="cs-block">
+      <div class="cs-block-label">02 — Research &amp; Discovery</div>
+      <h3>Understanding both the user and the ecosystem</h3>
+      <div class="cs-two-col">
+        <div>
+          <p>I conducted competitive analysis across Web2 SaaS tools (Stripe, Notion, QuickBooks) and Web3-native alternatives to identify gaps. I ran 6 stakeholder interviews with crypto business owners to understand their actual workflows.</p>
+          <p>Key insight: users trusted Web2 dashboards because they were familiar. The biggest barrier wasn't crypto — it was visual complexity and unclear affordances.</p>
+        </div>
+        <div>
+          <p><strong style="color:var(--text)">Key findings:</strong></p>
+          <div class="cs-list" style="margin-top:0.75rem;">
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Users wanted Web2-level clarity with Web3 capabilities underneath</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Wallet address display needed to feel native, not technical</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Subscription management was the most requested missing feature in Web3</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Dashboard data needed to be scannable in under 5 seconds</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Process -->
+    <div class="cs-block">
+      <div class="cs-block-label">03 — Design Process</div>
+      <h3>From wireframes to a scalable design system</h3>
+      <p>I started with low-fidelity wireframes in FigJam to map all user flows across both products: the subscription platform and the business dashboard. Once flows were validated with the team, I moved to high-fidelity in Figma.</p>
+      <p>The design system became the backbone — reusable components for tables, cards, charts, wallet displays, status indicators, and form patterns. This meant engineers could build faster and the product stayed consistent as it scaled.</p>
+      <div class="cs-two-col" style="margin-top:1.5rem;">
+        <div>
+          <p><strong style="color:var(--text)">Subscription Platform covered:</strong></p>
+          <div class="cs-list" style="margin-top:0.75rem;">
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Onboarding and wallet connection flow</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Plan creation and pricing configuration</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Subscriber management and analytics</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Token-gated access UI patterns</span></div>
+          </div>
+        </div>
+        <div>
+          <p><strong style="color:var(--text)">Business Dashboard covered:</strong></p>
+          <div class="cs-list" style="margin-top:0.75rem;">
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Earnings overview with real-time charts</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Invoice creation and payment tracking</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Customer database with wallet lookup</span></div>
+            <div class="cs-list-item"><span class="cs-dot"></span><span>Payroll module for team payments in crypto</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Challenges -->
+    <div class="cs-block">
+      <div class="cs-block-label">04 — Challenges</div>
+      <h3>Designing for a product that didn't exist yet</h3>
+      <p>There were no established design patterns for on-chain business tooling. Every decision — how to show a wallet address, how to represent pending blockchain transactions, how to make "payroll in crypto" feel safe — required first-principles thinking.</p>
+      <p>Working as the sole designer also meant I had to prioritise ruthlessly. I focused on the highest-traffic flows first and built the design system in parallel, so every screen I added benefited from the components already in place.</p>
+    </div>
+
+    <!-- Outcome -->
+    <div class="cs-block">
+      <div class="cs-block-label">05 — Outcome &amp; Impact</div>
+      <h3>A faster, cleaner feedback loop — and a product ready to ship</h3>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <div class="cs-metric-num">~30%</div>
+          <div class="cs-metric-label">Reduction in design review cycles via interactive prototyping</div>
+        </div>
+        <div class="cs-metric">
+          <div class="cs-metric-num">2</div>
+          <div class="cs-metric-label">Full product suites designed end-to-end as sole designer</div>
+        </div>
+        <div class="cs-metric">
+          <div class="cs-metric-num">1</div>
+          <div class="cs-metric-label">Scalable design system powering both products</div>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem;">By using interactive prototypes throughout the process, I reduced back-and-forth with engineering significantly. Developers could experience the intended behavior directly in Figma rather than interpreting static specs — cutting review cycles by approximately 30% and shipping screens faster.</p>
+    </div>
+
+  </div>
+</section>
+
 <!-- ── PROJECTS ── -->
 <section id="projects">
   <p class="section-label">Selected Work</p>
   <h2 class="section-title">Projects that <span class="dim">speak for themselves.</span></h2>
 
-  <div class="projects-grid">
+  <div class="projects-carousel-wrap">
+    <button class="carousel-btn prev" id="prevBtn" onclick="scrollCarousel(-1)">←</button>
+    <button class="carousel-btn next" id="nextBtn" onclick="scrollCarousel(1)">→</button>
 
-    <div class="project-card">
-      <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
-      <div class="project-body">
-        <p class="project-category">Web3, SaaS, UI/UX</p>
-        <h3 class="project-title">Sukuri Protocol</h3>
-        <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a business tooling app with invoicing, payroll, and customer management.</p>
-        <a href="https://tonyliljon.webflow.io/project/sukuri-protocol" target="_blank" class="project-link">View project →</a>
+    <div class="projects-carousel" id="projectsCarousel">
+
+      <!-- 1. Sukuri Protocol — ALWAYS FIRST -->
+      <div class="project-card">
+        <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, SaaS, UI/UX</p>
+          <h3 class="project-title">Sukuri Protocol</h3>
+          <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a full business dashboard.</p>
+          <a href="#case-study" class="project-link">Read case study →</a>
+        </div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync Travel App" loading="lazy" />
-      <div class="project-body">
-        <p class="project-category">Mobile, Travel, UI/UX</p>
-        <h3 class="project-title">WeivSync — Travel App</h3>
-        <p class="project-desc">End-to-end user flows and high-fidelity onboarding experience for a travel app, from splash through personalisation quiz to account creation.</p>
-        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+      <!-- 2. WeivSync — newer, from gallery -->
+      <div class="project-card">
+        <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Mobile, Travel, UI/UX</p>
+          <h3 class="project-title">WeivSync — Travel App</h3>
+          <p class="project-desc">End-to-end onboarding flows and high-fidelity UI for a travel recommendation app personalised to each user.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+        </div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
-      <div class="project-body">
-        <p class="project-category">Web3, Landing Page, UI</p>
-        <h3 class="project-title">Purrcoin ($PURR)</h3>
-        <p class="project-desc">Playful, high-energy Web3 landing page for a meme coin. Designed the desktop and mobile experience with custom illustrations and a bold visual language.</p>
-        <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
+      <!-- 3. Ourbet — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">🎲</div>
+        <div class="project-body">
+          <p class="project-category">Sports Betting, UI/UX, Brand</p>
+          <h3 class="project-title">Ourbet</h3>
+          <p class="project-desc">Brand identity and product UI design for a sports betting platform — covering logo, design language, and core app screens.</p>
+          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+        </div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
-      <div class="project-body">
-        <p class="project-category">Web3, Landing Page, UI</p>
-        <h3 class="project-title">XNaira — Crypto Exchange</h3>
-        <p class="project-desc">Landing page design for a cryptocurrency, gift card, and e-wallet trading platform, focused on trust, clarity, and conversion.</p>
-        <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
+      <!-- 4. Diyo Aviation — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">✈️</div>
+        <div class="project-body">
+          <p class="project-category">Aviation, Brand, UI</p>
+          <h3 class="project-title">Diyo Aviation</h3>
+          <p class="project-desc">Brand identity design for an aviation company — crafting a visual system that communicates trust, precision, and professionalism.</p>
+          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+        </div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
-      <div class="project-body">
-        <p class="project-category">Web3, Gaming, UI/UX</p>
-        <h3 class="project-title">Ronke Rice Farmers</h3>
-        <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, bluecoin mechanics, and an isometric canvas view designed for on-chain gameplay.</p>
-        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+      <!-- 5. Swisat Tech — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">💡</div>
+        <div class="project-body">
+          <p class="project-category">Tech, SaaS, Brand</p>
+          <h3 class="project-title">Swisat Tech</h3>
+          <p class="project-desc">Brand and UI design for a tech company, developing a clean, modern visual identity that positions the brand in the enterprise market.</p>
+          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+        </div>
       </div>
-    </div>
 
-    <div class="project-card">
-      <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
-      <div class="project-body">
-        <p class="project-category">Brand Identity, Logo Design</p>
-        <h3 class="project-title">Logofolio — 30+ Brands</h3>
-        <p class="project-desc">A selection of brand identities designed for clients across gaming, fintech, food, real estate, and media industries over 10 years of freelance work.</p>
-        <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
+      <!-- 6. Lotto27 — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">🎯</div>
+        <div class="project-body">
+          <p class="project-category">Gaming, Lottery, UI/UX</p>
+          <h3 class="project-title">Lotto27</h3>
+          <p class="project-desc">Product UI and brand design for a lottery platform — balancing excitement and trust through bold visuals and a clear user journey.</p>
+          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+        </div>
       </div>
-    </div>
 
+      <!-- 7. PluggXtra — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">🔌</div>
+        <div class="project-body">
+          <p class="project-category">E-commerce, Brand, UI</p>
+          <h3 class="project-title">PluggXtra</h3>
+          <p class="project-desc">End-to-end brand design and product UI for an e-commerce platform, including identity system, landing page, and key app screens.</p>
+          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 8. Transcend Case Study — Behance -->
+      <div class="project-card">
+        <div class="placeholder-img">🏥</div>
+        <div class="project-body">
+          <p class="project-category">HealthTech, Mobile, Case Study</p>
+          <h3 class="project-title">Transcend Health App</h3>
+          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — covering research, flows, and high-fidelity UI.</p>
+          <a href="https://tonyliljon.webflow.io/project/transcend-mobile-app-case-study" target="_blank" class="project-link">View case study →</a>
+        </div>
+      </div>
+
+      <!-- 9. Ronke Rice Farmers — from gallery -->
+      <div class="project-card">
+        <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Gaming, UI/UX</p>
+          <h3 class="project-title">Ronke Rice Farmers</h3>
+          <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, and an isometric canvas view.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 10. Purrcoin — from gallery -->
+      <div class="project-card">
+        <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Landing Page, UI</p>
+          <h3 class="project-title">Purrcoin ($PURR)</h3>
+          <p class="project-desc">High-energy Web3 landing page for a meme coin, designed for desktop and mobile with custom illustrations.</p>
+          <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 11. XNaira — from gallery -->
+      <div class="project-card">
+        <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Landing Page, UI</p>
+          <h3 class="project-title">XNaira — Crypto Exchange</h3>
+          <p class="project-desc">Landing page for a crypto and gift card trading platform — focused on trust, clarity, and conversion.</p>
+          <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 12. Logofolio — from gallery -->
+      <div class="project-card">
+        <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
+        <div class="project-body">
+          <p class="project-category">Brand Identity, Logo Design</p>
+          <h3 class="project-title">Logofolio — 30+ Brands</h3>
+          <p class="project-desc">Brand identities across gaming, fintech, food, real estate, and media over 10 years of freelance work.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -1394,6 +1653,22 @@
   function switchFigma(index) {
     document.querySelectorAll('.figma-tab').forEach((t, i) => t.classList.toggle('active', i === index));
     document.querySelectorAll('.figma-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+  }
+
+  // Projects carousel
+  function scrollCarousel(dir) {
+    const carousel = document.getElementById('projectsCarousel');
+    const scrollAmt = 340;
+    carousel.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
+  }
+  // Update arrow states on scroll
+  const carousel = document.getElementById('projectsCarousel');
+  if (carousel) {
+    carousel.addEventListener('scroll', () => {
+      document.getElementById('prevBtn').disabled = carousel.scrollLeft <= 0;
+      document.getElementById('nextBtn').disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10;
+    });
+    document.getElementById('prevBtn').disabled = true;
   }
 </script>
 </body>
