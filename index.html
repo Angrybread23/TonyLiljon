@@ -95,18 +95,18 @@
     }
     .hero-layout {
       display: grid;
-      grid-template-columns: 1fr 440px;
-      gap: 4rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
       align-items: center;
       width: 100%;
       max-width: 100%;
     }
-    .hero-inner { max-width: 680px; }
+    .hero-inner { max-width: 640px; }
     .hero-visual {
       position: relative;
-      height: 520px;
-      /* On large screens push the stack flush to the right edge */
+      height: clamp(420px, 55vh, 680px);
       margin-right: -5vw;
+      padding-right: 2vw;
     }
     .hero-badge {
       display: inline-flex;
@@ -186,7 +186,7 @@
     }
     .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
 
-    /* ─── HERO IMAGE STACK ─── */
+    /* ─── HERO IMAGE STACK — Horizontal ─── */
     @media (max-width: 900px) {
       .hero-layout { grid-template-columns: 1fr; }
       .hero-visual { display: none; }
@@ -199,78 +199,85 @@
     }
     .stack-card {
       position: absolute;
-      width: 300px;
-      border-radius: 16px;
+      width: clamp(220px, 22vw, 360px);
+      border-radius: 14px;
       overflow: hidden;
       border: 2px solid var(--border);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease, border-color 0.3s;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      transition: transform 0.5s cubic-bezier(0.34,1.46,0.64,1), box-shadow 0.4s ease, border-color 0.3s;
       will-change: transform;
+      top: 50%;
     }
     .stack-card img {
       width: 100%;
-      height: 200px;
+      height: clamp(150px, 15vw, 260px);
       object-fit: cover;
       object-position: top;
       display: block;
     }
     .stack-card-label {
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 1rem;
       background: var(--surface);
-      font-size: 0.75rem;
+      font-size: clamp(0.62rem, 0.75vw, 0.75rem);
       font-weight: 600;
       color: var(--muted);
       letter-spacing: 0.05em;
       text-transform: uppercase;
       border-top: 1px solid var(--border);
     }
-    /* default stacked positions */
+
+    /* Default: horizontally overlapping, centered vertically */
     .stack-card:nth-child(1) {
-      top: 20px; left: 50%;
-      transform: translateX(-50%) rotate(-4deg);
+      left: 0;
+      transform: translateY(-50%) rotate(-5deg);
       z-index: 1;
-      border-color: rgba(200,242,58,0.3);
+      border-color: rgba(200,242,58,0.25);
     }
     .stack-card:nth-child(2) {
-      top: 60px; left: 50%;
-      transform: translateX(-50%) rotate(2deg);
+      left: clamp(60px, 8vw, 140px);
+      transform: translateY(-56%) rotate(0deg);
       z-index: 2;
+      border-color: rgba(200,242,58,0.4);
     }
     .stack-card:nth-child(3) {
-      top: 100px; left: 50%;
-      transform: translateX(-50%) rotate(-1deg);
+      left: clamp(120px, 16vw, 280px);
+      transform: translateY(-44%) rotate(4deg);
       z-index: 3;
       border-color: var(--border);
     }
-    /* hover — fan out vertically */
+
+    /* Hover: fan out horizontally */
     .hero-visual:hover .stack-card:nth-child(1) {
-      transform: translateX(-50%) translateY(-160px) rotate(-6deg);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+      transform: translateY(-60%) translateX(clamp(-60px, -5vw, -30px)) rotate(-8deg);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.6);
       border-color: rgba(200,242,58,0.5);
-      z-index: 3;
-    }
-    .hero-visual:hover .stack-card:nth-child(2) {
-      transform: translateX(-50%) translateY(0px) rotate(0deg);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      border-color: rgba(200,242,58,0.25);
-      z-index: 2;
-    }
-    .hero-visual:hover .stack-card:nth-child(3) {
-      transform: translateX(-50%) translateY(160px) rotate(5deg);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.6);
       z-index: 1;
     }
+    .hero-visual:hover .stack-card:nth-child(2) {
+      transform: translateY(-67%) translateX(clamp(10px, 2vw, 24px)) rotate(0deg);
+      box-shadow: 0 36px 72px rgba(0,0,0,0.55);
+      border-color: var(--accent);
+      z-index: 3;
+    }
+    .hero-visual:hover .stack-card:nth-child(3) {
+      transform: translateY(-46%) translateX(clamp(70px, 9vw, 140px)) rotate(7deg);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.6);
+      border-color: rgba(200,242,58,0.3);
+      z-index: 2;
+    }
+
     .hero-visual-hint {
       position: absolute;
-      bottom: -1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
       font-size: 0.72rem;
       color: var(--muted);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
-      white-space: nowrap;
     }
     .hero-visual-hint::before,
     .hero-visual-hint::after { content: ''; display: block; width: 16px; height: 1px; background: var(--border); }
@@ -1386,75 +1393,63 @@
         </div>
       </div>
 
-      <!-- 3. Ourbet — Behance -->
+      <!-- 3. Transcend Case Study — Behance verified -->
       <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/bd554a203109901.Y3JvcCwxMDc5LDg0NCwwLDA.png" alt="Ourbet" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="placeholder-img" style="display:none">🎲</div>
-        <div class="project-body">
-          <p class="project-category">Sports Betting, UI/UX, Brand</p>
-          <h3 class="project-title">Ourbet</h3>
-          <p class="project-desc">Brand identity and product UI design for a sports betting platform — covering logo, design language, and core app screens.</p>
-          <a href="https://www.behance.net/gallery/203109901/Sukuri-Product-Design" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 4. Diyo Aviation — Behance -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Diyo Aviation" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="placeholder-img" style="display:none">✈️</div>
-        <div class="project-body">
-          <p class="project-category">Aviation, Brand, UI</p>
-          <h3 class="project-title">Diyo Aviation</h3>
-          <p class="project-desc">Brand identity design for an aviation company — crafting a visual system that communicates trust, precision, and professionalism.</p>
-          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 5. Swisat Tech — Behance -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Swisat Tech" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="placeholder-img" style="display:none">💡</div>
-        <div class="project-body">
-          <p class="project-category">Tech, SaaS, Brand</p>
-          <h3 class="project-title">Swisat Tech</h3>
-          <p class="project-desc">Brand and UI design for a tech company, developing a clean, modern visual identity that positions the brand in the enterprise market.</p>
-          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 6. Lotto27 — Behance -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Lotto27" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="placeholder-img" style="display:none">🎯</div>
-        <div class="project-body">
-          <p class="project-category">Gaming, Lottery, UI/UX</p>
-          <h3 class="project-title">Lotto27</h3>
-          <p class="project-desc">Product UI and brand design for a lottery platform — balancing excitement and trust through bold visuals and a clear user journey.</p>
-          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 7. PluggXtra — Behance -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/fabbe1176048121.Y3JvcCwxOTk5LDE1NjQsMCww.jpg" alt="PluggXtra" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="placeholder-img" style="display:none">🔌</div>
-        <div class="project-body">
-          <p class="project-category">E-commerce, Brand, UI</p>
-          <h3 class="project-title">PluggXtra</h3>
-          <p class="project-desc">End-to-end brand design and product UI for an e-commerce platform, including identity system, landing page, and key app screens.</p>
-          <a href="https://www.behance.net/tonyliljon" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 8. Transcend Case Study — Behance -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Health App" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Case Study" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
         <div class="placeholder-img" style="display:none">🏥</div>
         <div class="project-body">
           <p class="project-category">HealthTech, Mobile, Case Study</p>
           <h3 class="project-title">Transcend Health App</h3>
-          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — covering research, flows, and high-fidelity UI.</p>
+          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — research, flows, and high-fidelity UI.</p>
           <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 4. Afrofans — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Afrofans" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🎵</div>
+        <div class="project-body">
+          <p class="project-category">Brand, Web & Mobile, UI/UX</p>
+          <h3 class="project-title">Afrofans — Creator Platform</h3>
+          <p class="project-desc">Branding and UI/UX for a subscription platform helping African creators monetise their content and grow their fanbase.</p>
+          <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 5. Skateverse — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Skateverse" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🛹</div>
+        <div class="project-body">
+          <p class="project-category">Web3, Gaming, UI/UX</p>
+          <h3 class="project-title">Skateverse UI/UX</h3>
+          <p class="project-desc">Full UI/UX design for a Web3 skateboarding game — crafting an immersive interface that blends gaming culture with on-chain mechanics.</p>
+          <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 6. Suntok — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Suntok" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🌐</div>
+        <div class="project-body">
+          <p class="project-category">Web Design & Development</p>
+          <h3 class="project-title">Suntok — Web Design</h3>
+          <p class="project-desc">Full website design and development for Suntok — a clean, conversion-focused site with a modern visual language and responsive layout.</p>
+          <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 7. Steelseries — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/09b7f2173225225.Y3JvcCwyMTYwLDE2ODksMCw1MDI.png" alt="Steelseries" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🎮</div>
+        <div class="project-body">
+          <p class="project-category">Gaming, Product Page, UI</p>
+          <h3 class="project-title">Steelseries Product Page</h3>
+          <p class="project-desc">Concept product page redesign for Steelseries — high-impact layout focused on showcasing gaming peripherals with clarity and energy.</p>
+          <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" class="project-link">View on Behance →</a>
         </div>
       </div>
 
