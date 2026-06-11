@@ -22,6 +22,10 @@
       --radius: 14px;
       --display: 'Bricolage Grotesque', sans-serif;
       --body: 'DM Sans', sans-serif;
+      --gutter: 5vw;
+    }
+    @media (min-width: 1480px) {
+      :root { --gutter: calc((100vw - 1340px) / 2); }
     }
 
     html { scroll-behavior: smooth; }
@@ -55,7 +59,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.1rem 5vw;
+      padding: 1.1rem var(--gutter);
       background: rgba(13,13,13,0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--hairline);
@@ -107,7 +111,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 7.5rem 5vw 3rem;
+      padding: 7.5rem var(--gutter) 3rem;
       position: relative;
       background-image:
         linear-gradient(to right, rgba(13,13,13,0.86) 0%, rgba(13,13,13,0.45) 55%, rgba(13,13,13,0.55) 100%),
@@ -352,7 +356,7 @@
     @keyframes marquee { to { transform: translateX(-50%); } }
 
     /* ─── SECTIONS ─── */
-    section { padding: 6.5rem 5vw; scroll-margin-top: 4.5rem; }
+    section { padding: 6.5rem var(--gutter); scroll-margin-top: 4.5rem; }
     .section-label {
       font-size: 0.72rem;
       letter-spacing: 0.18em;
@@ -473,7 +477,7 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      padding: 4rem 5vw;
+      padding: 4rem var(--gutter);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -496,7 +500,7 @@
     }
     .lightbox-close {
       position: absolute;
-      top: 1.5rem; right: 5vw;
+      top: 1.5rem; right: var(--gutter);
       width: 44px; height: 44px;
       border-radius: 50%;
       background: var(--accent);
@@ -891,7 +895,7 @@
       background: var(--surface);
       border-top: 1px solid var(--hairline);
       text-align: center;
-      padding: 8rem 5vw 7rem;
+      padding: 8rem var(--gutter) 7rem;
     }
     #contact .section-label { justify-content: center; }
     .contact-title {
@@ -925,7 +929,7 @@
     footer {
       background: var(--paper);
       color: var(--gray);
-      padding: 2rem 5vw;
+      padding: 2rem var(--gutter);
       border-top: 1px solid var(--hairline);
       display: flex;
       justify-content: space-between;
@@ -943,6 +947,16 @@
     }
     footer a { color: var(--gray); text-decoration: none; }
     footer a:hover { color: var(--accent); }
+
+    /* ─── FLIGHT LIGHT STREAK ─── */
+    #flightTrace {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 49;
+      pointer-events: none;
+    }
 
     /* ─── FLYING MASCOT ─── */
     .flyer {
@@ -999,13 +1013,16 @@
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      section { padding: 4.5rem 5vw; }
+      section { padding: 4.5rem var(--gutter); }
     }
   </style>
 </head>
 <body>
 
 <div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ── FLIGHT LIGHT STREAK ── -->
+<canvas id="flightTrace" aria-hidden="true"></canvas>
 
 <!-- ── FLYING MASCOT ── -->
 <div class="flyer" id="flyer" aria-hidden="true">
@@ -1882,72 +1899,6 @@
       });
       deck.addEventListener('mouseleave', () => { tiltEl.style.transform = ''; });
     }
-  }
-
-  // Flying mascot: scroll-driven flight along the page edges
-  const flyer = document.getElementById('flyer');
-  if (flyer && !noMotion) {
-    const isNarrow = window.matchMedia('(max-width: 768px)').matches;
-    const SIZE = isNarrow ? 54 : 110;
-    // waypoints: [scroll progress, x in vw, y in vh] — hugs the edges, crosses between sections
-    const WPTS = [
-      [0.050, -12, 40],
-      [0.115,  85, 20],
-      [0.200,  89, 58],
-      [0.285,   6, 66],
-      [0.370,   5, 26],
-      [0.460,  86, 32],
-      [0.560,  90, 62],
-      [0.660,   7, 56],
-      [0.760,   6, 22],
-      [0.860,  85, 28],
-      [0.945,  46, 36],
-      [1.001,  46, -22]
-    ];
-    const smooth = t => t * t * (3 - 2 * t);
-    function pathAt(p) {
-      if (p < WPTS[0][0]) return null;
-      for (let i = 0; i < WPTS.length - 1; i++) {
-        const a = WPTS[i], b = WPTS[i + 1];
-        if (p >= a[0] && p <= b[0]) {
-          const t = smooth((p - a[0]) / (b[0] - a[0]));
-          return [a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
-        }
-      }
-      return [WPTS[WPTS.length - 1][1], WPTS[WPTS.length - 1][2]];
-    }
-    let cx = -300, cy = 300, dir = 1, shown = false;
-    function fly(ts) {
-      const h = document.documentElement;
-      const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
-      const wp = pathAt(p);
-      if (!wp) {
-        if (shown) { flyer.style.opacity = 0; shown = false; }
-        requestAnimationFrame(fly);
-        return;
-      }
-      let [txv, tyv] = wp;
-      // mobile: stay pinned near the right edge, tiny lateral drift only
-      if (isNarrow) txv = 80 + (txv - 50) * 0.14;
-      const tx = (txv / 100) * window.innerWidth;
-      const ty = (tyv / 100) * window.innerHeight + Math.sin(ts / 650) * 6;
-      if (!shown) {
-        flyer.style.opacity = 1;
-        shown = true;
-        if (cx < -200) { cx = tx; cy = ty; }
-      }
-      const nx = cx + (tx - cx) * 0.055;
-      const ny = cy + (ty - cy) * 0.055;
-      const vx = nx - cx, vy = ny - cy;
-      cx = nx; cy = ny;
-      const speed = Math.hypot(vx, vy);
-      if (Math.abs(vx) > 0.35) dir = vx < 0 ? 1 : -1; // sprite faces left
-      const tilt = Math.max(-13, Math.min(13, vy * 2.4)) * dir - (speed > 1.2 ? dir * 2 : 0);
-      flyer.style.transform = `translate(${cx - SIZE / 2}px, ${cy - SIZE / 2}px) scaleX(${dir}) rotate(${tilt}deg)`;
-      flyer.style.setProperty('--trailO', Math.min(1, speed / 8).toFixed(2));
-      requestAnimationFrame(fly);
-    }
-    requestAnimationFrame(fly);
   }
 
   // Lightbox
