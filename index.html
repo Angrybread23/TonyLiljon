@@ -6,31 +6,43 @@
   <title>Anthony Littlejohn — Product Designer & Ops</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --surface2: #1e1e1e;
-      --border: #2a2a2a;
-      --accent: #c8f23a;
-      --accent2: #f2e13a;
-      --text: #f0ede8;
-      --muted: #888;
-      --tag-bg: #1f1f1f;
+      --paper: #0a0a0a;
+      --ink: #f4f2ee;
+      --gray: #9a9a9a;
+      --gray-light: #6e6e6e;
+      --hairline: #232323;
+      --surface: #141414;
+      --radius: 14px;
+      --display: 'Archivo', sans-serif;
+      --body: 'DM Sans', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+    }
+
+    ::selection { background: var(--ink); color: var(--paper); }
+
+    /* ─── SCROLL PROGRESS ─── */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--ink);
+      z-index: 200;
     }
 
     /* ─── NAV ─── */
@@ -41,381 +53,353 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 5vw;
-      background: rgba(13,13,13,0.85);
+      padding: 1.1rem 5vw;
+      background: rgba(10,10,10,0.82);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--hairline);
     }
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -0.02em;
-      color: var(--accent);
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
       text-decoration: none;
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
     .nav-links a {
-      color: var(--muted);
+      color: var(--gray);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 500;
+      position: relative;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 100%; height: 1px;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
     .nav-cta {
-      background: var(--accent);
-      color: #000;
-      padding: 0.5rem 1.25rem;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.5rem 1.3rem;
       border-radius: 100px;
       font-weight: 600;
       font-size: 0.85rem;
       text-decoration: none;
       transition: opacity 0.2s;
+      display: inline-block;
     }
-    .nav-cta:hover { opacity: 0.85; }
+    .nav-cta:hover { opacity: 0.8; }
 
     /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      padding: 8rem 5vw 5rem;
+      align-items: flex-end;
+      padding: 7.5rem 5vw 0;
       position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px; right: -200px;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,242,58,0.07) 0%, transparent 70%);
-      pointer-events: none;
     }
     .hero-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 2rem;
+      align-items: end;
       width: 100%;
-      max-width: 100%;
     }
-    .hero-inner { max-width: 640px; }
-    .hero-visual {
-      position: relative;
-      height: clamp(420px, 55vh, 680px);
-      margin-right: -5vw;
-      padding-right: 2vw;
-    }
+    .hero-inner { padding-bottom: 4rem; }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      border: 1px solid var(--hairline);
       border-radius: 100px;
       padding: 0.35rem 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
     }
-    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+    .hero-badge span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
     .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 4vw, 3.8rem);
-      font-weight: 800;
-      line-height: 1.1;
+      font-family: var(--display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(2.8rem, 7.2vw, 6.4rem);
+      line-height: 0.95;
       letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
-    .hero h1 .highlight {
-      color: var(--accent);
-      display: inline;
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
     }
-    .hero-desc {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
+    .hero h1 .line > span {
+      display: block;
+      transform: translateY(110%);
+      animation: lineUp 0.85s cubic-bezier(0.2, 0.65, 0.2, 1) forwards;
     }
-    .hero-desc strong { color: var(--text); font-weight: 500; }
+    .hero h1 .line:nth-child(1) > span { animation-delay: 0.15s; }
+    .hero h1 .line:nth-child(2) > span { animation-delay: 0.27s; }
+    .hero h1 .line:nth-child(3) > span { animation-delay: 0.39s; }
+    @keyframes lineUp { to { transform: translateY(0); } }
+    .hero h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--ink);
+    }
 
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .hero-desc {
+      font-size: 1.02rem;
+      color: var(--gray);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 2.25rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.55s forwards;
+    }
+    .hero-desc strong { color: var(--ink); font-weight: 500; }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; opacity: 0; animation: fadeUp 0.7s ease 0.7s forwards; }
     .btn-primary {
-      background: var(--accent);
-      color: #000;
+      background: var(--ink);
+      color: var(--paper);
       padding: 0.85rem 2rem;
       border-radius: 100px;
       font-weight: 600;
       font-size: 0.95rem;
       text-decoration: none;
-      transition: transform 0.2s, opacity 0.2s;
+      transition: transform 0.25s ease, opacity 0.2s;
+      display: inline-block;
     }
-    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-primary:hover { opacity: 0.85; }
     .btn-ghost {
-      border: 1px solid var(--border);
-      color: var(--text);
+      border: 1px solid var(--ink);
+      color: var(--ink);
       padding: 0.85rem 2rem;
       border-radius: 100px;
       font-weight: 500;
       font-size: 0.95rem;
       text-decoration: none;
-      transition: border-color 0.2s;
+      transition: background 0.25s, color 0.25s, transform 0.25s ease;
+      display: inline-block;
     }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-ghost:hover { background: var(--ink); color: var(--paper); }
 
     .hero-stats {
       display: flex;
-      gap: 2.5rem;
-      margin-top: 3.5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--border);
+      gap: 2.75rem;
+      margin-top: 3rem;
+      padding-top: 2.25rem;
+      border-top: 1px solid var(--hairline);
       flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.85s forwards;
     }
     .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent);
+      font-family: var(--display);
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--ink);
       letter-spacing: -0.03em;
+      line-height: 1.1;
     }
-    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
+    .stat-label { font-size: 0.82rem; color: var(--gray); margin-top: 0.15rem; }
 
-    /* ─── HERO IMAGE STACK — Horizontal ─── */
-    @media (max-width: 900px) {
-      .hero-layout { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
+    /* Hero deck (interactive card stack) */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding-bottom: 4rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.45s forwards;
     }
-    .hero-stack {
+    .deck {
       position: relative;
       width: 100%;
-      height: 100%;
+      max-width: 440px;
+      height: clamp(360px, 46vh, 540px);
+      perspective: 1100px;
       cursor: pointer;
     }
-    .stack-card {
+    .deck-tilt {
       position: absolute;
-      width: clamp(220px, 22vw, 360px);
-      border-radius: 14px;
-      overflow: hidden;
-      border: 2px solid var(--border);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-      transition: transform 0.5s cubic-bezier(0.34,1.46,0.64,1), box-shadow 0.4s ease, border-color 0.3s;
-      will-change: transform;
-      top: 50%;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out;
     }
-    .stack-card img {
+    .deck-card {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: clamp(240px, 21vw, 330px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.5, 1), opacity 0.35s ease, filter 0.4s ease, border-color 0.3s;
+      will-change: transform;
+    }
+    .deck-card img {
       width: 100%;
-      height: clamp(150px, 15vw, 260px);
+      height: clamp(170px, 15vw, 235px);
       object-fit: cover;
       object-position: top;
       display: block;
     }
-    .stack-card-label {
-      padding: 0.65rem 1rem;
-      background: var(--surface);
-      font-size: clamp(0.62rem, 0.75vw, 0.75rem);
+    .deck-card figcaption {
+      padding: 0.7rem 1rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      border-top: 1px solid var(--border);
+      color: var(--gray);
+      border-top: 1px solid var(--hairline);
+      background: var(--paper);
     }
-
-    /* Default: horizontally overlapping, centered vertically */
-    .stack-card:nth-child(1) {
-      left: 0;
-      transform: translateY(-50%) rotate(-5deg);
-      z-index: 1;
-      border-color: rgba(200,242,58,0.25);
-    }
-    .stack-card:nth-child(2) {
-      left: clamp(60px, 8vw, 140px);
-      transform: translateY(-56%) rotate(0deg);
-      z-index: 2;
-      border-color: rgba(200,242,58,0.4);
-    }
-    .stack-card:nth-child(3) {
-      left: clamp(120px, 16vw, 280px);
-      transform: translateY(-44%) rotate(4deg);
+    .deck-card.pos-0 {
+      transform: translate(-50%, -52%) rotate(0deg);
       z-index: 3;
-      border-color: var(--border);
+      border-color: rgba(244,242,238,0.35);
     }
-
-    /* Hover: fan out horizontally */
-    .hero-visual:hover .stack-card:nth-child(1) {
-      transform: translateY(-60%) translateX(clamp(-60px, -5vw, -30px)) rotate(-8deg);
-      box-shadow: 0 28px 60px rgba(0,0,0,0.6);
-      border-color: rgba(200,242,58,0.5);
-      z-index: 1;
-    }
-    .hero-visual:hover .stack-card:nth-child(2) {
-      transform: translateY(-67%) translateX(clamp(10px, 2vw, 24px)) rotate(0deg);
-      box-shadow: 0 36px 72px rgba(0,0,0,0.55);
-      border-color: var(--accent);
-      z-index: 3;
-    }
-    .hero-visual:hover .stack-card:nth-child(3) {
-      transform: translateY(-46%) translateX(clamp(70px, 9vw, 140px)) rotate(7deg);
-      box-shadow: 0 28px 60px rgba(0,0,0,0.6);
-      border-color: rgba(200,242,58,0.3);
+    .deck-card.pos-1 {
+      transform: translate(calc(-50% + 38px), calc(-50% - 8px)) rotate(5deg);
       z-index: 2;
+      filter: brightness(0.72);
     }
-
-    .hero-visual-hint {
-      position: absolute;
-      bottom: 1rem;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.72rem;
-      color: var(--muted);
+    .deck-card.pos-2 {
+      transform: translate(calc(-50% - 36px), calc(-50% + 6px)) rotate(-6deg);
+      z-index: 1;
+      filter: brightness(0.5);
+    }
+    .deck-card.leaving {
+      transform: translate(35%, -62%) rotate(14deg) !important;
+      opacity: 0;
+      z-index: 4;
+      transition: transform 0.38s ease-in, opacity 0.3s ease;
+    }
+    .deck-hint {
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-light);
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
-    .hero-visual-hint::before,
-    .hero-visual-hint::after { content: ''; display: block; width: 16px; height: 1px; background: var(--border); }
+    .deck-hint::before, .deck-hint::after { content: ''; width: 18px; height: 1px; background: var(--hairline); }
 
     @media (max-width: 900px) {
+      .hero { align-items: center; padding-top: 6.5rem; }
       .hero-layout { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
+      .hero-inner { padding-bottom: 0; }
+      .hero-visual { order: -1; margin-bottom: 0.5rem; padding-bottom: 0; }
+      .deck { max-width: 320px; height: 320px; }
+      .deck-card { width: 220px; }
+      .hero h1 { font-size: clamp(2.6rem, 11vw, 4rem); }
     }
 
-    /* ─── SECTIONS ─── */
-    section { padding: 6rem 5vw; }
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 1rem;
+    /* ─── MARQUEE ─── */
+    .marquee {
+      background: var(--ink);
+      color: var(--paper);
+      overflow: hidden;
+      padding: 1.1rem 0;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
     }
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 3rem;
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
     }
-    .section-title .dim { color: var(--muted); }
-
-    /* ─── WORK / TIMELINE ─── */
-    #work { background: var(--surface); }
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 0 3rem;
-      padding: 3rem 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .timeline-item.visible { opacity: 1; transform: translateY(0); }
-    .timeline-item:last-child { border-bottom: none; }
-
-    .tl-meta {}
-    .tl-year {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-    .tl-company {
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .tl-content {}
-    .tl-role {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.4rem;
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track span {
+      font-family: var(--display);
       font-weight: 700;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.02em;
-    }
-    .tl-summary {
-      color: var(--muted);
+      text-transform: uppercase;
       font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-      max-width: 640px;
-    }
-    .impact-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
-    }
-    .impact-item {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-      font-size: 0.9rem;
-      color: var(--text);
-    }
-    .impact-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(200,242,58,0.12);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      padding: 0 1.4rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 2px;
+      gap: 2.8rem;
     }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag {
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.25rem 0.85rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .marquee-track span::after { content: '✦'; font-size: 0.7rem; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
 
-    /* ─── VISUAL GALLERY — Interactive Masonry ─── */
-    #gallery { background: var(--bg); padding: 6rem 5vw; }
+    /* ─── SECTIONS ─── */
+    section { padding: 6.5rem 5vw; scroll-margin-top: 4.5rem; }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before { content: ''; width: 28px; height: 1px; background: var(--ink); display: inline-block; }
+    .section-title {
+      font-family: var(--display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      margin-bottom: 3rem;
+    }
+    .section-title .dim { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+
+    /* reveal on scroll */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    [data-reveal].visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── SHOWCASE (mosaic) ─── */
+    #gallery { background: var(--paper); padding-top: 6.5rem; }
     .mosaic {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto;
-      gap: 0.75rem;
+      gap: 0.85rem;
       margin-top: 2.5rem;
     }
     .mosaic-item {
       position: relative;
       overflow: hidden;
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      border: 1px solid var(--hairline);
       cursor: pointer;
-      background: var(--surface2);
+      background: var(--surface);
     }
-    /* layout spanning */
     .mosaic-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
     .mosaic-item:nth-child(2) { grid-column: span 5; }
     .mosaic-item:nth-child(3) { grid-column: span 5; }
     .mosaic-item:nth-child(4) { grid-column: span 4; }
     .mosaic-item:nth-child(5) { grid-column: span 4; }
     .mosaic-item:nth-child(6) { grid-column: span 4; }
-
     .mosaic-item img {
       width: 100%;
       height: 100%;
@@ -423,16 +407,15 @@
       object-fit: cover;
       object-position: top;
       display: block;
-      transition: transform 0.5s ease;
+      transition: transform 0.55s ease;
     }
     .mosaic-item:nth-child(4) img,
     .mosaic-item:nth-child(5) img,
     .mosaic-item:nth-child(6) img { object-position: center; }
-
     .mosaic-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 55%);
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 52%);
       opacity: 0;
       transition: opacity 0.35s ease;
       display: flex;
@@ -441,405 +424,552 @@
       padding: 1.25rem;
     }
     .mosaic-item:hover .mosaic-overlay { opacity: 1; }
-    .mosaic-item:hover img { transform: scale(1.05); }
+    .mosaic-item:hover img { transform: scale(1.04); }
     .mosaic-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.2rem;
+      font-family: var(--display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.15rem;
     }
-    .mosaic-sub { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+    .mosaic-sub { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
     .mosaic-expand {
       position: absolute;
       top: 1rem; right: 1rem;
       width: 32px; height: 32px;
-      background: rgba(200,242,58,0.15);
-      border: 1px solid var(--accent);
+      background: rgba(10,10,10,0.78);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem;
-      color: var(--accent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .mosaic-item:hover .mosaic-expand { opacity: 1; }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: var(--ink);
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .mosaic-item:hover .mosaic-expand { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) {
+      .mosaic { grid-template-columns: 1fr 1fr; }
+      .mosaic-item { grid-column: span 2 !important; grid-row: span 1 !important; }
+      .mosaic-item:nth-child(n+3) { grid-column: span 1 !important; }
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,8,8,0.95);
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 4rem 5vw;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s;
-      backdrop-filter: blur(8px);
+      transition: opacity 0.3s ease;
     }
-    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox.open { opacity: 1; pointer-events: auto; }
     .lightbox-img {
-      max-width: 88vw;
-      max-height: 84vh;
-      border-radius: 12px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-      object-fit: contain;
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: var(--radius);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
     }
     .lightbox-label {
-      position: absolute;
-      bottom: 2rem;
-      font-family: 'Syne', sans-serif;
+      font-family: var(--display);
+      font-weight: 700;
       font-size: 0.9rem;
-      color: var(--text);
-      background: rgba(0,0,0,0.6);
-      padding: 0.5rem 1.25rem;
-      border-radius: 100px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
     }
     .lightbox-close {
       position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      width: 40px; height: 40px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      top: 1.5rem; right: 5vw;
+      width: 44px; height: 44px;
       border-radius: 50%;
-      color: var(--text);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s;
-    }
-    .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ─── FIGMA EMBEDS ─── */
-    #figma { background: var(--surface); padding: 6rem 5vw; }
-    .figma-tabs {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .figma-tab {
-      padding: 0.5rem 1.25rem;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .figma-tab:hover { border-color: var(--accent); color: var(--text); }
-    .figma-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
-    .figma-panel { display: none; }
-    .figma-panel.active { display: block; }
-    .figma-frame-wrap {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface2);
-    }
-    .figma-frame-wrap iframe {
-      width: 100%;
-      height: 520px;
+      background: var(--ink);
+      color: var(--paper);
       border: none;
-      display: block;
+      font-size: 1rem;
+      cursor: pointer;
     }
-    .figma-label {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--border);
+
+    /* ─── EXPERIENCE ACCORDION ─── */
+    #work { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+    .xp-list { border-top: 1px solid var(--ink); }
+    .xp { border-bottom: 1px solid var(--hairline); background: transparent; transition: background 0.3s; }
+    .xp.open { background: var(--paper); }
+    .xp-head {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 150px 200px 1fr 44px;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem 1.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--body);
+      transition: padding 0.3s;
+    }
+    .xp-head:hover .xp-co { transform: translateX(4px); }
+    .xp-year { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
+    .xp-co {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      transition: transform 0.3s ease;
+    }
+    .xp-role { font-size: 0.9rem; color: var(--gray); }
+    .xp.open .xp-role { color: var(--ink); font-weight: 500; }
+    .xp-icon {
+      width: 34px; height: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--ink);
+      transition: transform 0.4s ease, background 0.3s, color 0.3s;
+      justify-self: end;
     }
-    .figma-label span { font-size: 0.85rem; color: var(--muted); }
-    .figma-label a {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    @media (max-width: 768px) {
-      .mosaic { grid-template-columns: 1fr 1fr; }
-      .mosaic-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-      .mosaic-item:nth-child(2),
-      .mosaic-item:nth-child(3) { grid-column: span 1; }
-      .mosaic-item:nth-child(4),
-      .mosaic-item:nth-child(5),
-      .mosaic-item:nth-child(6) { grid-column: span 1; }
-    }
-
-    /* ─── CASE STUDY ─── */
-    #case-study { background: var(--bg); padding: 6rem 5vw; }
-    .cs-hero {
+    .xp.open .xp-icon { transform: rotate(45deg); background: var(--ink); color: var(--paper); }
+    .xp-body {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .xp.open .xp-body { grid-template-rows: 1fr; }
+    .xp-inner { overflow: hidden; }
+    .xp-content {
+      padding: 0 1.25rem 2.25rem;
+      padding-left: calc(150px + 200px + 3rem + 1.25rem);
+      max-width: 1020px;
+    }
+    .xp-summary {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+      line-height: 1.7;
+    }
+    .impact-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.4rem; }
+    .impact-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--ink); }
+    .impact-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
       align-items: center;
-      margin-bottom: 5rem;
-      padding-bottom: 5rem;
-      border-bottom: 1px solid var(--border);
+      justify-content: center;
+      font-size: 0.55rem;
+      flex-shrink: 0;
+      margin-top: 3px;
     }
-    .cs-tag {
-      display: inline-block;
-      background: rgba(200,242,58,0.1);
-      border: 1px solid rgba(200,242,58,0.3);
-      color: var(--accent);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.9rem;
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      border: 1px solid var(--hairline);
+      background: var(--paper);
       border-radius: 100px;
-      margin-bottom: 1.25rem;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.74rem;
+      color: var(--gray);
     }
-    .cs-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-    .cs-subtitle { font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
-    .cs-meta-row { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .cs-meta-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
-    .cs-meta-value { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-    .cs-img-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
-    .cs-img-wrap img { width: 100%; display: block; object-fit: cover; }
-    .cs-blocks { display: flex; flex-direction: column; gap: 4rem; }
-    .cs-block-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.75rem; }
-    .cs-block h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
-    .cs-block p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
-    .cs-block p + p { margin-top: 0.75rem; }
-    .cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
-    .cs-metric { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
-    .cs-metric-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
-    .cs-metric-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
-    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-    .cs-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-    .cs-list-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--text); }
-    .cs-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-    @media(max-width:768px) {
-      .cs-hero { grid-template-columns: 1fr; }
-      .cs-two-col { grid-template-columns: 1fr; }
-      .cs-metrics { grid-template-columns: 1fr 1fr; }
+    .xp.open .tag { background: var(--surface); }
+    @media (max-width: 860px) {
+      .xp-head { grid-template-columns: 1fr 44px; gap: 0.35rem 1rem; padding: 1.25rem 0.75rem; }
+      .xp-year { order: 1; grid-column: 1; }
+      .xp-co { order: 2; grid-column: 1; font-size: 1.05rem; }
+      .xp-role { order: 3; grid-column: 1; }
+      .xp-icon { order: 2; grid-row: 1 / span 3; grid-column: 2; }
+      .xp-content { padding-left: 0.75rem; }
     }
 
     /* ─── PROJECTS CAROUSEL ─── */
-    #projects { background: var(--surface); }
-    .projects-carousel-wrap { position: relative; padding: 0 2rem; }
+    #projects { background: var(--paper); }
+    .projects-carousel-wrap {
+      position: relative;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .projects-carousel-wrap.static { overflow-x: auto; scrollbar-width: none; -webkit-mask-image: none; mask-image: none; }
+    .projects-carousel-wrap.static::-webkit-scrollbar { display: none; }
     .projects-carousel {
       display: flex;
       gap: 1.25rem;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      padding-bottom: 1rem;
+      width: max-content;
+      padding: 0.5rem 0 1rem;
+      will-change: transform;
     }
-    .projects-carousel::-webkit-scrollbar { display: none; }
+    /* hover spotlight: pause is handled in JS, dim siblings + lift the hovered card */
+    .projects-carousel:hover .project-card { opacity: 0.35; }
+    .projects-carousel .project-card:hover {
+      opacity: 1;
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--ink);
+    }
     .project-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
       overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+      transition: border-color 0.3s, transform 0.35s ease, box-shadow 0.3s ease, opacity 0.35s ease;
       flex: 0 0 310px;
     }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover { border-color: rgba(200,242,58,0.3); transform: translateY(-4px); }
     .project-img {
       width: 100%;
       height: 190px;
       object-fit: cover;
       object-position: top;
-      background: var(--surface2);
+      background: var(--surface);
       display: block;
+      border-bottom: 1px solid var(--hairline);
     }
     .placeholder-img {
       width: 100%;
       height: 190px;
-      background: linear-gradient(135deg, var(--surface2), #2a2a2a);
+      background: var(--surface);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2rem;
+      border-bottom: 1px solid var(--hairline);
     }
     .project-body { padding: 1.4rem; }
-    .project-category { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
-    .project-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-    .project-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
-    .project-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--accent); text-decoration: none; }
-    .project-link:hover { opacity: 0.75; }
+    .project-category { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 0.5rem; }
+    .project-title { font-family: var(--display); font-size: 1.08rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .project-desc { font-size: 0.83rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+      transition: gap 0.25s ease;
+    }
+    .project-link:hover { gap: 0.7rem; }
     .carousel-btn {
       position: absolute;
       top: 50%; transform: translateY(-60%);
-      width: 42px; height: 42px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      width: 44px; height: 44px;
+      background: var(--paper);
+      border: 1px solid var(--ink);
       border-radius: 50%;
-      color: var(--text);
+      color: var(--ink);
       font-size: 1rem;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       z-index: 10;
-      transition: border-color 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
-    .carousel-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .carousel-btn.prev { left: -8px; }
-    .carousel-btn.next { right: -8px; }
-    .carousel-btn:disabled { opacity: 0.2; cursor: default; }
+    .carousel-btn:hover { background: var(--ink); color: var(--paper); }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-btn:disabled { opacity: 0.15; cursor: default; }
+    .carousel-btn:disabled:hover { background: var(--paper); color: var(--ink); }
+
+    /* ─── FIGMA EMBEDS ─── */
+    #figma { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+    .figma-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .figma-tab {
+      border: 1px solid var(--hairline);
+      background: var(--paper);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      font-family: var(--body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gray);
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .figma-tab:hover { border-color: var(--ink); color: var(--ink); }
+    .figma-tab.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .figma-panel { display: none; }
+    .figma-panel.active { display: block; }
+    .figma-frame-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      background: var(--paper);
+    }
+    .figma-frame-wrap iframe {
+      width: 100%;
+      height: 60vh;
+      min-height: 420px;
+      border: none;
+      display: block;
+    }
+    .figma-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 1.25rem;
+      border-top: 1px solid var(--hairline);
+      font-size: 0.85rem;
+    }
+    .figma-label span { font-weight: 600; color: var(--ink); }
+    .figma-label a { color: var(--gray); text-decoration: none; font-size: 0.8rem; }
+    .figma-label a:hover { color: var(--ink); }
+
+    /* ─── CASE STUDY ─── */
+    #case-study { background: var(--paper); }
+    .cs-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      margin-bottom: 5rem;
+    }
+    .cs-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 600;
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+    .cs-title {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      margin-bottom: 1rem;
+    }
+    .cs-subtitle { font-size: 1rem; color: var(--gray); line-height: 1.7; margin-bottom: 2rem; }
+    .cs-meta-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .cs-meta-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); margin-bottom: 0.25rem; }
+    .cs-meta-value { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .cs-img-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--hairline); }
+    .cs-img-wrap img { width: 100%; display: block; object-fit: cover; }
+    .cs-blocks { display: flex; flex-direction: column; gap: 4.5rem; max-width: 920px; }
+    .cs-block-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .cs-block-label::before { content: ''; width: 22px; height: 1px; background: var(--ink); }
+    .cs-block h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+    .cs-block p { color: var(--gray); line-height: 1.8; font-size: 0.95rem; }
+    .cs-block p + p { margin-top: 0.75rem; }
+    .cs-block p strong { color: var(--ink); }
+    .cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .cs-metric { border: 1px solid var(--ink); border-radius: var(--radius); padding: 1.4rem 1.25rem; text-align: center; }
+    .cs-metric-num { font-family: var(--display); font-size: 2rem; font-weight: 900; color: var(--ink); letter-spacing: -0.03em; }
+    .cs-metric-label { font-size: 0.78rem; color: var(--gray); margin-top: 0.35rem; line-height: 1.5; }
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .cs-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .cs-list-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--ink); }
+    .cs-dot { width: 6px; height: 6px; background: var(--ink); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    @media (max-width: 768px) {
+      .cs-hero { grid-template-columns: 1fr; gap: 2rem; }
+      .cs-two-col { grid-template-columns: 1fr; gap: 1.5rem; }
+      .cs-metrics { grid-template-columns: 1fr; }
+    }
 
     /* ─── SKILLS ─── */
-    #skills { background: var(--surface); }
+    #skills { background: var(--surface); border-top: 1px solid var(--hairline); }
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.25rem;
+      gap: 1.1rem;
     }
     .skill-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
       padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s ease;
     }
+    .skill-card:hover { border-color: var(--ink); transform: translateY(-3px); }
     .skill-card h4 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.03em;
+      font-family: var(--display);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.85rem;
+      color: var(--ink);
     }
     .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .skill-pill {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--hairline);
       border-radius: 6px;
       padding: 0.3rem 0.7rem;
-      font-size: 0.8rem;
-      color: var(--text);
+      font-size: 0.79rem;
+      color: var(--ink);
     }
 
     /* ─── ABOUT ─── */
-    #about { background: var(--bg); }
+    #about { background: var(--paper); }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
-    .about-text p strong { color: var(--text); }
+    .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .about-text p strong { color: var(--ink); }
     .about-certs { margin-top: 2rem; }
-    .about-certs h4 { font-family: 'Syne', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .about-certs h4 { font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 1rem; font-weight: 800; }
     .cert-item {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--hairline);
       font-size: 0.875rem;
     }
-    .cert-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
-
+    .cert-dot { width: 8px; height: 8px; background: var(--ink); border-radius: 50%; flex-shrink: 0; }
     .about-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
       padding: 2.5rem;
     }
     .about-card-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      font-family: var(--display);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--gray);
       margin-bottom: 1.5rem;
+      font-weight: 800;
     }
     .about-stat-row {
       display: flex;
       justify-content: space-between;
+      gap: 1rem;
       padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      border-bottom: 1px solid var(--hairline);
+      font-size: 0.88rem;
     }
     .about-stat-row:last-child { border-bottom: none; }
-    .about-stat-row span:first-child { color: var(--muted); }
-    .about-stat-row span:last-child { color: var(--text); font-weight: 500; }
+    .about-stat-row span:first-child { color: var(--gray); flex-shrink: 0; }
+    .about-stat-row span:last-child { color: var(--ink); font-weight: 500; text-align: right; }
+    .about-stat-row a { color: var(--ink); text-decoration: underline; }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
 
-    /* ─── CONTACT / FOOTER ─── */
+    /* ─── CONTACT (inverted) ─── */
     #contact {
-      background: var(--surface);
+      background: var(--ink);
+      color: var(--paper);
       text-align: center;
-      padding: 7rem 5vw;
+      padding: 8rem 5vw 7rem;
     }
-    #contact .section-title { margin-bottom: 1rem; }
-    #contact p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+    #contact .section-label { color: rgba(0,0,0,0.55); justify-content: center; }
+    #contact .section-label::before { background: var(--paper); }
+    .contact-title {
+      font-family: var(--display);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      letter-spacing: -0.02em;
+      line-height: 0.98;
+      margin-bottom: 1.5rem;
     }
+    .contact-title .outline { color: transparent; -webkit-text-stroke: 1.5px var(--paper); }
+    .contact-intro { color: rgba(0,0,0,0.6); max-width: 500px; margin: 0 auto 2.75rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .contact-link {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0,0,0,0.35);
       border-radius: 100px;
-      padding: 0.7rem 1.5rem;
+      padding: 0.75rem 1.6rem;
       font-size: 0.875rem;
-      color: var(--text);
+      color: var(--paper);
       text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
+      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s ease;
     }
-    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-link:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
     footer {
+      background: var(--ink);
+      color: rgba(0,0,0,0.55);
       padding: 2rem 5vw;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(0,0,0,0.12);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.8rem;
-      color: var(--muted);
+      gap: 1rem;
+      flex-wrap: wrap;
     }
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--accent); }
+    footer .tagline {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--paper);
+    }
+    footer a { color: rgba(0,0,0,0.55); text-decoration: none; }
+    footer a:hover { color: var(--paper); }
 
-    /* ─── RESPONSIVE ─── */
+    /* ─── ACCESSIBILITY / MISC ─── */
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    #contact a:focus-visible, footer a:focus-visible { outline-color: var(--paper); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+      .hero h1 .line > span { transform: none; }
+      .hero-badge, .hero-desc, .hero-actions, .hero-stats, .hero-visual { opacity: 1; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
     @media (max-width: 768px) {
-      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .tl-meta { margin-bottom: 0.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .nav-links { display: none; }
+      section { padding: 4.5rem 5vw; }
     }
   </style>
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- ── NAV ── -->
 <nav>
   <a href="#" class="nav-logo">TonyLiljon.</a>
   <ul class="nav-links">
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#figma">Figma</a></li>
-    <li><a href="#case-study">Case Study</a></li>
+    <li><a href="#gallery">Showcase</a></li>
     <li><a href="#work">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#figma">Figma</a></li>
+    <li><a href="#case-study">Case Study</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <a href="mailto:tonyliljon@gmail.com" class="nav-cta">Hire me →</a>
+  <a href="mailto:tonyliljon@gmail.com" class="nav-cta" data-magnetic>Hire me →</a>
 </nav>
 
 <!-- ── HERO ── -->
@@ -853,7 +983,9 @@
         Open to work · Remote / Relocation
       </div>
       <h1>
-        Senior Product Designer <span class="highlight">&amp; Ops Manager that ships and scales.</span>
+        <span class="line"><span>Product</span></span>
+        <span class="line"><span>Designer &amp;</span></span>
+        <span class="line"><span class="outline">Ops Manager.</span></span>
       </h1>
       <p class="hero-desc">
         I design <strong>digital products that work</strong> and build the operations behind them.
@@ -861,8 +993,8 @@
         <strong>user experience, business goals, and execution.</strong>
       </p>
       <div class="hero-actions">
-        <a href="#work" class="btn-primary">See my work</a>
-        <a href="mailto:tonyliljon@gmail.com" class="btn-ghost">Get in touch</a>
+        <a href="#gallery" class="btn-primary" data-magnetic>See my work</a>
+        <a href="mailto:tonyliljon@gmail.com" class="btn-ghost" data-magnetic>Get in touch</a>
       </div>
       <div class="hero-stats">
         <div>
@@ -884,259 +1016,45 @@
       </div>
     </div>
 
-    <!-- RIGHT: Image Stack -->
+    <!-- RIGHT: Interactive deck -->
     <div class="hero-visual">
-      <div class="hero-stack">
-        <div class="stack-card">
-          <img src="hero_img1.webp" alt="Sukuri Flow Design" />
-          <div class="stack-card-label">Sukuri, User Flow</div>
-        </div>
-        <div class="stack-card">
-          <img src="hero_img2.webp" alt="Afrofans Prototype" />
-          <div class="stack-card-label">Afrofans, Prototype</div>
-        </div>
-        <div class="stack-card">
-          <img src="hero_img3.webp" alt="WeivSync Flow" />
-          <div class="stack-card-label">WeivSync, App Flow</div>
+      <div class="deck" id="heroDeck" role="button" aria-label="Shuffle work previews" tabindex="0">
+        <div class="deck-tilt" id="deckTilt">
+          <figure class="deck-card pos-0">
+            <img src="hero_img1.webp" alt="Sukuri Flow Design" />
+            <figcaption>Sukuri, User Flow</figcaption>
+          </figure>
+          <figure class="deck-card pos-1">
+            <img src="hero_img2.webp" alt="Afrofans Prototype" />
+            <figcaption>Afrofans, Prototype</figcaption>
+          </figure>
+          <figure class="deck-card pos-2">
+            <img src="hero_img3.webp" alt="WeivSync Flow" />
+            <figcaption>WeivSync, App Flow</figcaption>
+          </figure>
         </div>
       </div>
-      <div class="hero-visual-hint">hover to explore</div>
+      <div class="deck-hint">Click to shuffle</div>
     </div>
 
   </div>
 </section>
 
-<!-- ── WORK EXPERIENCE ── -->
-<section id="work">
-  <p class="section-label">Experience</p>
-  <h2 class="section-title">Where I've <span class="dim">made an impact.</span></h2>
-
-  <div class="timeline">
-
-    <!-- Ronin Radio -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">Apr 2025, Present</div>
-        <div class="tl-company">RONIN RADIO</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">Designer &amp; Operations Lead</div>
-        <p class="tl-summary">
-          Wearing two hats: leading brand design and running daily social and sponsorship operations.
-          Built the visual identity from scratch and created video content driving consistent audience growth.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Grew engagement and activity by defining the full brand identity from scratch, creating a distinct visual language that elevated Ronin Radio's market presence.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Managed day-to-day social operations, driving consistent brand output across all channels.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Assisted with research and outreach during sponsorship campaigns.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">Brand Identity</span>
-          <span class="tag">Operations</span>
-          <span class="tag">After Effects</span>
-          <span class="tag">Sponsorships</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- WeivSync -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">Sep 2024, Nov 2025</div>
-        <div class="tl-company">WEIVSYNC</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">Senior Product Designer (Contract)</div>
-        <p class="tl-summary">
-          Contract role focused on delivering polished, end-to-end product design for a travel application,
-          working closely with engineering and product stakeholders in a fast-paced environment.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Designed end-to-end user flows and high-fidelity interfaces for a travel app, from discovery to booking.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Collaborated directly with engineering and product stakeholders to iterate rapidly, reducing review cycles through clear documentation and interactive prototypes.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">UI Design</span>
-          <span class="tag">User Flows</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Prototyping</span>
-          <span class="tag">Travel</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bloom Studio -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">Aug 2024, Nov 2025</div>
-        <div class="tl-company">BLOOM STUDIO</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">UI/UX Designer, Web3 Game Studio</div>
-        <p class="tl-summary">
-          Owned end-to-end product design for a Web3 game studio, delivering UI, marketing assets,
-          and pitch materials while advising leadership on strategy and market positioning.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Increased pitch efficiency by <strong>30-40%</strong> by redesigning and consolidating pitch deck content, enabling faster investor conversations with less material.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Designed UI screens, in-game guides, and landing pages supporting multiple product launches and investor pitches.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Advised leadership on market positioning and product ideation, influencing strategic decisions that shaped the studio's go-to-market approach.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">UI Design</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Web3</span>
-          <span class="tag">Strategy</span>
-          <span class="tag">Pitch Decks</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sukuri Protocol -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">Sep 2021, Nov 2022</div>
-        <div class="tl-company">SUKURI PROTOCOL</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">Product Designer</div>
-        <p class="tl-summary">
-          Sole designer on two complex Web3 SaaS products: a crypto subscription platform
-          and an all-in-one business tooling app. Owned the full design process from research to final handoff.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Cut design review cycles by <strong>~30%</strong> through interactive prototyping and clear documentation, enabling faster feedback loops with engineering and stakeholders.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Designed an end-to-end web application for on-chain subscriptions and business dashboards, covering wireframes through high-fidelity prototypes and a scalable design system.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Built UI for a business suite covering invoicing, payroll, product listings, and a customer database, reducing workflow friction for crypto-native businesses.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">UX Research</span>
-          <span class="tag">Design Systems</span>
-          <span class="tag">Prototyping</span>
-          <span class="tag">Web3</span>
-          <span class="tag">SaaS</span>
-          <span class="tag">Figma</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nestcoin -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">2020, 2021</div>
-        <div class="tl-company">NESTCOIN</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">Business Operations Manager</div>
-        <p class="tl-summary">
-          Hybrid role straddling product and operations at one of Africa's most prominent Web3 startups.
-          Drove growth strategy, UX quality, and developer acquisition on a gaming platform.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Drove growth in a Web3 gaming platform by leading product strategy, UX research, and competitive analysis, contributing to measurable gains in weekly active users (WAU).</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Conducted UX research and user testing to optimize in-app experiences and improve engagement.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Acquired game developers and integrated titles into the platform, expanding the product catalog.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">Business Ops</span>
-          <span class="tag">Growth Strategy</span>
-          <span class="tag">UX Research</span>
-          <span class="tag">Gaming</span>
-          <span class="tag">Web3</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- TLjGraphics -->
-    <div class="timeline-item">
-      <div class="tl-meta">
-        <div class="tl-year">2015, Apr 2020</div>
-        <div class="tl-company">TLJGRAPHICS STUDIO</div>
-      </div>
-      <div class="tl-content">
-        <div class="tl-role">Freelance Product Designer &amp; Business Consultant</div>
-        <p class="tl-summary">
-          Founded and ran my own design studio for 5 years, delivering brand design, product strategy,
-          and operational consulting for over 100 businesses ranging from startups to established B2B and SaaS companies.
-        </p>
-        <div class="impact-list">
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Delivered <strong>100+ brand identities</strong> across B2B and SaaS, building repeatable brand systems that reduced client onboarding time and ensured cross-team consistency.</span>
-          </div>
-          <div class="impact-item">
-            <div class="impact-icon">▲</div>
-            <span>Partnered with early-stage startups to translate product ideas into launch-ready designs, directly contributing to go-to-market timelines.</span>
-          </div>
-        </div>
-        <div class="tags">
-          <span class="tag">Brand Design</span>
-          <span class="tag">B2B, SaaS</span>
-          <span class="tag">Product Strategy</span>
-          <span class="tag">100+ Clients</span>
-        </div>
-      </div>
-    </div>
-
+<!-- ── MARQUEE ── -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Product Design</span><span>Business Ops</span><span>UI/UX</span><span>Web3</span><span>Gaming</span><span>SaaS</span><span>B2B</span><span>Brand Identity</span><span>Design Systems</span><span>AI Workflows</span>
+    <span>Product Design</span><span>Business Ops</span><span>UI/UX</span><span>Web3</span><span>Gaming</span><span>SaaS</span><span>B2B</span><span>Brand Identity</span><span>Design Systems</span><span>AI Workflows</span>
   </div>
-</section>
-
-<!-- ── LIGHTBOX ── -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img class="lightbox-img" id="lightboxImg" src="" alt="" />
-  <div class="lightbox-label" id="lightboxLabel"></div>
 </div>
 
-<!-- ── VISUAL GALLERY — Interactive Mosaic ── -->
+<!-- ── SHOWCASE ── -->
 <section id="gallery">
-  <p class="section-label">Visual Work</p>
-  <h2 class="section-title">A glimpse of <span class="dim">what I've shipped.</span></h2>
+  <p class="section-label">The Showcase</p>
+  <h2 class="section-title" data-reveal>A glimpse of <span class="dim">what I've shipped.</span></h2>
 
   <div class="mosaic">
-    <div class="mosaic-item" onclick="openLightbox('sukuri_thumb.webp','Sukuri Protocol, Dashboard UI')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('sukuri_thumb.webp','Sukuri Protocol, Dashboard UI')">
       <img src="sukuri_thumb.webp" alt="Sukuri Protocol Dashboard" loading="lazy" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">Sukuri Protocol</div>
@@ -1144,7 +1062,7 @@
       </div>
       <div class="mosaic-expand">⤢</div>
     </div>
-    <div class="mosaic-item" onclick="openLightbox('weivsync_thumb.webp','WeivSync, Travel App Onboarding')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('weivsync_thumb.webp','WeivSync, Travel App Onboarding')">
       <img src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">WeivSync</div>
@@ -1152,7 +1070,7 @@
       </div>
       <div class="mosaic-expand">⤢</div>
     </div>
-    <div class="mosaic-item" onclick="openLightbox('purrcoin_thumb.webp','Purrcoin, Web3 Landing Page')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('purrcoin_thumb.webp','Purrcoin, Web3 Landing Page')">
       <img src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">Purrcoin ($PURR)</div>
@@ -1160,7 +1078,7 @@
       </div>
       <div class="mosaic-expand">⤢</div>
     </div>
-    <div class="mosaic-item" onclick="openLightbox('xnaira_thumb.webp','XNaira, Crypto Exchange')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('xnaira_thumb.webp','XNaira, Crypto Exchange')">
       <img src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">XNaira</div>
@@ -1168,7 +1086,7 @@
       </div>
       <div class="mosaic-expand">⤢</div>
     </div>
-    <div class="mosaic-item" onclick="openLightbox('ronke_thumb.webp','Ronke Rice Farmers, Web3 Gaming UI')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('ronke_thumb.webp','Ronke Rice Farmers, Web3 Gaming UI')">
       <img src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" style="object-position:top;" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">Ronke Rice Farmers</div>
@@ -1176,7 +1094,7 @@
       </div>
       <div class="mosaic-expand">⤢</div>
     </div>
-    <div class="mosaic-item" onclick="openLightbox('logofolio_thumb.webp','Logofolio, 30+ Brand Identities')">
+    <div class="mosaic-item" data-reveal onclick="openLightbox('logofolio_thumb.webp','Logofolio, 30+ Brand Identities')">
       <img src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
       <div class="mosaic-overlay">
         <div class="mosaic-label">Logofolio</div>
@@ -1187,12 +1105,359 @@
   </div>
 </section>
 
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+  <div class="lightbox-label" id="lightboxLabel"></div>
+</div>
+
+<!-- ── EXPERIENCE (accordion) ── -->
+<section id="work">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title" data-reveal>Where I've <span class="dim">made an impact.</span></h2>
+
+  <div class="xp-list" data-reveal>
+
+    <!-- Ronin Radio -->
+    <div class="xp">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
+        <span class="xp-year">Apr 2025, Present</span>
+        <span class="xp-co">Ronin Radio</span>
+        <span class="xp-role">Designer &amp; Operations Lead</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Wearing two hats: leading brand design and running daily social and sponsorship operations.
+              Built the visual identity from scratch and created video content driving consistent audience growth.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Grew engagement and activity by defining the full brand identity from scratch, creating a distinct visual language that elevated Ronin Radio's market presence.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Managed day-to-day social operations, driving consistent brand output across all channels.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Assisted with research and outreach during sponsorship campaigns.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Brand Identity</span>
+              <span class="tag">Operations</span>
+              <span class="tag">After Effects</span>
+              <span class="tag">Sponsorships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WeivSync -->
+    <div class="xp">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
+        <span class="xp-year">Sep 2024, Nov 2025</span>
+        <span class="xp-co">WeivSync</span>
+        <span class="xp-role">Senior Product Designer (Contract)</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Contract role focused on delivering polished, end-to-end product design for a travel application,
+              working closely with engineering and product stakeholders in a fast-paced environment.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed end-to-end user flows and high-fidelity interfaces for a travel app, from discovery to booking.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Collaborated directly with engineering and product stakeholders to iterate rapidly, reducing review cycles through clear documentation and interactive prototypes.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">UI Design</span>
+              <span class="tag">User Flows</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Prototyping</span>
+              <span class="tag">Travel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloom Studio -->
+    <div class="xp">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
+        <span class="xp-year">Aug 2024, Nov 2025</span>
+        <span class="xp-co">Bloom Studio</span>
+        <span class="xp-role">UI/UX Designer, Web3 Game Studio</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Owned end-to-end product design for a Web3 game studio, delivering UI, marketing assets,
+              and pitch materials while advising leadership on strategy and market positioning.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Increased pitch efficiency by <strong>30-40%</strong> by redesigning and consolidating pitch deck content, enabling faster investor conversations with less material.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed UI screens, in-game guides, and landing pages supporting multiple product launches and investor pitches.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Advised leadership on market positioning and product ideation, influencing strategic decisions that shaped the studio's go-to-market approach.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">UI Design</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Web3</span>
+              <span class="tag">Strategy</span>
+              <span class="tag">Pitch Decks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sukuri Protocol (open by default) -->
+    <div class="xp open">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="true">
+        <span class="xp-year">Sep 2021, Nov 2022</span>
+        <span class="xp-co">Sukuri Protocol</span>
+        <span class="xp-role">Product Designer</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Sole designer on two complex Web3 SaaS products: a crypto subscription platform
+              and an all-in-one business tooling app. Owned the full design process from research to final handoff.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Cut design review cycles by <strong>~30%</strong> through interactive prototyping and clear documentation, enabling faster feedback loops with engineering and stakeholders.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed an end-to-end web application for on-chain subscriptions and business dashboards, covering wireframes through high-fidelity prototypes and a scalable design system.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Built UI for a business suite covering invoicing, payroll, product listings, and a customer database, reducing workflow friction for crypto-native businesses.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">UX Research</span>
+              <span class="tag">Design Systems</span>
+              <span class="tag">Prototyping</span>
+              <span class="tag">Web3</span>
+              <span class="tag">SaaS</span>
+              <span class="tag">Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nestcoin -->
+    <div class="xp">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
+        <span class="xp-year">2020, 2021</span>
+        <span class="xp-co">Nestcoin</span>
+        <span class="xp-role">Business Operations Manager</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Hybrid role straddling product and operations at one of Africa's most prominent Web3 startups.
+              Drove growth strategy, UX quality, and developer acquisition on a gaming platform.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Drove growth in a Web3 gaming platform by leading product strategy, UX research, and competitive analysis, contributing to measurable gains in weekly active users (WAU).</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Conducted UX research and user testing to optimize in-app experiences and improve engagement.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Acquired game developers and integrated titles into the platform, expanding the product catalog.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Business Ops</span>
+              <span class="tag">Growth Strategy</span>
+              <span class="tag">UX Research</span>
+              <span class="tag">Gaming</span>
+              <span class="tag">Web3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TLjGraphics -->
+    <div class="xp">
+      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
+        <span class="xp-year">2015, Apr 2020</span>
+        <span class="xp-co">TLjGraphics Studio</span>
+        <span class="xp-role">Freelance Product Designer &amp; Business Consultant</span>
+        <span class="xp-icon">+</span>
+      </button>
+      <div class="xp-body">
+        <div class="xp-inner">
+          <div class="xp-content">
+            <p class="xp-summary">
+              Founded and ran my own design studio for 5 years, delivering brand design, product strategy,
+              and operational consulting for over 100 businesses ranging from startups to established B2B and SaaS companies.
+            </p>
+            <div class="impact-list">
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Delivered <strong>100+ brand identities</strong> across B2B and SaaS, building repeatable brand systems that reduced client onboarding time and ensured cross-team consistency.</span></div>
+              <div class="impact-item"><div class="impact-icon">▲</div><span>Partnered with early-stage startups to translate product ideas into launch-ready designs, directly contributing to go-to-market timelines.</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Brand Design</span>
+              <span class="tag">B2B, SaaS</span>
+              <span class="tag">Product Strategy</span>
+              <span class="tag">100+ Clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <p class="section-label">Selected Work</p>
+  <h2 class="section-title" data-reveal>Projects that <span class="dim">speak for themselves.</span></h2>
+
+  <div class="projects-carousel-wrap" data-reveal>
+    <button class="carousel-btn prev" id="prevBtn" onclick="scrollCarousel(-1)" aria-label="Previous projects">←</button>
+    <button class="carousel-btn next" id="nextBtn" onclick="scrollCarousel(1)" aria-label="Next projects">→</button>
+
+    <div class="projects-carousel" id="projectsCarousel">
+
+      <!-- 1. Sukuri Protocol — ALWAYS FIRST -->
+      <div class="project-card">
+        <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, SaaS, UI/UX</p>
+          <h3 class="project-title">Sukuri Protocol</h3>
+          <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a full business dashboard.</p>
+          <a href="#case-study" class="project-link">Read case study →</a>
+        </div>
+      </div>
+
+      <!-- 2. WeivSync -->
+      <div class="project-card">
+        <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Mobile, Travel, UI/UX</p>
+          <h3 class="project-title">WeivSync — Travel App</h3>
+          <p class="project-desc">End-to-end onboarding flows and high-fidelity UI for a travel recommendation app personalised to each user.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 3. Transcend Case Study — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Case Study" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🏥</div>
+        <div class="project-body">
+          <p class="project-category">HealthTech, Mobile, Case Study</p>
+          <h3 class="project-title">Transcend Health App</h3>
+          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — research, flows, and high-fidelity UI.</p>
+          <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 4. Afrofans — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Afrofans" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🎵</div>
+        <div class="project-body">
+          <p class="project-category">Brand, Web &amp; Mobile, UI/UX</p>
+          <h3 class="project-title">Afrofans — Creator Platform</h3>
+          <p class="project-desc">Branding and UI/UX for a subscription platform helping African creators monetise their content and grow their fanbase.</p>
+          <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 5. Skateverse — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Skateverse" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🛹</div>
+        <div class="project-body">
+          <p class="project-category">Web3, Gaming, UI/UX</p>
+          <h3 class="project-title">Skateverse UI/UX</h3>
+          <p class="project-desc">Full UI/UX design for a Web3 skateboarding game — crafting an immersive interface that blends gaming culture with on-chain mechanics.</p>
+          <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 6. Suntok — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Suntok" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🌐</div>
+        <div class="project-body">
+          <p class="project-category">Web Design &amp; Development</p>
+          <h3 class="project-title">Suntok — Web Design</h3>
+          <p class="project-desc">Full website design and development for Suntok — a clean, conversion-focused site with a modern visual language and responsive layout.</p>
+          <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 7. Steelseries — Behance verified -->
+      <div class="project-card">
+        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/09b7f2173225225.Y3JvcCwyMTYwLDE2ODksMCw1MDI.png" alt="Steelseries" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
+        <div class="placeholder-img" style="display:none">🎮</div>
+        <div class="project-body">
+          <p class="project-category">Gaming, Product Page, UI</p>
+          <h3 class="project-title">Steelseries Product Page</h3>
+          <p class="project-desc">Concept product page redesign for Steelseries — high-impact layout focused on showcasing gaming peripherals with clarity and energy.</p>
+          <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" class="project-link">View on Behance →</a>
+        </div>
+      </div>
+
+      <!-- 8. Ronke Rice Farmers -->
+      <div class="project-card">
+        <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Gaming, UI/UX</p>
+          <h3 class="project-title">Ronke Rice Farmers</h3>
+          <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, and an isometric canvas view.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 9. Purrcoin -->
+      <div class="project-card">
+        <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Landing Page, UI</p>
+          <h3 class="project-title">Purrcoin ($PURR)</h3>
+          <p class="project-desc">High-energy Web3 landing page for a meme coin, designed for desktop and mobile with custom illustrations.</p>
+          <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 10. XNaira -->
+      <div class="project-card">
+        <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
+        <div class="project-body">
+          <p class="project-category">Web3, Landing Page, UI</p>
+          <h3 class="project-title">XNaira — Crypto Exchange</h3>
+          <p class="project-desc">Landing page for a crypto and gift card trading platform — focused on trust, clarity, and conversion.</p>
+          <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+
+      <!-- 11. Logofolio -->
+      <div class="project-card">
+        <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
+        <div class="project-body">
+          <p class="project-category">Brand Identity, Logo Design</p>
+          <h3 class="project-title">Logofolio — 30+ Brands</h3>
+          <p class="project-desc">Brand identities across gaming, fintech, food, real estate, and media over 10 years of freelance work.</p>
+          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── FIGMA EMBEDS ── -->
 <section id="figma">
   <p class="section-label">Live Design Files</p>
-  <h2 class="section-title">Explore my work <span class="dim">in Figma.</span></h2>
+  <h2 class="section-title" data-reveal>Explore my work <span class="dim">in Figma.</span></h2>
 
-  <div class="figma-tabs">
+  <div class="figma-tabs" data-reveal>
     <button class="figma-tab active" onclick="switchFigma(0)">WeivSync</button>
     <button class="figma-tab" onclick="switchFigma(1)">GrootSwap</button>
     <button class="figma-tab" onclick="switchFigma(2)">Skateverse</button>
@@ -1249,10 +1514,9 @@
 <!-- ── CASE STUDY: SUKURI PROTOCOL ── -->
 <section id="case-study">
   <p class="section-label">Case Study</p>
-  <h2 class="section-title">Deep dive: <span class="dim">Sukuri Protocol.</span></h2>
+  <h2 class="section-title" data-reveal>Deep dive: <span class="dim">Sukuri Protocol.</span></h2>
 
-  <!-- Overview -->
-  <div class="cs-hero">
+  <div class="cs-hero" data-reveal>
     <div>
       <div class="cs-tag">Web3 · SaaS · Product Design</div>
       <h2 class="cs-title">Designing a business operating system for the on-chain economy</h2>
@@ -1271,16 +1535,14 @@
 
   <div class="cs-blocks">
 
-    <!-- Problem -->
-    <div class="cs-block">
+    <div class="cs-block" data-reveal>
       <div class="cs-block-label">01 — The Problem</div>
       <h3>Crypto businesses had no infrastructure built for them</h3>
       <p>Web3 businesses were stitching together Web2 tools that weren't built for on-chain payments, wallet-based identities, or token-gated access. They couldn't invoice in crypto, manage subscribers on-chain, or track business performance in one place.</p>
       <p>The brief was clear: design a product suite that lets any business operate entirely on-chain — subscriptions, invoicing, payroll, customer management — with a UI that feels familiar and trustworthy, not intimidating.</p>
     </div>
 
-    <!-- Research -->
-    <div class="cs-block">
+    <div class="cs-block" data-reveal>
       <div class="cs-block-label">02 — Research &amp; Discovery</div>
       <h3>Understanding both the user and the ecosystem</h3>
       <div class="cs-two-col">
@@ -1289,7 +1551,7 @@
           <p>Key insight: users trusted Web2 dashboards because they were familiar. The biggest barrier wasn't crypto — it was visual complexity and unclear affordances.</p>
         </div>
         <div>
-          <p><strong style="color:var(--text)">Key findings:</strong></p>
+          <p><strong>Key findings:</strong></p>
           <div class="cs-list" style="margin-top:0.75rem;">
             <div class="cs-list-item"><span class="cs-dot"></span><span>Users wanted Web2-level clarity with Web3 capabilities underneath</span></div>
             <div class="cs-list-item"><span class="cs-dot"></span><span>Wallet address display needed to feel native, not technical</span></div>
@@ -1300,15 +1562,14 @@
       </div>
     </div>
 
-    <!-- Design Process -->
-    <div class="cs-block">
+    <div class="cs-block" data-reveal>
       <div class="cs-block-label">03 — Design Process</div>
       <h3>From wireframes to a scalable design system</h3>
       <p>I started with low-fidelity wireframes in FigJam to map all user flows across both products: the subscription platform and the business dashboard. Once flows were validated with the team, I moved to high-fidelity in Figma.</p>
       <p>The design system became the backbone — reusable components for tables, cards, charts, wallet displays, status indicators, and form patterns. This meant engineers could build faster and the product stayed consistent as it scaled.</p>
       <div class="cs-two-col" style="margin-top:1.5rem;">
         <div>
-          <p><strong style="color:var(--text)">Subscription Platform covered:</strong></p>
+          <p><strong>Subscription Platform covered:</strong></p>
           <div class="cs-list" style="margin-top:0.75rem;">
             <div class="cs-list-item"><span class="cs-dot"></span><span>Onboarding and wallet connection flow</span></div>
             <div class="cs-list-item"><span class="cs-dot"></span><span>Plan creation and pricing configuration</span></div>
@@ -1317,7 +1578,7 @@
           </div>
         </div>
         <div>
-          <p><strong style="color:var(--text)">Business Dashboard covered:</strong></p>
+          <p><strong>Business Dashboard covered:</strong></p>
           <div class="cs-list" style="margin-top:0.75rem;">
             <div class="cs-list-item"><span class="cs-dot"></span><span>Earnings overview with real-time charts</span></div>
             <div class="cs-list-item"><span class="cs-dot"></span><span>Invoice creation and payment tracking</span></div>
@@ -1328,16 +1589,14 @@
       </div>
     </div>
 
-    <!-- Challenges -->
-    <div class="cs-block">
+    <div class="cs-block" data-reveal>
       <div class="cs-block-label">04 — Challenges</div>
       <h3>Designing for a product that didn't exist yet</h3>
       <p>There were no established design patterns for on-chain business tooling. Every decision — how to show a wallet address, how to represent pending blockchain transactions, how to make "payroll in crypto" feel safe — required first-principles thinking.</p>
       <p>Working as the sole designer also meant I had to prioritise ruthlessly. I focused on the highest-traffic flows first and built the design system in parallel, so every screen I added benefited from the components already in place.</p>
     </div>
 
-    <!-- Outcome -->
-    <div class="cs-block">
+    <div class="cs-block" data-reveal>
       <div class="cs-block-label">05 — Outcome &amp; Impact</div>
       <h3>A faster, cleaner feedback loop — and a product ready to ship</h3>
       <div class="cs-metrics">
@@ -1360,153 +1619,12 @@
   </div>
 </section>
 
-<!-- ── PROJECTS ── -->
-<section id="projects">
-  <p class="section-label">Selected Work</p>
-  <h2 class="section-title">Projects that <span class="dim">speak for themselves.</span></h2>
-
-  <div class="projects-carousel-wrap">
-    <button class="carousel-btn prev" id="prevBtn" onclick="scrollCarousel(-1)">←</button>
-    <button class="carousel-btn next" id="nextBtn" onclick="scrollCarousel(1)">→</button>
-
-    <div class="projects-carousel" id="projectsCarousel">
-
-      <!-- 1. Sukuri Protocol — ALWAYS FIRST -->
-      <div class="project-card">
-        <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, SaaS, UI/UX</p>
-          <h3 class="project-title">Sukuri Protocol</h3>
-          <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a full business dashboard.</p>
-          <a href="#case-study" class="project-link">Read case study →</a>
-        </div>
-      </div>
-
-      <!-- 2. WeivSync — newer, from gallery -->
-      <div class="project-card">
-        <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Mobile, Travel, UI/UX</p>
-          <h3 class="project-title">WeivSync — Travel App</h3>
-          <p class="project-desc">End-to-end onboarding flows and high-fidelity UI for a travel recommendation app personalised to each user.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 3. Transcend Case Study — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Case Study" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🏥</div>
-        <div class="project-body">
-          <p class="project-category">HealthTech, Mobile, Case Study</p>
-          <h3 class="project-title">Transcend Health App</h3>
-          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — research, flows, and high-fidelity UI.</p>
-          <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 4. Afrofans — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Afrofans" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🎵</div>
-        <div class="project-body">
-          <p class="project-category">Brand, Web & Mobile, UI/UX</p>
-          <h3 class="project-title">Afrofans — Creator Platform</h3>
-          <p class="project-desc">Branding and UI/UX for a subscription platform helping African creators monetise their content and grow their fanbase.</p>
-          <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 5. Skateverse — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Skateverse" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🛹</div>
-        <div class="project-body">
-          <p class="project-category">Web3, Gaming, UI/UX</p>
-          <h3 class="project-title">Skateverse UI/UX</h3>
-          <p class="project-desc">Full UI/UX design for a Web3 skateboarding game — crafting an immersive interface that blends gaming culture with on-chain mechanics.</p>
-          <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 6. Suntok — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Suntok" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🌐</div>
-        <div class="project-body">
-          <p class="project-category">Web Design & Development</p>
-          <h3 class="project-title">Suntok — Web Design</h3>
-          <p class="project-desc">Full website design and development for Suntok — a clean, conversion-focused site with a modern visual language and responsive layout.</p>
-          <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 7. Steelseries — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/09b7f2173225225.Y3JvcCwyMTYwLDE2ODksMCw1MDI.png" alt="Steelseries" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🎮</div>
-        <div class="project-body">
-          <p class="project-category">Gaming, Product Page, UI</p>
-          <h3 class="project-title">Steelseries Product Page</h3>
-          <p class="project-desc">Concept product page redesign for Steelseries — high-impact layout focused on showcasing gaming peripherals with clarity and energy.</p>
-          <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 9. Ronke Rice Farmers — from gallery -->
-      <div class="project-card">
-        <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Gaming, UI/UX</p>
-          <h3 class="project-title">Ronke Rice Farmers</h3>
-          <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, and an isometric canvas view.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 10. Purrcoin — from gallery -->
-      <div class="project-card">
-        <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Landing Page, UI</p>
-          <h3 class="project-title">Purrcoin ($PURR)</h3>
-          <p class="project-desc">High-energy Web3 landing page for a meme coin, designed for desktop and mobile with custom illustrations.</p>
-          <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 11. XNaira — from gallery -->
-      <div class="project-card">
-        <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Landing Page, UI</p>
-          <h3 class="project-title">XNaira — Crypto Exchange</h3>
-          <p class="project-desc">Landing page for a crypto and gift card trading platform — focused on trust, clarity, and conversion.</p>
-          <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 12. Logofolio — from gallery -->
-      <div class="project-card">
-        <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
-        <div class="project-body">
-          <p class="project-category">Brand Identity, Logo Design</p>
-          <h3 class="project-title">Logofolio — 30+ Brands</h3>
-          <p class="project-desc">Brand identities across gaming, fintech, food, real estate, and media over 10 years of freelance work.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ── SKILLS ── -->
 <section id="skills">
   <p class="section-label">Capabilities</p>
-  <h2 class="section-title">What I <span class="dim">bring to the table.</span></h2>
+  <h2 class="section-title" data-reveal>What I <span class="dim">bring to the table.</span></h2>
 
-  <div class="skills-grid">
+  <div class="skills-grid" data-reveal>
     <div class="skill-card">
       <h4>AI &amp; Emerging Tools</h4>
       <div class="skill-pills">
@@ -1545,13 +1663,13 @@
       <div class="skill-pills">
         <span class="skill-pill">Growth Strategy</span>
         <span class="skill-pill">Competitive Analysis</span>
-        <span class="skill-pill">OKRs & Planning</span>
+        <span class="skill-pill">OKRs &amp; Planning</span>
         <span class="skill-pill">Stakeholder Mgmt</span>
         <span class="skill-pill">Partnership Dev</span>
       </div>
     </div>
     <div class="skill-card">
-      <h4>No-Code & Dev</h4>
+      <h4>No-Code &amp; Dev</h4>
       <div class="skill-pills">
         <span class="skill-pill">Webflow Dev</span>
         <span class="skill-pill">WordPress</span>
@@ -1585,9 +1703,9 @@
 <!-- ── ABOUT ── -->
 <section id="about">
   <p class="section-label">About</p>
-  <h2 class="section-title">The person <span class="dim">behind the work.</span></h2>
+  <h2 class="section-title" data-reveal>The person <span class="dim">behind the work.</span></h2>
 
-  <div class="about-grid">
+  <div class="about-grid" data-reveal>
     <div class="about-text">
       <p>I'm <strong>Anthony Littlejohn</strong>, a Senior Product Designer and Business Operations Manager with over <strong>10 years of experience</strong> across Web3, gaming, SaaS, and B2B industries.</p>
       <p>My edge isn't just good design. It's that I understand <strong>how businesses operate</strong>. I've run ops, acquired partners, built growth strategies, and shipped full products, not just handed over files. I also leverage <strong>generative AI</strong> to accelerate workflows and prototype faster.</p>
@@ -1606,12 +1724,12 @@
     <div>
       <div class="about-card">
         <p class="about-card-title">Quick Profile</p>
-        <div class="about-stat-row"><span>Location</span><span>Remote / Open to Relocation</span></div>
+        <div class="about-stat-row"><span>Location</span><span>Remote / Relocation</span></div>
         <div class="about-stat-row"><span>Availability</span><span>Open to opportunities</span></div>
         <div class="about-stat-row"><span>Experience</span><span>10+ years</span></div>
         <div class="about-stat-row"><span>Education</span><span>BSc. Social Sciences (Economics), Babcock University</span></div>
         <div class="about-stat-row"><span>Languages</span><span>English (fluent)</span></div>
-        <div class="about-stat-row"><span>Email</span><span><a href="mailto:tonyliljon@gmail.com" style="color:var(--accent);text-decoration:none">tonyliljon@gmail.com</a></span></div>
+        <div class="about-stat-row"><span>Email</span><span><a href="mailto:tonyliljon@gmail.com">tonyliljon@gmail.com</a></span></div>
       </div>
     </div>
   </div>
@@ -1620,28 +1738,95 @@
 <!-- ── CONTACT ── -->
 <section id="contact">
   <p class="section-label">Let's talk</p>
-  <h2 class="section-title">Ready when <span class="dim">you are.</span></h2>
-  <p>I'm actively looking for UI/UX or Product Design roles globally. If you're building something great, let's connect.</p>
+  <h2 class="contact-title" data-reveal>Ready when <span class="outline">you are.</span></h2>
+  <p class="contact-intro">I'm actively looking for UI/UX or Product Design roles globally. If you're building something great, let's connect.</p>
   <div class="contact-links">
-    <a href="mailto:tonyliljon@gmail.com" class="contact-link">✉ tonyliljon@gmail.com</a>
-    <a href="https://tonyliljon.webflow.io" target="_blank" class="contact-link">🌐 Portfolio</a>
-    <a href="https://www.linkedin.com/in/tonyliljon" target="_blank" class="contact-link">💼 LinkedIn</a>
+    <a href="mailto:tonyliljon@gmail.com" class="contact-link" data-magnetic>✉ tonyliljon@gmail.com</a>
+    <a href="https://tonyliljon.webflow.io" target="_blank" class="contact-link" data-magnetic>🌐 Portfolio</a>
+    <a href="https://www.linkedin.com/in/tonyliljon" target="_blank" class="contact-link" data-magnetic>💼 LinkedIn</a>
   </div>
 </section>
 
 <!-- ── FOOTER ── -->
 <footer>
-  <span>© 2025 Anthony Littlejohn</span>
-  <span>I get shit done.</span>
+  <span>© 2026 Anthony Littlejohn</span>
+  <span class="tagline">I get shit done.</span>
   <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to top</a>
 </footer>
 
 <script>
-  // Scroll animations
+  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.timeline-item, .project-card').forEach(el => observer.observe(el));
+    entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+  // Scroll progress
+  const progress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  }, { passive: true });
+
+  // Experience accordion: one open at a time
+  function toggleXp(head) {
+    const item = head.closest('.xp');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.xp').forEach(x => {
+      x.classList.remove('open');
+      x.querySelector('.xp-head').setAttribute('aria-expanded', 'false');
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+      head.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  // Magnetic buttons
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine && !noMotion) {
+    document.querySelectorAll('[data-magnetic]').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        el.style.transform = `translate(${x * 5}px, ${y * 4}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+  }
+
+  // Hero deck: tilt toward cursor, click to shuffle
+  const deck = document.getElementById('heroDeck');
+  if (deck) {
+    const tiltEl = document.getElementById('deckTilt');
+    const cards = Array.from(deck.querySelectorAll('.deck-card'));
+    let order = [0, 1, 2];
+    let busy = false;
+    const apply = () => order.forEach((ci, pos) => {
+      cards[ci].classList.remove('pos-0', 'pos-1', 'pos-2', 'leaving');
+      cards[ci].classList.add('pos-' + pos);
+    });
+    const shuffle = () => {
+      if (busy) return;
+      busy = true;
+      cards[order[0]].classList.add('leaving');
+      setTimeout(() => { order.push(order.shift()); apply(); busy = false; }, 360);
+    };
+    deck.addEventListener('click', shuffle);
+    deck.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shuffle(); } });
+    if (fine && !noMotion) {
+      deck.addEventListener('mousemove', e => {
+        const r = deck.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        tiltEl.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
+      });
+      deck.addEventListener('mouseleave', () => { tiltEl.style.transform = ''; });
+    }
+  }
 
   // Lightbox
   function openLightbox(src, label) {
@@ -1662,20 +1847,41 @@
     document.querySelectorAll('.figma-panel').forEach((p, i) => p.classList.toggle('active', i === index));
   }
 
-  // Projects carousel
-  function scrollCarousel(dir) {
-    const carousel = document.getElementById('projectsCarousel');
-    const scrollAmt = 340;
-    carousel.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
-  }
-  // Update arrow states on scroll
-  const carousel = document.getElementById('projectsCarousel');
-  if (carousel) {
-    carousel.addEventListener('scroll', () => {
-      document.getElementById('prevBtn').disabled = carousel.scrollLeft <= 0;
-      document.getElementById('nextBtn').disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10;
-    });
-    document.getElementById('prevBtn').disabled = true;
+  // Projects carousel: auto-loop, pause on hover, arrows nudge
+  let scrollCarousel = () => {};
+  const track = document.getElementById('projectsCarousel');
+  if (track) {
+    const wrap = track.parentElement;
+    if (noMotion) {
+      // reduced motion: plain horizontal scroll, no auto-loop
+      wrap.classList.add('static');
+      scrollCarousel = dir => wrap.scrollBy({ left: dir * 340 });
+    } else {
+      // duplicate cards once for a seamless loop
+      Array.from(track.children).forEach(card => track.appendChild(card.cloneNode(true)));
+      let half = 0;
+      const gap = 20; // 1.25rem
+      const measure = () => { half = (track.scrollWidth + gap) / 2; };
+      measure();
+      window.addEventListener('resize', measure);
+
+      let current = 0, target = 0, paused = false;
+      const SPEED = 0.55; // px per frame
+      wrap.addEventListener('mouseenter', () => paused = true);
+      wrap.addEventListener('mouseleave', () => paused = false);
+      wrap.addEventListener('touchstart', () => paused = true, { passive: true });
+      wrap.addEventListener('touchend', () => setTimeout(() => paused = false, 1200), { passive: true });
+
+      (function frame() {
+        if (!paused) target += SPEED;
+        current += (target - current) * 0.09;
+        const mod = ((current % half) + half) % half;
+        track.style.transform = `translateX(${-mod}px)`;
+        requestAnimationFrame(frame);
+      })();
+
+      scrollCarousel = dir => { target += dir * 340; };
+    }
   }
 </script>
 </body>
