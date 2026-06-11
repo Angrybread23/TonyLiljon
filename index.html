@@ -948,16 +948,6 @@
     footer a { color: var(--gray); text-decoration: none; }
     footer a:hover { color: var(--accent); }
 
-    /* ─── FLIGHT LIGHT STREAK ─── */
-    #flightTrace {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 49;
-      pointer-events: none;
-    }
-
     /* ─── FLYING MASCOT ─── */
     .flyer {
       position: fixed;
@@ -1020,9 +1010,6 @@
 <body>
 
 <div class="scroll-progress" id="scrollProgress"></div>
-
-<!-- ── FLIGHT LIGHT STREAK ── -->
-<canvas id="flightTrace" aria-hidden="true"></canvas>
 
 <!-- ── FLYING MASCOT ── -->
 <div class="flyer" id="flyer" aria-hidden="true">
@@ -1899,6 +1886,72 @@
       });
       deck.addEventListener('mouseleave', () => { tiltEl.style.transform = ''; });
     }
+  }
+
+  // Flying mascot: scroll-driven flight along the page edges
+  const flyer = document.getElementById('flyer');
+  if (flyer && !noMotion) {
+    const isNarrow = window.matchMedia('(max-width: 768px)').matches;
+    const SIZE = isNarrow ? 54 : 110;
+    // waypoints: [scroll progress, x in vw, y in vh] — hugs the edges, crosses between sections
+    const WPTS = [
+      [0.050, -12, 40],
+      [0.115,  85, 20],
+      [0.200,  89, 58],
+      [0.285,   6, 66],
+      [0.370,   5, 26],
+      [0.460,  86, 32],
+      [0.560,  90, 62],
+      [0.660,   7, 56],
+      [0.760,   6, 22],
+      [0.860,  85, 28],
+      [0.945,  46, 36],
+      [1.001,  46, -22]
+    ];
+    const smooth = t => t * t * (3 - 2 * t);
+    function pathAt(p) {
+      if (p < WPTS[0][0]) return null;
+      for (let i = 0; i < WPTS.length - 1; i++) {
+        const a = WPTS[i], b = WPTS[i + 1];
+        if (p >= a[0] && p <= b[0]) {
+          const t = smooth((p - a[0]) / (b[0] - a[0]));
+          return [a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+        }
+      }
+      return [WPTS[WPTS.length - 1][1], WPTS[WPTS.length - 1][2]];
+    }
+
+    let cx = -300, cy = 300, dir = 1, shown = false;
+    function fly(ts) {
+      const h = document.documentElement;
+      const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+      const wp = pathAt(p);
+      if (!wp) {
+        if (shown) { flyer.style.opacity = 0; shown = false; }
+        requestAnimationFrame(fly);
+        return;
+      }
+      let txv = wp[0], tyv = wp[1];
+      if (isNarrow) txv = 80 + (txv - 50) * 0.14;
+      const tx = (txv / 100) * window.innerWidth;
+      const ty = (tyv / 100) * window.innerHeight + Math.sin(ts / 650) * 6;
+      if (!shown) {
+        flyer.style.opacity = 1;
+        shown = true;
+        if (cx < -200) { cx = tx; cy = ty; }
+      }
+      const nx = cx + (tx - cx) * 0.055;
+      const ny = cy + (ty - cy) * 0.055;
+      const vx = nx - cx, vy = ny - cy;
+      cx = nx; cy = ny;
+      const speed = Math.hypot(vx, vy);
+      if (Math.abs(vx) > 0.35) dir = vx < 0 ? 1 : -1; // sprite faces left
+      const tilt = Math.max(-13, Math.min(13, vy * 2.4)) * dir - (speed > 1.2 ? dir * 2 : 0);
+      flyer.style.transform = `translate(${cx - SIZE / 2}px, ${cy - SIZE / 2}px) scaleX(${dir}) rotate(${tilt}deg)`;
+      flyer.style.setProperty('--trailO', Math.min(1, speed / 8).toFixed(2));
+      requestAnimationFrame(fly);
+    }
+    requestAnimationFrame(fly);
   }
 
   // Lightbox
