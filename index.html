@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anthony Littlejohn — Product Designer & Ops</title>
+  <title>Anthony Littlejohn — Design Engineer, Product Strategy &amp; Ops</title>
+  <meta name="description" content="Anthony Littlejohn designs products, builds them with code, no-code and AI, and runs the product strategy and operations that get them shipped. 10+ years across Web3, gaming, SaaS and B2B." />
+  <meta name="theme-color" content="#0d0d0d" />
+    <meta property="og:type" content="website" />
+  <meta property="og:title" content="Anthony Littlejohn — Design Engineer" />
+  <meta property="og:description" content="I design it, build it and ship it. Design engineering, product strategy and ops." />
+  <meta property="og:url" content="https://tonyliljon.xyz/" />
+  <meta property="og:image" content="https://tonyliljon.xyz/hero_bg.webp" />
+  <link rel="canonical" href="https://tonyliljon.xyz/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0d0d'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='38' fill='%23c8f23a'%3ET.%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
@@ -41,6 +51,19 @@
 
     ::selection { background: var(--accent); color: #000; }
 
+    .skip-link {
+      position: absolute;
+      left: 1rem; top: -3rem;
+      background: var(--accent);
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      z-index: 400;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+
     /* ─── SCROLL PROGRESS ─── */
     .scroll-progress {
       position: fixed;
@@ -59,6 +82,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
       padding: 1.1rem var(--gutter);
       background: rgba(13,13,13,0.85);
       backdrop-filter: blur(12px);
@@ -93,6 +117,7 @@
     }
     .nav-links a:hover { color: var(--ink); }
     .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
     .nav-cta {
       background: var(--accent);
       color: #000;
@@ -105,6 +130,42 @@
       display: inline-block;
     }
     .nav-cta:hover { opacity: 0.8; }
+    .nav-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-toggle span { width: 16px; height: 1.5px; background: currentColor; transition: transform 0.25s, opacity 0.25s; }
+    nav.menu-open .nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    nav.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    nav.menu-open .nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+    @media (max-width: 860px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--paper);
+        border-bottom: 1px solid var(--hairline);
+        box-shadow: 0 24px 40px rgba(0,0,0,0.6);
+        padding: 0.5rem var(--gutter) 1rem;
+      }
+      nav.menu-open .nav-links { display: flex; }
+      .nav-links a { display: block; padding: 0.85rem 0; font-size: 1rem; color: var(--ink); border-bottom: 1px solid var(--hairline); }
+      .nav-links li:last-child a { border-bottom: none; }
+      .nav-links a::after { display: none; }
+    }
 
     /* ─── HERO ─── */
     .hero {
@@ -131,7 +192,6 @@
       align-items: center;
       width: 100%;
     }
-    .hero-inner { }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -153,10 +213,10 @@
       font-family: var(--display);
       font-weight: 800;
       text-transform: uppercase;
-      font-size: clamp(2.8rem, 7.2vw, 6.4rem);
+      font-size: clamp(2.8rem, 7.6vw, 6.8rem);
       line-height: 0.95;
       letter-spacing: -0.03em;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.25rem;
     }
     .hero h1 .line {
       display: block;
@@ -169,9 +229,20 @@
     }
     .hero h1 .line:nth-child(1) > span { animation-delay: 0.15s; }
     .hero h1 .line:nth-child(2) > span { animation-delay: 0.27s; }
-    .hero h1 .line:nth-child(3) > span { animation-delay: 0.39s; }
     @keyframes lineUp { to { transform: translateY(0); } }
     .hero h1 .highlight { color: var(--accent); }
+
+    .hero-kicker {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+    .hero-kicker .plus { color: var(--accent); margin-right: 0.35rem; }
 
     .hero-desc {
       font-size: 1.02rem;
@@ -322,9 +393,8 @@
     @media (max-width: 900px) {
       .hero { align-items: center; padding-top: 6.5rem; }
       .hero-layout { grid-template-columns: 1fr; }
-      .hero-inner { padding-bottom: 0; }
       .hero-visual { display: none; }
-      .hero h1 { font-size: clamp(2.6rem, 11vw, 4rem); }
+      .hero h1 { font-size: clamp(2.8rem, 13vw, 4.4rem); }
     }
 
     /* ─── MARQUEE ─── */
@@ -376,9 +446,10 @@
       font-size: clamp(1.9rem, 4.5vw, 3.2rem);
       letter-spacing: -0.02em;
       line-height: 1.02;
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
     }
     .section-title .dim { color: var(--gray); }
+    .section-intro { color: var(--gray); max-width: 620px; margin-bottom: 3rem; font-size: 0.98rem; }
 
     /* reveal on scroll */
     [data-reveal] {
@@ -388,13 +459,156 @@
     }
     [data-reveal].visible { opacity: 1; transform: translateY(0); }
 
-    /* ─── SHOWCASE (mosaic) ─── */
-    #gallery { background: var(--paper); padding-top: 6.5rem; }
+    /* ─── WHAT I DO ─── */
+    #services { background: var(--paper); }
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.1rem;
+    }
+    .pillar {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: border-color 0.3s, transform 0.3s ease;
+    }
+    .pillar:hover { border-color: rgba(200,242,58,0.4); transform: translateY(-3px); }
+    .pillar-num { font-family: var(--display); font-weight: 800; color: var(--accent); font-size: 0.85rem; letter-spacing: 0.08em; }
+    .pillar h3 { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; line-height: 1.15; }
+    .pillar p { color: var(--gray); font-size: 0.9rem; line-height: 1.7; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.5rem; }
+    .pill {
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      color: var(--ink);
+    }
+    @media (max-width: 900px) {
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    .combo {
+      margin-top: 1.1rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.25rem 2rem;
+    }
+    .combo-text h3 { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; margin-bottom: 0.85rem; }
+    .combo-text p { color: var(--gray); font-size: 0.92rem; line-height: 1.75; }
+    .combo-text p + p { margin-top: 0.75rem; }
+    .combo-text strong { color: var(--ink); font-weight: 500; }
+    .combo-steps { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .combo-steps li {
+      display: grid;
+      grid-template-columns: 2rem 5.5rem 1fr;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .combo-steps li:last-child { border-bottom: none; }
+    .combo-steps span { font-family: var(--display); font-weight: 800; color: var(--accent); font-size: 0.78rem; }
+    .combo-steps strong { font-family: var(--display); font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+    @media (max-width: 900px) {
+      .combo { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.75rem 1.4rem; }
+      .combo-steps li { grid-template-columns: 1.75rem 4.75rem 1fr; }
+    }
+
+    /* ─── BUILT & LIVE ─── */
+    #built { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+    .builds {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .build {
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.35s ease;
+    }
+    .build:hover { border-color: rgba(200,242,58,0.5); transform: translateY(-4px); }
+    .build-visual {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: radial-gradient(120% 90% at 20% 0%, #1f2a0a 0%, var(--surface) 55%);
+      border-bottom: 1px solid var(--hairline);
+      overflow: hidden;
+    }
+    .build-visual img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .build-visual svg { width: 100%; height: 100%; display: block; }
+    .build-status {
+      position: absolute;
+      top: 0.85rem; left: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(13,13,13,0.85);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .build-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    .build-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; flex: 1; }
+    .build-category { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .build-title { font-family: var(--display); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; }
+    .build-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.65; }
+    .build-proof {
+      font-size: 0.82rem;
+      color: var(--ink);
+      border-left: 2px solid var(--accent);
+      padding-left: 0.75rem;
+    }
+    .build-actions { margin-top: auto; padding-top: 0.5rem; }
+    .build-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #000;
+      background: var(--accent);
+      border-radius: 100px;
+      padding: 0.55rem 1.2rem;
+      text-decoration: none;
+      transition: opacity 0.2s, gap 0.25s;
+    }
+    .build-link:hover { opacity: 0.85; gap: 0.65rem; }
+    @media (max-width: 1000px) {
+      .builds { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .builds { grid-template-columns: 1fr; }
+    }
+
+    /* ─── DESIGN WORK (mosaic) ─── */
+    #design { background: var(--paper); }
     .mosaic {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 0.85rem;
-      margin-top: 2.5rem;
     }
     .mosaic-item {
       position: relative;
@@ -403,6 +617,11 @@
       border: 1px solid var(--hairline);
       cursor: pointer;
       background: var(--surface);
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      display: block;
     }
     .mosaic-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
     .mosaic-item:nth-child(2) { grid-column: span 5; }
@@ -420,8 +639,8 @@
       transition: transform 0.55s ease;
     }
     .mosaic-item:nth-child(4) img,
-    .mosaic-item:nth-child(5) img,
     .mosaic-item:nth-child(6) img { object-position: center; }
+    .mosaic-item:nth-child(6) img { background: #111; }
     .mosaic-overlay {
       position: absolute;
       inset: 0;
@@ -433,7 +652,8 @@
       justify-content: flex-end;
       padding: 1.25rem;
     }
-    .mosaic-item:hover .mosaic-overlay { opacity: 1; }
+    .mosaic-item:hover .mosaic-overlay,
+    .mosaic-item:focus-visible .mosaic-overlay { opacity: 1; }
     .mosaic-item:hover img { transform: scale(1.04); }
     .mosaic-label {
       font-family: var(--display);
@@ -459,12 +679,39 @@
       transform: translateY(-6px);
       transition: opacity 0.3s, transform 0.3s;
     }
-    .mosaic-item:hover .mosaic-expand { opacity: 1; transform: translateY(0); }
+    .mosaic-item:hover .mosaic-expand,
+    .mosaic-item:focus-visible .mosaic-expand { opacity: 1; transform: translateY(0); }
+    @media (hover: none) {
+      .mosaic-overlay { opacity: 1; }
+    }
     @media (max-width: 768px) {
       .mosaic { grid-template-columns: 1fr 1fr; }
       .mosaic-item { grid-column: span 2 !important; grid-row: span 1 !important; }
       .mosaic-item:nth-child(n+3) { grid-column: span 1 !important; }
     }
+
+    .more-work {
+      margin-top: 2.25rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 0.75rem;
+    }
+    .more-work-label { font-size: 0.78rem; color: var(--gray); margin-right: 0.5rem; }
+    .more-work a {
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .more-work a:hover { border-color: var(--accent); color: var(--accent); }
+    .more-work a span { color: var(--gray); }
 
     /* ─── LIGHTBOX ─── */
     .lightbox {
@@ -479,10 +726,10 @@
       gap: 1rem;
       padding: 4rem var(--gutter);
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     }
-    .lightbox.open { opacity: 1; pointer-events: auto; }
+    .lightbox.open { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
     .lightbox-img {
       max-width: 100%;
       max-height: 80vh;
@@ -510,190 +757,6 @@
       cursor: pointer;
     }
 
-    /* ─── EXPERIENCE ACCORDION ─── */
-    #work { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-    .xp-list { border-top: 1px solid var(--hairline); }
-    .xp { border-bottom: 1px solid var(--hairline); background: transparent; transition: background 0.3s; }
-    .xp.open { background: var(--paper); border-left: 2px solid var(--accent); }
-    .xp-head {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 150px 200px 1fr 44px;
-      gap: 1.5rem;
-      align-items: center;
-      padding: 1.5rem 1.25rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      font-family: var(--body);
-      transition: padding 0.3s;
-    }
-    .xp-head:hover .xp-co { transform: translateX(4px); }
-    .xp-year { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
-    .xp-co {
-      font-family: var(--display);
-      font-weight: 800;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      color: var(--ink);
-      transition: transform 0.3s ease;
-    }
-    .xp-role { font-size: 0.9rem; color: var(--gray); }
-    .xp.open .xp-role { color: var(--ink); font-weight: 500; }
-    .xp-icon {
-      width: 34px; height: 34px;
-      border: 1px solid var(--gray-light);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: var(--ink);
-      transition: transform 0.4s ease, background 0.3s, color 0.3s;
-      justify-self: end;
-    }
-    .xp.open .xp-icon { transform: rotate(45deg); background: var(--accent); color: #000; border-color: var(--accent); }
-    .xp-body {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .xp.open .xp-body { grid-template-rows: 1fr; }
-    .xp-inner { overflow: hidden; }
-    .xp-content {
-      padding: 0 1.25rem 2.25rem;
-      padding-left: calc(150px + 200px + 3rem + 1.25rem);
-      max-width: 1020px;
-    }
-    .xp-summary {
-      color: var(--gray);
-      font-size: 0.95rem;
-      margin-bottom: 1.4rem;
-      line-height: 1.7;
-    }
-    .impact-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.4rem; }
-    .impact-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--ink); }
-    .impact-icon {
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      background: rgba(200,242,58,0.12);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.55rem;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag {
-      border: 1px solid var(--hairline);
-      background: var(--paper);
-      border-radius: 100px;
-      padding: 0.25rem 0.85rem;
-      font-size: 0.74rem;
-      color: var(--gray);
-    }
-    .xp.open .tag { background: var(--surface); }
-    @media (max-width: 860px) {
-      .xp-head { grid-template-columns: 1fr 44px; gap: 0.35rem 1rem; padding: 1.25rem 0.75rem; }
-      .xp-year { order: 1; grid-column: 1; }
-      .xp-co { order: 2; grid-column: 1; font-size: 1.05rem; }
-      .xp-role { order: 3; grid-column: 1; }
-      .xp-icon { order: 2; grid-row: 1 / span 3; grid-column: 2; }
-      .xp-content { padding-left: 0.75rem; }
-    }
-
-    /* ─── PROJECTS CAROUSEL ─── */
-    #projects { background: var(--paper); }
-    .projects-carousel-wrap {
-      position: relative;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-    }
-    .projects-carousel-wrap.static { overflow-x: auto; scrollbar-width: none; -webkit-mask-image: none; mask-image: none; }
-    .projects-carousel-wrap.static::-webkit-scrollbar { display: none; }
-    .projects-carousel {
-      display: flex;
-      gap: 1.25rem;
-      width: max-content;
-      padding: 0.5rem 0 1rem;
-      will-change: transform;
-    }
-    /* hover spotlight: pause is handled in JS, dim siblings + lift the hovered card */
-    .projects-carousel:hover .project-card { opacity: 0.35; }
-    .projects-carousel .project-card:hover {
-      opacity: 1;
-      transform: translateY(-6px) scale(1.02);
-      border-color: rgba(200,242,58,0.5);
-    }
-    .project-card {
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.35s ease, box-shadow 0.3s ease, opacity 0.35s ease;
-      flex: 0 0 310px;
-    }
-    .project-img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      object-position: top;
-      background: var(--surface);
-      display: block;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .placeholder-img {
-      width: 100%;
-      height: 190px;
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .project-body { padding: 1.4rem; }
-    .project-category { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
-    .project-title { font-family: var(--display); font-size: 1.08rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
-    .project-desc { font-size: 0.83rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; }
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 1px;
-      transition: gap 0.25s ease;
-    }
-    .project-link:hover { gap: 0.7rem; }
-    .carousel-btn {
-      position: absolute;
-      top: 50%; transform: translateY(-60%);
-      width: 44px; height: 44px;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 50%;
-      color: var(--ink);
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 10;
-      transition: background 0.2s, color 0.2s;
-    }
-    .carousel-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
-    .carousel-btn:disabled { opacity: 0.15; cursor: default; }
-
-
     /* ─── FIGMA EMBEDS ─── */
     #figma { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
     .figma-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
@@ -710,9 +773,8 @@
       transition: background 0.25s, color 0.25s, border-color 0.25s;
     }
     .figma-tab:hover { border-color: var(--accent); color: var(--accent); }
-    .figma-tab.active { background: var(--accent); border-color: var(--accent); color: #000; }
-    .figma-panel { display: none; }
-    .figma-panel.active { display: block; }
+    .figma-tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #000; }
+    .figma-panel[hidden] { display: none; }
     .figma-frame-wrap {
       border-radius: var(--radius);
       overflow: hidden;
@@ -730,140 +792,57 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
       padding: 0.9rem 1.25rem;
       border-top: 1px solid var(--hairline);
       font-size: 0.85rem;
     }
     .figma-label span { font-weight: 600; color: var(--ink); }
-    .figma-label a { color: var(--gray); text-decoration: none; font-size: 0.8rem; }
+    .figma-label a { color: var(--gray); text-decoration: none; font-size: 0.8rem; white-space: nowrap; }
     .figma-label a:hover { color: var(--accent); }
 
-    /* ─── CASE STUDY ─── */
-    #case-study { background: var(--paper); }
-    .cs-hero {
+    /* ─── EXPERIENCE (compact) ─── */
+    #experience { background: var(--paper); }
+    .xp-list { border-top: 1px solid var(--hairline); }
+    .xp-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3.5rem;
-      align-items: center;
-      margin-bottom: 5rem;
+      grid-template-columns: 150px 220px 1fr;
+      gap: 1.5rem;
+      align-items: baseline;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--hairline);
     }
-    .cs-tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gray);
-      font-weight: 600;
-      border: 1px solid var(--hairline);
-      border-radius: 100px;
-      padding: 0.3rem 0.9rem;
-      margin-bottom: 1.25rem;
-    }
-    .cs-title {
+    .xp-year { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
+    .xp-co {
       font-family: var(--display);
       font-weight: 800;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-      margin-bottom: 1rem;
-    }
-    .cs-subtitle { font-size: 1rem; color: var(--gray); line-height: 1.7; margin-bottom: 2rem; }
-    .cs-meta-row { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .cs-meta-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); margin-bottom: 0.25rem; }
-    .cs-meta-value { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
-    .cs-img-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--hairline); }
-    .cs-img-wrap img { width: 100%; display: block; object-fit: cover; }
-    .cs-blocks { display: flex; flex-direction: column; gap: 4.5rem; max-width: 920px; }
-    .cs-block-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
+      font-size: 1rem;
       text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      letter-spacing: 0.01em;
     }
-    .cs-block-label::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
-    .cs-block h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-    .cs-block p { color: var(--gray); line-height: 1.8; font-size: 0.95rem; }
-    .cs-block p + p { margin-top: 0.75rem; }
-    .cs-block p strong { color: var(--ink); }
-    .cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
-    .cs-metric { border: 1px solid var(--hairline); background: var(--surface); border-radius: var(--radius); padding: 1.4rem 1.25rem; text-align: center; }
-    .cs-metric-num { font-family: var(--display); font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
-    .cs-metric-label { font-size: 0.78rem; color: var(--gray); margin-top: 0.35rem; line-height: 1.5; }
-    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-    .cs-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-    .cs-list-item { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; color: var(--ink); }
-    .cs-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
-    @media (max-width: 768px) {
-      .cs-hero { grid-template-columns: 1fr; gap: 2rem; }
-      .cs-two-col { grid-template-columns: 1fr; gap: 1.5rem; }
-      .cs-metrics { grid-template-columns: 1fr; }
+    .xp-role { font-size: 0.82rem; color: var(--gray); margin-top: 0.15rem; }
+    .xp-note { font-size: 0.9rem; color: var(--ink); line-height: 1.6; }
+    .xp-note strong { color: var(--accent); font-weight: 600; }
+    .xp-row.current .xp-year { color: var(--accent); }
+    @media (max-width: 860px) {
+      .xp-row { grid-template-columns: 1fr; gap: 0.35rem; }
     }
 
-    /* ─── SKILLS ─── */
-    #skills { background: var(--surface); border-top: 1px solid var(--hairline); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.1rem;
-    }
-    .skill-card {
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color 0.3s, transform 0.3s ease;
-    }
-    .skill-card:hover { border-color: rgba(200,242,58,0.4); transform: translateY(-3px); }
-    .skill-card h4 {
-      font-family: var(--display);
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.85rem;
-      color: var(--accent);
-    }
-    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .skill-pill {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 6px;
-      padding: 0.3rem 0.7rem;
-      font-size: 0.79rem;
-      color: var(--ink);
-    }
-
-    /* ─── ABOUT ─── */
-    #about { background: var(--paper); }
+    /* ─── ABOUT + CONTACT ─── */
+    #about { background: var(--surface); border-top: 1px solid var(--hairline); }
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+      align-items: start;
     }
     .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
     .about-text p strong { color: var(--ink); }
-    .about-certs { margin-top: 2rem; }
-    .about-certs h4 { font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 1rem; font-weight: 800; }
-    .cert-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--hairline);
-      font-size: 0.875rem;
-    }
-    .cert-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
     .about-card {
-      background: var(--surface);
+      background: var(--paper);
       border: 1px solid var(--hairline);
       border-radius: var(--radius);
-      padding: 2.5rem;
+      padding: 2.25rem;
     }
     .about-card-title {
       font-family: var(--display);
@@ -871,31 +850,29 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--gray);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       font-weight: 800;
     }
     .about-stat-row {
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem 0;
+      padding: 0.9rem 0;
       border-bottom: 1px solid var(--hairline);
       font-size: 0.88rem;
     }
     .about-stat-row:last-child { border-bottom: none; }
     .about-stat-row span:first-child { color: var(--gray); flex-shrink: 0; }
     .about-stat-row span:last-child { color: var(--ink); font-weight: 500; text-align: right; }
-    .about-stat-row a { color: var(--accent); text-decoration: none; }
-    @media (max-width: 768px) {
+    @media (max-width: 860px) {
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
 
-    /* ─── CONTACT (inverted) ─── */
     #contact {
-      background: var(--surface);
+      background: var(--paper);
       border-top: 1px solid var(--hairline);
       text-align: center;
-      padding: 8rem var(--gutter) 7rem;
+      padding: 7.5rem var(--gutter) 6.5rem;
     }
     #contact .section-label { justify-content: center; }
     .contact-title {
@@ -906,10 +883,9 @@
       letter-spacing: -0.02em;
       line-height: 0.98;
       margin-bottom: 1.5rem;
-      color: var(--ink);
     }
     .contact-title .highlight { color: var(--accent); }
-    .contact-intro { color: var(--gray); max-width: 500px; margin: 0 auto 2.75rem; }
+    .contact-intro { color: var(--gray); max-width: 520px; margin: 0 auto 2.75rem; }
     .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .contact-link {
       display: inline-flex;
@@ -960,6 +936,8 @@
       will-change: transform;
       --trailO: 0;
     }
+    .flyer-bob { animation: bob 4s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
     .flyer img {
       width: 100%;
       display: block;
@@ -993,67 +971,74 @@
     }
 
     /* ─── ACCESSIBILITY / MISC ─── */
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
       html { scroll-behavior: auto; }
       .hero h1 .line > span { transform: none; }
-      .hero-badge, .hero-desc, .hero-actions, .hero-stats, .hero-visual { opacity: 1; }
+      .hero-badge, .hero-kicker, .hero-desc, .hero-actions, .hero-stats, .hero-visual { opacity: 1; }
       [data-reveal] { opacity: 1; transform: none; }
     }
     @media (max-width: 768px) {
-      .nav-links { display: none; }
       section { padding: 4.5rem var(--gutter); }
     }
   </style>
 </head>
 <body>
 
+<a href="#main" class="skip-link">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ── FLYING MASCOT ── -->
 <div class="flyer" id="flyer" aria-hidden="true">
-  <img src="mascot_fly.webp" alt="" />
-  <div class="flyer-trail"><span></span><span></span><span></span></div>
+  <div class="flyer-bob">
+    <img src="mascot_fly.webp" alt="" />
+    <div class="flyer-trail"><span></span><span></span><span></span></div>
+  </div>
 </div>
 
 <!-- ── NAV ── -->
-<nav>
+<nav id="nav" aria-label="Main">
   <a href="#" class="nav-logo">TonyLiljon.</a>
-  <ul class="nav-links">
-    <li><a href="#gallery">Showcase</a></li>
-    <li><a href="#work">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">What I do</a></li>
+    <li><a href="#built">Built</a></li>
+    <li><a href="#design">Design</a></li>
     <li><a href="#figma">Figma</a></li>
-    <li><a href="#case-study">Case Study</a></li>
-    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <a href="mailto:tonyliljon@gmail.com" class="nav-cta" data-magnetic>Hire me →</a>
+  <div class="nav-right">
+    <a href="mailto:tonyliljon@gmail.com" class="nav-cta" data-magnetic>Hire me →</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<main id="main">
 
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-layout">
 
-    <!-- LEFT: Text -->
     <div class="hero-inner">
       <div class="hero-badge">
         <span></span>
-        Open to work · Remote / Relocation
+        Open to roles &amp; consulting · Remote / Relocation
       </div>
       <h1>
-        <span class="line"><span>Product</span></span>
-        <span class="line"><span>Designer &amp;</span></span>
-        <span class="line"><span class="highlight">Ops Manager.</span></span>
+        <span class="line"><span>Design</span></span>
+        <span class="line"><span class="highlight">Engineer.</span></span>
       </h1>
+      <p class="hero-kicker"><span class="plus">+</span>Product Strategy &amp; Ops</p>
       <p class="hero-desc">
-        I design <strong>digital products that work</strong> and build the operations behind them.
-        10+ years shipping across Web3, gaming, SaaS, and B2B. I bridge the gap between
-        <strong>user experience, business goals, and execution.</strong>
+        I <strong>design products, then build and ship them</strong> with code, no-code and AI tools.
+        10+ years across Web3, gaming, SaaS and B2B means I also bring
+        <strong>the strategy and operations</strong> that turn a good design into a working business.
       </p>
       <div class="hero-actions">
-        <a href="#gallery" class="btn-primary" data-magnetic>See my work</a>
+        <a href="#built" class="btn-primary" data-magnetic>See what I've built</a>
         <a href="mailto:tonyliljon@gmail.com" class="btn-ghost" data-magnetic>Get in touch</a>
       </div>
       <div class="hero-stats">
@@ -1062,12 +1047,12 @@
           <div class="stat-label">Years of experience</div>
         </div>
         <div>
-          <div class="stat-num">100+</div>
-          <div class="stat-label">Businesses served</div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Live apps built</div>
         </div>
         <div>
-          <div class="stat-num">6</div>
-          <div class="stat-label">Products shipped</div>
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Businesses served</div>
         </div>
         <div>
           <div class="stat-num">4</div>
@@ -1076,20 +1061,19 @@
       </div>
     </div>
 
-    <!-- RIGHT: Interactive deck -->
     <div class="hero-visual">
       <div class="deck" id="heroDeck" role="button" aria-label="Shuffle work previews" tabindex="0">
         <div class="deck-tilt" id="deckTilt">
           <figure class="deck-card pos-0">
-            <img src="hero_img1.webp" alt="Sukuri Flow Design" />
+            <img src="hero_img1.webp" alt="Sukuri user flow design" />
             <figcaption>Sukuri, User Flow</figcaption>
           </figure>
           <figure class="deck-card pos-1">
-            <img src="hero_img2.webp" alt="Afrofans Prototype" />
+            <img src="hero_img2.webp" alt="Afrofans prototype" />
             <figcaption>Afrofans, Prototype</figcaption>
           </figure>
           <figure class="deck-card pos-2">
-            <img src="hero_img3.webp" alt="WeivSync Flow" />
+            <img src="hero_img3.webp" alt="WeivSync app flow" />
             <figcaption>WeivSync, App Flow</figcaption>
           </figure>
         </div>
@@ -1103,659 +1087,327 @@
 <!-- ── MARQUEE ── -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>Product Design</span><span>Business Ops</span><span>UI/UX</span><span>Web3</span><span>Gaming</span><span>SaaS</span><span>B2B</span><span>Brand Identity</span><span>Design Systems</span><span>AI Workflows</span>
-    <span>Product Design</span><span>Business Ops</span><span>UI/UX</span><span>Web3</span><span>Gaming</span><span>SaaS</span><span>B2B</span><span>Brand Identity</span><span>Design Systems</span><span>AI Workflows</span>
+    <span>Design Engineering</span><span>Product Strategy</span><span>Operations</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
+    <span>Design Engineering</span><span>Product Strategy</span><span>Operations</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
   </div>
 </div>
 
-<!-- ── SHOWCASE ── -->
-<section id="gallery">
-  <p class="section-label">The Showcase</p>
-  <h2 class="section-title" data-reveal>A glimpse of <span class="dim">what I've shipped.</span></h2>
+<!-- ── WHAT I DO ── -->
+<section id="services">
+  <p class="section-label">What I do</p>
+  <h2 class="section-title" data-reveal>Design it. Build it. <span class="dim">Run it.</span></h2>
+  <p class="section-intro" data-reveal>Three skill sets, one person. Here's how they fit together.</p>
+
+  <div class="pillars" data-reveal>
+    <article class="pillar">
+      <span class="pillar-num">01</span>
+      <h3>Design Engineering</h3>
+      <p>From Figma to a live product. I design the interface, then build it myself with code, no-code and AI tools, so ideas ship in days, not sprints.</p>
+      <div class="pills">
+        <span class="pill">Figma</span><span class="pill">AI-assisted coding</span><span class="pill">HTML / CSS / JS</span><span class="pill">Webflow</span><span class="pill">APIs</span>
+      </div>
+    </article>
+    <article class="pillar">
+      <span class="pillar-num">02</span>
+      <h3>Product Strategy</h3>
+      <p>Research, positioning and scoping. I help teams decide what to build and why, then turn that into flows, prototypes and a roadmap people can execute.</p>
+      <div class="pills">
+        <span class="pill">UX Research</span><span class="pill">Competitive Analysis</span><span class="pill">Prototyping</span><span class="pill">Pitch Decks</span>
+      </div>
+    </article>
+    <article class="pillar">
+      <span class="pillar-num">03</span>
+      <h3>Operations</h3>
+      <p>The systems behind the product: growth, partnerships, content and day-to-day operations. I've run ops at Web3 startups and for 100+ client businesses.</p>
+      <div class="pills">
+        <span class="pill">Growth Strategy</span><span class="pill">Partnerships</span><span class="pill">AI Workflows</span><span class="pill">Brand Systems</span>
+      </div>
+    </article>
+  </div>
+
+  <div class="combo" data-reveal>
+    <div class="combo-text">
+      <h3>Why one person doing all three matters</h3>
+      <p>Most products lose time in the handoffs: strategy to design, design to engineering, launch to operations. I cover the whole loop, so <strong>nothing gets lost in translation</strong>. I can test an idea against the market, design the experience, build a working version with AI-assisted code, and then run the growth and operations around it.</p>
+      <p>For a business, that means <strong>faster validation, fewer people to coordinate, and products that are designed to be run</strong>, not just launched.</p>
+    </div>
+    <ol class="combo-steps">
+      <li><span>01</span><strong>Strategy</strong>Find the problem worth solving and the market for it.</li>
+      <li><span>02</span><strong>Design</strong>Shape the flows and UI in Figma.</li>
+      <li><span>03</span><strong>Build</strong>Ship a working product with code, no-code and AI.</li>
+      <li><span>04</span><strong>Run</strong>Set up the growth, content and operations behind it.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── BUILT & LIVE ── -->
+<section id="built">
+  <p class="section-label">Built &amp; live</p>
+  <h2 class="section-title" data-reveal>Things I've built <span class="dim">that people use.</span></h2>
+  <p class="section-intro" data-reveal>Live products I designed and built end to end, with AI as my pair programmer. Click through and try them.</p>
+
+  <div class="builds" data-reveal>
+
+    <!-- 1. Confluence. TODO: swap the SVG for a screenshot (<img src="confluence_thumb.webp" alt="…">) -->
+    <article class="build">
+      <div class="build-visual">
+        <span class="build-status">Live</span>
+        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a price chart with trading calls marked">
+          <g stroke="#2a2a2a" stroke-width="1">
+            <line x1="20" y1="50" x2="300" y2="50"/><line x1="20" y1="95" x2="300" y2="95"/><line x1="20" y1="140" x2="300" y2="140"/>
+          </g>
+          <polyline fill="none" stroke="#c8f23a" stroke-width="2.5" stroke-linejoin="round" points="20,150 55,132 85,140 115,104 145,112 175,80 205,92 235,58 265,66 300,40"/>
+          <polygon fill="rgba(200,242,58,0.08)" points="20,150 55,132 85,140 115,104 145,112 175,80 205,92 235,58 265,66 300,40 300,175 20,175"/>
+          <g fill="#0d0d0d" stroke="#c8f23a" stroke-width="2">
+            <circle cx="115" cy="104" r="5"/><circle cx="175" cy="80" r="5"/><circle cx="235" cy="58" r="5"/>
+          </g>
+          <rect x="196" y="112" width="104" height="44" rx="8" fill="#161616" stroke="#2a2a2a"/>
+          <text x="208" y="130" fill="#8a8a8a" font-family="DM Sans, sans-serif" font-size="10">Call · 12 Oct</text>
+          <text x="208" y="147" fill="#c8f23a" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14">+18.4%</text>
+        </svg>
+      </div>
+      <div class="build-body">
+        <p class="build-category">Trading · Web app</p>
+        <h3 class="build-title">Confluence</h3>
+        <p class="build-desc">A trading bot and tracker that logs trading calls by date, so traders can see which callers are actually right and act on better information.</p>
+        <div class="build-actions">
+          <a class="build-link" href="https://trade-tracker-tawny-eta.vercel.app/" target="_blank" rel="noopener">Open Confluence →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2. Ronke Score. TODO: swap the SVG for a screenshot -->
+    <article class="build">
+      <div class="build-visual">
+        <span class="build-status">Live</span>
+        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a shareable score card for an X profile">
+          <rect x="70" y="22" width="180" height="156" rx="14" fill="#161616" stroke="#c8f23a" stroke-opacity="0.5"/>
+          <circle cx="104" cy="58" r="16" fill="#2a2a2a"/>
+          <rect x="128" y="48" width="70" height="8" rx="4" fill="#f0ede8"/>
+          <rect x="128" y="62" width="46" height="6" rx="3" fill="#666"/>
+          <text x="160" y="118" text-anchor="middle" fill="#c8f23a" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="40">92</text>
+          <text x="160" y="134" text-anchor="middle" fill="#8a8a8a" font-family="DM Sans, sans-serif" font-size="9" letter-spacing="2">SCORE</text>
+          <rect x="88" y="148" width="144" height="5" rx="2.5" fill="#2a2a2a"/><rect x="88" y="148" width="118" height="5" rx="2.5" fill="#c8f23a"/>
+          <rect x="88" y="160" width="144" height="5" rx="2.5" fill="#2a2a2a"/><rect x="88" y="160" width="84" height="5" rx="2.5" fill="#c8f23a" fill-opacity="0.6"/>
+          <text x="238" y="44" text-anchor="end" fill="#f0ede8" font-family="Arial, sans-serif" font-weight="700" font-size="14">𝕏</text>
+        </svg>
+      </div>
+      <div class="build-body">
+        <p class="build-category">Social · API integration</p>
+        <h3 class="build-title">Ronke Score</h3>
+        <p class="build-desc">Pulls a user's data from the X (Twitter) API and turns it into a scored, shareable card people post to show off their profile.</p>
+        <p class="build-proof">Used by hundreds of people on X.</p>
+        <div class="build-actions">
+          <a class="build-link" href="https://ronke-score.vercel.app/" target="_blank" rel="noopener">Open Ronke Score →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. Axie Clash. TODO: swap the SVG for a screenshot -->
+    <article class="build">
+      <div class="build-visual">
+        <span class="build-status">Playable</span>
+        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a browser game scene with a play button">
+          <rect x="0" y="150" width="320" height="50" fill="#1e1e1e"/>
+          <g fill="#2a2a2a">
+            <rect x="30" y="118" width="32" height="32"/><rect x="62" y="118" width="32" height="32" fill="#232323"/>
+            <rect x="230" y="102" width="32" height="48"/><rect x="262" y="86" width="32" height="64" fill="#232323"/>
+          </g>
+          <rect x="120" y="126" width="22" height="24" rx="3" fill="#c8f23a"/>
+          <rect x="126" y="132" width="4" height="4" fill="#0d0d0d"/>
+          <g fill="#c8f23a" fill-opacity="0.7"><rect x="178" y="96" width="8" height="8"/><rect x="196" y="84" width="8" height="8"/><rect x="214" y="72" width="8" height="8"/></g>
+          <circle cx="160" cy="70" r="26" fill="rgba(13,13,13,0.85)" stroke="#c8f23a" stroke-width="2"/>
+          <polygon points="152,58 152,82 172,70" fill="#c8f23a"/>
+        </svg>
+      </div>
+      <div class="build-body">
+        <p class="build-category">Gaming · Browser</p>
+        <h3 class="build-title">Axie Clash</h3>
+        <p class="build-desc">A playable browser game demo, live on the web, designed and built end to end, from game feel and UI to the code.</p>
+        <div class="build-actions">
+          <a class="build-link" href="https://axie-clash.vercel.app/" target="_blank" rel="noopener">Play Axie Clash →</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── DESIGN WORK ── -->
+<section id="design">
+  <p class="section-label">Design work</p>
+  <h2 class="section-title" data-reveal>A glimpse of <span class="dim">what I've designed.</span></h2>
+  <p class="section-intro" data-reveal>Product, web and brand work across Web3, travel, fintech and gaming. Click any piece to enlarge it.</p>
 
   <div class="mosaic">
-    <div class="mosaic-item" data-reveal onclick="openLightbox('sukuri_thumb.webp','Sukuri Protocol, Dashboard UI')">
-      <img src="sukuri_thumb.webp" alt="Sukuri Protocol Dashboard" loading="lazy" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">Sukuri Protocol</div>
-        <div class="mosaic-sub">Dashboard UI, Web3 SaaS</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
-    <div class="mosaic-item" data-reveal onclick="openLightbox('weivsync_thumb.webp','WeivSync, Travel App Onboarding')">
-      <img src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">WeivSync</div>
-        <div class="mosaic-sub">Travel App, Onboarding Flow</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
-    <div class="mosaic-item" data-reveal onclick="openLightbox('purrcoin_thumb.webp','Purrcoin, Web3 Landing Page')">
-      <img src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">Purrcoin ($PURR)</div>
-        <div class="mosaic-sub">Web3 Landing Page</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
-    <div class="mosaic-item" data-reveal onclick="openLightbox('xnaira_thumb.webp','XNaira, Crypto Exchange')">
-      <img src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">XNaira</div>
-        <div class="mosaic-sub">Crypto Exchange</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
-    <div class="mosaic-item" data-reveal onclick="openLightbox('ronke_thumb.webp','Ronke Rice Farmers, Web3 Gaming UI')">
-      <img src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" style="object-position:top;" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">Ronke Rice Farmers</div>
-        <div class="mosaic-sub">Web3 Game UI</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
-    <div class="mosaic-item" data-reveal onclick="openLightbox('logofolio_thumb.webp','Logofolio, 30+ Brand Identities')">
-      <img src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
-      <div class="mosaic-overlay">
-        <div class="mosaic-label">Logofolio</div>
-        <div class="mosaic-sub">30+ Brand Identities</div>
-      </div>
-      <div class="mosaic-expand">⤢</div>
-    </div>
+    <button class="mosaic-item" data-reveal data-src="sukuri_thumb.webp" data-label="Sukuri Protocol, Dashboard UI">
+      <img src="sukuri_thumb.webp" alt="Sukuri Protocol dashboard" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">Sukuri Protocol</span>
+        <span class="mosaic-sub">Web3 SaaS dashboard, sole designer</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+    <button class="mosaic-item" data-reveal data-src="weivsync_thumb.webp" data-label="WeivSync, Travel App Onboarding">
+      <img src="weivsync_thumb.webp" alt="WeivSync onboarding screens" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">WeivSync</span>
+        <span class="mosaic-sub">Travel app, onboarding flow</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+    <button class="mosaic-item" data-reveal data-src="purrcoin_thumb.webp" data-label="Purrcoin, Web3 Landing Page">
+      <img src="purrcoin_thumb.webp" alt="Purrcoin landing page" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">Purrcoin ($PURR)</span>
+        <span class="mosaic-sub">Web3 landing page</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+    <button class="mosaic-item" data-reveal data-src="xnaira_thumb.webp" data-label="XNaira, Crypto Exchange">
+      <img src="xnaira_thumb.webp" alt="XNaira landing page" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">XNaira</span>
+        <span class="mosaic-sub">Crypto &amp; gift card exchange</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+    <button class="mosaic-item" data-reveal data-src="ronke_thumb.webp" data-label="Ronke Rice Farmers, Web3 Game UI">
+      <img src="ronke_thumb.webp" alt="Ronke Rice Farmers game interface" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">Ronke Rice Farmers</span>
+        <span class="mosaic-sub">Web3 game UI</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+    <button class="mosaic-item" data-reveal data-src="logofolio_thumb.webp" data-label="Logofolio, Selected Brand Identities">
+      <img src="logofolio_thumb.webp" alt="Grid of logos designed for client brands" loading="lazy" />
+      <span class="mosaic-overlay">
+        <span class="mosaic-label">Logofolio</span>
+        <span class="mosaic-sub">Selected brand identities</span>
+      </span>
+      <span class="mosaic-expand" aria-hidden="true">⤢</span>
+    </button>
+  </div>
+
+  <div class="more-work">
+    <span class="more-work-label">More case studies on Behance:</span>
+    <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" rel="noopener">Transcend <span>· HealthTech</span></a>
+    <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" rel="noopener">Afrofans <span>· Creator platform</span></a>
+    <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" rel="noopener">Skateverse <span>· Web3 game</span></a>
+    <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" rel="noopener">Suntok <span>· Web</span></a>
+    <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" rel="noopener">Steelseries <span>· Product page</span></a>
   </div>
 </section>
 
 <!-- ── LIGHTBOX ── -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxLabel">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">✕</button>
   <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   <div class="lightbox-label" id="lightboxLabel"></div>
 </div>
 
-<!-- ── EXPERIENCE (accordion) ── -->
-<section id="work">
-  <p class="section-label">Experience</p>
-  <h2 class="section-title" data-reveal>Where I've <span class="dim">made an impact.</span></h2>
-
-  <div class="xp-list" data-reveal>
-
-    <!-- Ronin Radio -->
-    <div class="xp">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
-        <span class="xp-year">Apr 2025, Present</span>
-        <span class="xp-co">Ronin Radio</span>
-        <span class="xp-role">Designer &amp; Operations Lead</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Wearing two hats: leading brand design and running daily social and sponsorship operations.
-              Built the visual identity from scratch and created video content driving consistent audience growth.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Grew engagement and activity by defining the full brand identity from scratch, creating a distinct visual language that elevated Ronin Radio's market presence.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Managed day-to-day social operations, driving consistent brand output across all channels.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Assisted with research and outreach during sponsorship campaigns.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">Brand Identity</span>
-              <span class="tag">Operations</span>
-              <span class="tag">After Effects</span>
-              <span class="tag">Sponsorships</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WeivSync -->
-    <div class="xp">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
-        <span class="xp-year">Sep 2024, Nov 2025</span>
-        <span class="xp-co">WeivSync</span>
-        <span class="xp-role">Senior Product Designer (Contract)</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Contract role focused on delivering polished, end-to-end product design for a travel application,
-              working closely with engineering and product stakeholders in a fast-paced environment.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed end-to-end user flows and high-fidelity interfaces for a travel app, from discovery to booking.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Collaborated directly with engineering and product stakeholders to iterate rapidly, reducing review cycles through clear documentation and interactive prototypes.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">UI Design</span>
-              <span class="tag">User Flows</span>
-              <span class="tag">Figma</span>
-              <span class="tag">Prototyping</span>
-              <span class="tag">Travel</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bloom Studio -->
-    <div class="xp">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
-        <span class="xp-year">Aug 2024, Nov 2025</span>
-        <span class="xp-co">Bloom Studio</span>
-        <span class="xp-role">UI/UX Designer, Web3 Game Studio</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Owned end-to-end product design for a Web3 game studio, delivering UI, marketing assets,
-              and pitch materials while advising leadership on strategy and market positioning.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Increased pitch efficiency by <strong>30-40%</strong> by redesigning and consolidating pitch deck content, enabling faster investor conversations with less material.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed UI screens, in-game guides, and landing pages supporting multiple product launches and investor pitches.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Advised leadership on market positioning and product ideation, influencing strategic decisions that shaped the studio's go-to-market approach.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">UI Design</span>
-              <span class="tag">Figma</span>
-              <span class="tag">Web3</span>
-              <span class="tag">Strategy</span>
-              <span class="tag">Pitch Decks</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sukuri Protocol (open by default) -->
-    <div class="xp open">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="true">
-        <span class="xp-year">Sep 2021, Nov 2022</span>
-        <span class="xp-co">Sukuri Protocol</span>
-        <span class="xp-role">Product Designer</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Sole designer on two complex Web3 SaaS products: a crypto subscription platform
-              and an all-in-one business tooling app. Owned the full design process from research to final handoff.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Cut design review cycles by <strong>~30%</strong> through interactive prototyping and clear documentation, enabling faster feedback loops with engineering and stakeholders.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Designed an end-to-end web application for on-chain subscriptions and business dashboards, covering wireframes through high-fidelity prototypes and a scalable design system.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Built UI for a business suite covering invoicing, payroll, product listings, and a customer database, reducing workflow friction for crypto-native businesses.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">UX Research</span>
-              <span class="tag">Design Systems</span>
-              <span class="tag">Prototyping</span>
-              <span class="tag">Web3</span>
-              <span class="tag">SaaS</span>
-              <span class="tag">Figma</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nestcoin -->
-    <div class="xp">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
-        <span class="xp-year">2020, 2021</span>
-        <span class="xp-co">Nestcoin</span>
-        <span class="xp-role">Business Operations Manager</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Hybrid role straddling product and operations at one of Africa's most prominent Web3 startups.
-              Drove growth strategy, UX quality, and developer acquisition on a gaming platform.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Drove growth in a Web3 gaming platform by leading product strategy, UX research, and competitive analysis, contributing to measurable gains in weekly active users (WAU).</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Conducted UX research and user testing to optimize in-app experiences and improve engagement.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Acquired game developers and integrated titles into the platform, expanding the product catalog.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">Business Ops</span>
-              <span class="tag">Growth Strategy</span>
-              <span class="tag">UX Research</span>
-              <span class="tag">Gaming</span>
-              <span class="tag">Web3</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TLjGraphics -->
-    <div class="xp">
-      <button class="xp-head" onclick="toggleXp(this)" aria-expanded="false">
-        <span class="xp-year">2015, Apr 2020</span>
-        <span class="xp-co">TLjGraphics Studio</span>
-        <span class="xp-role">Freelance Product Designer &amp; Business Consultant</span>
-        <span class="xp-icon">+</span>
-      </button>
-      <div class="xp-body">
-        <div class="xp-inner">
-          <div class="xp-content">
-            <p class="xp-summary">
-              Founded and ran my own design studio for 5 years, delivering brand design, product strategy,
-              and operational consulting for over 100 businesses ranging from startups to established B2B and SaaS companies.
-            </p>
-            <div class="impact-list">
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Delivered <strong>100+ brand identities</strong> across B2B and SaaS, building repeatable brand systems that reduced client onboarding time and ensured cross-team consistency.</span></div>
-              <div class="impact-item"><div class="impact-icon">▲</div><span>Partnered with early-stage startups to translate product ideas into launch-ready designs, directly contributing to go-to-market timelines.</span></div>
-            </div>
-            <div class="tags">
-              <span class="tag">Brand Design</span>
-              <span class="tag">B2B, SaaS</span>
-              <span class="tag">Product Strategy</span>
-              <span class="tag">100+ Clients</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── PROJECTS ── -->
-<section id="projects">
-  <p class="section-label">Selected Work</p>
-  <h2 class="section-title" data-reveal>Projects that <span class="dim">speak for themselves.</span></h2>
-
-  <div class="projects-carousel-wrap" data-reveal>
-    <button class="carousel-btn prev" id="prevBtn" onclick="scrollCarousel(-1)" aria-label="Previous projects">←</button>
-    <button class="carousel-btn next" id="nextBtn" onclick="scrollCarousel(1)" aria-label="Next projects">→</button>
-
-    <div class="projects-carousel" id="projectsCarousel">
-
-      <!-- 1. Sukuri Protocol — ALWAYS FIRST -->
-      <div class="project-card">
-        <img class="project-img" src="sukuri_thumb.webp" alt="Sukuri Protocol" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, SaaS, UI/UX</p>
-          <h3 class="project-title">Sukuri Protocol</h3>
-          <p class="project-desc">End-to-end design of two Web3 SaaS products: a crypto subscription platform and a full business dashboard.</p>
-          <a href="#case-study" class="project-link">Read case study →</a>
-        </div>
-      </div>
-
-      <!-- 2. WeivSync -->
-      <div class="project-card">
-        <img class="project-img" src="weivsync_thumb.webp" alt="WeivSync" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Mobile, Travel, UI/UX</p>
-          <h3 class="project-title">WeivSync — Travel App</h3>
-          <p class="project-desc">End-to-end onboarding flows and high-fidelity UI for a travel recommendation app personalised to each user.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 3. Transcend Case Study — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/62c798176087013.Y3JvcCwzMDE2LDIzNTksMCw5Nw.jpg" alt="Transcend Case Study" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🏥</div>
-        <div class="project-body">
-          <p class="project-category">HealthTech, Mobile, Case Study</p>
-          <h3 class="project-title">Transcend Health App</h3>
-          <p class="project-desc">UX case study for a health tourism app connecting African users to quality healthcare — research, flows, and high-fidelity UI.</p>
-          <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 4. Afrofans — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/a0deca170705033.Y3JvcCw0MDE2LDMxNDEsMCw0Mzc.jpg" alt="Afrofans" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🎵</div>
-        <div class="project-body">
-          <p class="project-category">Brand, Web &amp; Mobile, UI/UX</p>
-          <h3 class="project-title">Afrofans — Creator Platform</h3>
-          <p class="project-desc">Branding and UI/UX for a subscription platform helping African creators monetise their content and grow their fanbase.</p>
-          <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 5. Skateverse — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/d59279173224813.Y3JvcCwyMTYwLDE2ODksMCwxNDA2.png" alt="Skateverse" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🛹</div>
-        <div class="project-body">
-          <p class="project-category">Web3, Gaming, UI/UX</p>
-          <h3 class="project-title">Skateverse UI/UX</h3>
-          <p class="project-desc">Full UI/UX design for a Web3 skateboarding game — crafting an immersive interface that blends gaming culture with on-chain mechanics.</p>
-          <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 6. Suntok — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/485eb8170705291.Y3JvcCwxOTk5LDE1NjQsMCwyMTc.png" alt="Suntok" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🌐</div>
-        <div class="project-body">
-          <p class="project-category">Web Design &amp; Development</p>
-          <h3 class="project-title">Suntok — Web Design</h3>
-          <p class="project-desc">Full website design and development for Suntok — a clean, conversion-focused site with a modern visual language and responsive layout.</p>
-          <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 7. Steelseries — Behance verified -->
-      <div class="project-card">
-        <img class="project-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/09b7f2173225225.Y3JvcCwyMTYwLDE2ODksMCw1MDI.png" alt="Steelseries" loading="lazy" onerror="this.parentElement.querySelector('.placeholder-img').style.display='flex';this.style.display='none'" />
-        <div class="placeholder-img" style="display:none">🎮</div>
-        <div class="project-body">
-          <p class="project-category">Gaming, Product Page, UI</p>
-          <h3 class="project-title">Steelseries Product Page</h3>
-          <p class="project-desc">Concept product page redesign for Steelseries — high-impact layout focused on showcasing gaming peripherals with clarity and energy.</p>
-          <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" class="project-link">View on Behance →</a>
-        </div>
-      </div>
-
-      <!-- 8. Ronke Rice Farmers -->
-      <div class="project-card">
-        <img class="project-img" src="ronke_thumb.webp" alt="Ronke Rice Farmers" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Gaming, UI/UX</p>
-          <h3 class="project-title">Ronke Rice Farmers</h3>
-          <p class="project-desc">Full game UI for a Web3 farming game with real-time stats, resource management, and an isometric canvas view.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 9. Purrcoin -->
-      <div class="project-card">
-        <img class="project-img" src="purrcoin_thumb.webp" alt="Purrcoin" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Landing Page, UI</p>
-          <h3 class="project-title">Purrcoin ($PURR)</h3>
-          <p class="project-desc">High-energy Web3 landing page for a meme coin, designed for desktop and mobile with custom illustrations.</p>
-          <a href="https://tonyliljon.webflow.io/project/gohard" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 10. XNaira -->
-      <div class="project-card">
-        <img class="project-img" src="xnaira_thumb.webp" alt="XNaira" loading="lazy" />
-        <div class="project-body">
-          <p class="project-category">Web3, Landing Page, UI</p>
-          <h3 class="project-title">XNaira — Crypto Exchange</h3>
-          <p class="project-desc">Landing page for a crypto and gift card trading platform — focused on trust, clarity, and conversion.</p>
-          <a href="https://tonyliljon.webflow.io/project/xnaira" target="_blank" class="project-link">View project →</a>
-        </div>
-      </div>
-
-      <!-- 11. Logofolio -->
-      <div class="project-card">
-        <img class="project-img" src="logofolio_thumb.webp" alt="Logofolio" loading="lazy" style="object-position:center; background:#111;" />
-        <div class="project-body">
-          <p class="project-category">Brand Identity, Logo Design</p>
-          <h3 class="project-title">Logofolio — 30+ Brands</h3>
-          <p class="project-desc">Brand identities across gaming, fintech, food, real estate, and media over 10 years of freelance work.</p>
-          <a href="https://tonyliljon.webflow.io" target="_blank" class="project-link">View portfolio →</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ── FIGMA EMBEDS ── -->
 <section id="figma">
-  <p class="section-label">Live Design Files</p>
+  <p class="section-label">Live design files</p>
   <h2 class="section-title" data-reveal>Explore my work <span class="dim">in Figma.</span></h2>
+  <p class="section-intro" data-reveal>The real working files, not just the final screenshots.</p>
 
-  <div class="figma-tabs" data-reveal>
-    <button class="figma-tab active" onclick="switchFigma(0)">WeivSync</button>
-    <button class="figma-tab" onclick="switchFigma(1)">GrootSwap</button>
-    <button class="figma-tab" onclick="switchFigma(2)">Skateverse</button>
-    <button class="figma-tab" onclick="switchFigma(3)">MegaPurr</button>
-    <button class="figma-tab" onclick="switchFigma(4)">Sukuri</button>
-    <button class="figma-tab" onclick="switchFigma(5)">XNaira</button>
-    <button class="figma-tab" onclick="switchFigma(6)">Sukuri Wireframe</button>
+  <div class="figma-tabs" role="tablist" aria-label="Figma files" data-reveal>
+    <button class="figma-tab" role="tab" id="ftab-0" aria-controls="figma-0" aria-selected="true">WeivSync</button>
+    <button class="figma-tab" role="tab" id="ftab-1" aria-controls="figma-1" aria-selected="false" tabindex="-1">Sukuri</button>
+    <button class="figma-tab" role="tab" id="ftab-2" aria-controls="figma-2" aria-selected="false" tabindex="-1">Sukuri Wireframe</button>
+    <button class="figma-tab" role="tab" id="ftab-3" aria-controls="figma-3" aria-selected="false" tabindex="-1">GrootSwap</button>
+    <button class="figma-tab" role="tab" id="ftab-4" aria-controls="figma-4" aria-selected="false" tabindex="-1">Skateverse</button>
+    <button class="figma-tab" role="tab" id="ftab-5" aria-controls="figma-5" aria-selected="false" tabindex="-1">MegaPurr</button>
+    <button class="figma-tab" role="tab" id="ftab-6" aria-controls="figma-6" aria-selected="false" tabindex="-1">XNaira</button>
   </div>
 
-  <div class="figma-panel active" id="figma-0">
+  <div class="figma-panel" role="tabpanel" id="figma-0" aria-labelledby="ftab-0">
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>WeivSync — Travel App</span><a href="https://embed.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="WeivSync Figma file" src="https://embed.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>WeivSync — Travel App</span><a href="https://www.figma.com/design/stUABFrOjOIEIitvI6d6RV/WeivSync?node-id=3-3" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-1">
+  <div class="figma-panel" role="tabpanel" id="figma-1" aria-labelledby="ftab-1" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>GrootSwap — DeFi Exchange</span><a href="https://embed.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="Sukuri Protocol Figma file" src="https://embed.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Sukuri Protocol — Full Design</span><a href="https://www.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-2">
+  <div class="figma-panel" role="tabpanel" id="figma-2" aria-labelledby="ftab-2" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>Skateverse — Web3 Game</span><a href="https://embed.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="Sukuri wireframe Figma file" src="https://embed.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Sukuri.io — Wireframe</span><a href="https://www.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-3">
+  <div class="figma-panel" role="tabpanel" id="figma-3" aria-labelledby="ftab-3" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>MegaPurr — Website</span><a href="https://embed.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="GrootSwap Figma file" src="https://embed.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>GrootSwap — DeFi Exchange</span><a href="https://www.figma.com/design/Q5cukfVVozmrirVQaErE6v/GrootSwap?node-id=0-1" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-4">
+  <div class="figma-panel" role="tabpanel" id="figma-4" aria-labelledby="ftab-4" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>Sukuri Protocol — Full Design</span><a href="https://embed.figma.com/design/GigaZMBLlqZ5VDQ4Rkct7e/Project-Sukuri?node-id=15-487&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="Skateverse Figma file" src="https://embed.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>Skateverse — Web3 Game</span><a href="https://www.figma.com/design/N7kSkor7ADz09kxyEAG1tD/Skateverse?node-id=0-1" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-5">
+  <div class="figma-panel" role="tabpanel" id="figma-5" aria-labelledby="ftab-5" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>XNaira — Website Design</span><a href="https://embed.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="MegaPurr website Figma file" src="https://embed.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>MegaPurr — Website</span><a href="https://www.figma.com/design/QmGWMHB4kU6lOGz0TrkdmY/MegaPurr-Website?node-id=0-1" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
-  <div class="figma-panel" id="figma-6">
+  <div class="figma-panel" role="tabpanel" id="figma-6" aria-labelledby="ftab-6" hidden>
     <div class="figma-frame-wrap">
-      <iframe src="https://embed.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
-      <div class="figma-label"><span>Sukuri.io — Wireframe</span><a href="https://embed.figma.com/design/PIZsuOWXbnRfawf7VC9hDZ/Sukuri.io?node-id=0-1&embed-host=share" target="_blank">Open in Figma →</a></div>
+      <iframe title="XNaira website Figma file" src="https://embed.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1&embed-host=share" allowfullscreen loading="lazy"></iframe>
+      <div class="figma-label"><span>XNaira — Website Design</span><a href="https://www.figma.com/design/EywoNZr3net4mVIGOvpFDB/xnaira-website--Copy-?node-id=0-1" target="_blank" rel="noopener">Open in Figma →</a></div>
     </div>
   </div>
 </section>
 
-<!-- ── CASE STUDY: SUKURI PROTOCOL ── -->
-<section id="case-study">
-  <p class="section-label">Case Study</p>
-  <h2 class="section-title" data-reveal>Deep dive: <span class="dim">Sukuri Protocol.</span></h2>
+<!-- ── EXPERIENCE (compact) ── -->
+<section id="experience">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title" data-reveal>Where I've <span class="dim">made an impact.</span></h2>
+  <p class="section-intro" data-reveal>The short version. Full details are on my résumé, available on request.</p>
 
-  <div class="cs-hero" data-reveal>
-    <div>
-      <div class="cs-tag">Web3 · SaaS · Product Design</div>
-      <h2 class="cs-title">Designing a business operating system for the on-chain economy</h2>
-      <p class="cs-subtitle">Sukuri Protocol needed two things at once: a crypto subscription platform for creators and businesses, and a full-featured business dashboard. I was the sole designer, owning everything from research to final handoff.</p>
-      <div class="cs-meta-row">
-        <div><div class="cs-meta-label">Role</div><div class="cs-meta-value">Senior Product Designer</div></div>
-        <div><div class="cs-meta-label">Duration</div><div class="cs-meta-value">Sep 2021 – Nov 2022</div></div>
-        <div><div class="cs-meta-label">Platform</div><div class="cs-meta-value">Web App</div></div>
-        <div><div class="cs-meta-label">Tools</div><div class="cs-meta-value">Figma, FigJam</div></div>
-      </div>
+  <div class="xp-list" data-reveal>
+    <div class="xp-row current">
+      <span class="xp-year">Current</span>
+      <div><div class="xp-co">Independent</div><div class="xp-role">Design Engineer &amp; Product Consultant</div></div>
+      <p class="xp-note">Designing and shipping live apps with AI-assisted code, and helping teams with product strategy and operations.</p>
     </div>
-    <div class="cs-img-wrap">
-      <img src="sukuri_thumb.webp" alt="Sukuri Protocol Dashboard" />
+    <div class="xp-row current">
+      <span class="xp-year">Apr 2025 – Present</span>
+      <div><div class="xp-co">Ronin Radio</div><div class="xp-role">Designer &amp; Operations Lead</div></div>
+      <p class="xp-note">Built the brand identity from scratch and run day-to-day social and sponsorship operations.</p>
     </div>
-  </div>
-
-  <div class="cs-blocks">
-
-    <div class="cs-block" data-reveal>
-      <div class="cs-block-label">01 — The Problem</div>
-      <h3>Crypto businesses had no infrastructure built for them</h3>
-      <p>Web3 businesses were stitching together Web2 tools that weren't built for on-chain payments, wallet-based identities, or token-gated access. They couldn't invoice in crypto, manage subscribers on-chain, or track business performance in one place.</p>
-      <p>The brief was clear: design a product suite that lets any business operate entirely on-chain — subscriptions, invoicing, payroll, customer management — with a UI that feels familiar and trustworthy, not intimidating.</p>
+    <div class="xp-row">
+      <span class="xp-year">Sep 2024 – Nov 2025</span>
+      <div><div class="xp-co">WeivSync</div><div class="xp-role">Senior Product Designer (Contract)</div></div>
+      <p class="xp-note">End-to-end flows and high-fidelity UI for a travel app, from discovery to booking.</p>
     </div>
-
-    <div class="cs-block" data-reveal>
-      <div class="cs-block-label">02 — Research &amp; Discovery</div>
-      <h3>Understanding both the user and the ecosystem</h3>
-      <div class="cs-two-col">
-        <div>
-          <p>I conducted competitive analysis across Web2 SaaS tools (Stripe, Notion, QuickBooks) and Web3-native alternatives to identify gaps. I ran 6 stakeholder interviews with crypto business owners to understand their actual workflows.</p>
-          <p>Key insight: users trusted Web2 dashboards because they were familiar. The biggest barrier wasn't crypto — it was visual complexity and unclear affordances.</p>
-        </div>
-        <div>
-          <p><strong>Key findings:</strong></p>
-          <div class="cs-list" style="margin-top:0.75rem;">
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Users wanted Web2-level clarity with Web3 capabilities underneath</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Wallet address display needed to feel native, not technical</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Subscription management was the most requested missing feature in Web3</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Dashboard data needed to be scannable in under 5 seconds</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="xp-row">
+      <span class="xp-year">Aug 2024 – Nov 2025</span>
+      <div><div class="xp-co">Bloom Studio</div><div class="xp-role">UI/UX Designer, Web3 Game Studio</div></div>
+      <p class="xp-note">Made pitches <strong>30–40% more efficient</strong> by rebuilding the deck; designed game UI and landing pages; advised leadership on positioning.</p>
     </div>
-
-    <div class="cs-block" data-reveal>
-      <div class="cs-block-label">03 — Design Process</div>
-      <h3>From wireframes to a scalable design system</h3>
-      <p>I started with low-fidelity wireframes in FigJam to map all user flows across both products: the subscription platform and the business dashboard. Once flows were validated with the team, I moved to high-fidelity in Figma.</p>
-      <p>The design system became the backbone — reusable components for tables, cards, charts, wallet displays, status indicators, and form patterns. This meant engineers could build faster and the product stayed consistent as it scaled.</p>
-      <div class="cs-two-col" style="margin-top:1.5rem;">
-        <div>
-          <p><strong>Subscription Platform covered:</strong></p>
-          <div class="cs-list" style="margin-top:0.75rem;">
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Onboarding and wallet connection flow</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Plan creation and pricing configuration</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Subscriber management and analytics</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Token-gated access UI patterns</span></div>
-          </div>
-        </div>
-        <div>
-          <p><strong>Business Dashboard covered:</strong></p>
-          <div class="cs-list" style="margin-top:0.75rem;">
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Earnings overview with real-time charts</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Invoice creation and payment tracking</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Customer database with wallet lookup</span></div>
-            <div class="cs-list-item"><span class="cs-dot"></span><span>Payroll module for team payments in crypto</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="xp-row">
+      <span class="xp-year">Sep 2021 – Nov 2022</span>
+      <div><div class="xp-co">Sukuri Protocol</div><div class="xp-role">Product Designer (Sole Designer)</div></div>
+      <p class="xp-note">Designed two Web3 SaaS products and their design system; cut design review cycles by <strong>~30%</strong> with interactive prototypes.</p>
     </div>
-
-    <div class="cs-block" data-reveal>
-      <div class="cs-block-label">04 — Challenges</div>
-      <h3>Designing for a product that didn't exist yet</h3>
-      <p>There were no established design patterns for on-chain business tooling. Every decision — how to show a wallet address, how to represent pending blockchain transactions, how to make "payroll in crypto" feel safe — required first-principles thinking.</p>
-      <p>Working as the sole designer also meant I had to prioritise ruthlessly. I focused on the highest-traffic flows first and built the design system in parallel, so every screen I added benefited from the components already in place.</p>
+    <div class="xp-row">
+      <span class="xp-year">2020 – 2021</span>
+      <div><div class="xp-co">Nestcoin</div><div class="xp-role">Business Operations Manager</div></div>
+      <p class="xp-note">Led product strategy, UX research and developer acquisition for a Web3 gaming platform, growing weekly active users.</p>
     </div>
-
-    <div class="cs-block" data-reveal>
-      <div class="cs-block-label">05 — Outcome &amp; Impact</div>
-      <h3>A faster, cleaner feedback loop — and a product ready to ship</h3>
-      <div class="cs-metrics">
-        <div class="cs-metric">
-          <div class="cs-metric-num">~30%</div>
-          <div class="cs-metric-label">Reduction in design review cycles via interactive prototyping</div>
-        </div>
-        <div class="cs-metric">
-          <div class="cs-metric-num">2</div>
-          <div class="cs-metric-label">Full product suites designed end-to-end as sole designer</div>
-        </div>
-        <div class="cs-metric">
-          <div class="cs-metric-num">1</div>
-          <div class="cs-metric-label">Scalable design system powering both products</div>
-        </div>
-      </div>
-      <p style="margin-top:1.5rem;">By using interactive prototypes throughout the process, I reduced back-and-forth with engineering significantly. Developers could experience the intended behavior directly in Figma rather than interpreting static specs — cutting review cycles by approximately 30% and shipping screens faster.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── SKILLS ── -->
-<section id="skills">
-  <p class="section-label">Capabilities</p>
-  <h2 class="section-title" data-reveal>What I <span class="dim">bring to the table.</span></h2>
-
-  <div class="skills-grid" data-reveal>
-    <div class="skill-card">
-      <h4>AI &amp; Emerging Tools</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Generative AI</span>
-        <span class="skill-pill">AI-assisted Design</span>
-        <span class="skill-pill">Prompt Engineering</span>
-        <span class="skill-pill">AI Workflows</span>
-        <span class="skill-pill">ChatGPT, Claude, Midjourney</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>Design</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">UI Design</span>
-        <span class="skill-pill">UX Research</span>
-        <span class="skill-pill">Wireframing</span>
-        <span class="skill-pill">Prototyping</span>
-        <span class="skill-pill">Design Systems</span>
-        <span class="skill-pill">Brand Identity</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>Tools</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Figma</span>
-        <span class="skill-pill">Webflow</span>
-        <span class="skill-pill">Adobe Illustrator</span>
-        <span class="skill-pill">Photoshop</span>
-        <span class="skill-pill">After Effects</span>
-        <span class="skill-pill">WordPress</span>
-        <span class="skill-pill">Corel Draw</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>Business Ops</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Growth Strategy</span>
-        <span class="skill-pill">Competitive Analysis</span>
-        <span class="skill-pill">OKRs &amp; Planning</span>
-        <span class="skill-pill">Stakeholder Mgmt</span>
-        <span class="skill-pill">Partnership Dev</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>No-Code &amp; Dev</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Webflow Dev</span>
-        <span class="skill-pill">WordPress</span>
-        <span class="skill-pill">No-Code Tools</span>
-        <span class="skill-pill">HTML / CSS</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>Domains</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Web3 / DeFi</span>
-        <span class="skill-pill">Gaming</span>
-        <span class="skill-pill">SaaS / B2B</span>
-        <span class="skill-pill">HealthTech</span>
-        <span class="skill-pill">Creator Economy</span>
-        <span class="skill-pill">Fintech</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <h4>Soft Skills</h4>
-      <div class="skill-pills">
-        <span class="skill-pill">Leadership</span>
-        <span class="skill-pill">Cross-functional Collab</span>
-        <span class="skill-pill">Problem Solving</span>
-        <span class="skill-pill">Communication</span>
-      </div>
+    <div class="xp-row">
+      <span class="xp-year">2015 – Apr 2020</span>
+      <div><div class="xp-co">TLjGraphics Studio</div><div class="xp-role">Founder, Design &amp; Business Consulting</div></div>
+      <p class="xp-note">Ran my own studio for 5 years, delivering brand, product and operations work for <strong>100+ businesses</strong>.</p>
     </div>
   </div>
 </section>
@@ -1767,30 +1419,19 @@
 
   <div class="about-grid" data-reveal>
     <div class="about-text">
-      <p>I'm <strong>Anthony Littlejohn</strong>, a Senior Product Designer and Business Operations Manager with over <strong>10 years of experience</strong> across Web3, gaming, SaaS, and B2B industries.</p>
-      <p>My edge isn't just good design. It's that I understand <strong>how businesses operate</strong>. I've run ops, acquired partners, built growth strategies, and shipped full products, not just handed over files. I also leverage <strong>generative AI</strong> to accelerate workflows and prototype faster.</p>
-      <p>I'm looking to bring this blend of design thinking and operational experience to a <strong>world-class product team</strong>, wherever great work is being done.</p>
+      <p>I'm <strong>Anthony Littlejohn</strong>, a <strong>Design Engineer</strong> who also works on product strategy and operations. I've spent 10+ years across Web3, gaming, SaaS and B2B, first as a designer, then running operations, and now building the products myself.</p>
+      <p>AI changed how I work. I use it to <strong>go from idea to a live, working product</strong>, which lets me test real things with real users instead of handing over static files. Pair that with an operator's view of how businesses run, and I can take a product from strategy to shipped.</p>
+      <p>I'm looking for a team or client that wants someone who can <strong>think, design and build</strong>.</p>
       <p>Outside of work: gaming, boxing, and watching food recipes on YouTube.</p>
-
-      <div class="about-certs">
-        <h4>Certifications</h4>
-        <div class="cert-item"><span class="cert-dot"></span> Google UX Design Professional Certificate</div>
-        <div class="cert-item"><span class="cert-dot"></span> Google AI Professional Certificate</div>
-        <div class="cert-item"><span class="cert-dot"></span> Complete Web Design: Figma to Webflow</div>
-        <div class="cert-item"><span class="cert-dot"></span> UI/UX Design — Verified</div>
-      </div>
     </div>
 
-    <div>
-      <div class="about-card">
-        <p class="about-card-title">Quick Profile</p>
-        <div class="about-stat-row"><span>Location</span><span>Remote / Relocation</span></div>
-        <div class="about-stat-row"><span>Availability</span><span>Open to opportunities</span></div>
-        <div class="about-stat-row"><span>Experience</span><span>10+ years</span></div>
-        <div class="about-stat-row"><span>Education</span><span>BSc. Social Sciences (Economics), Babcock University</span></div>
-        <div class="about-stat-row"><span>Languages</span><span>English (fluent)</span></div>
-        <div class="about-stat-row"><span>Email</span><span><a href="mailto:tonyliljon@gmail.com">tonyliljon@gmail.com</a></span></div>
-      </div>
+    <div class="about-card">
+      <p class="about-card-title">Quick profile</p>
+      <div class="about-stat-row"><span>Focus</span><span>Design Engineering, Product Strategy, Ops</span></div>
+      <div class="about-stat-row"><span>Location</span><span>Remote / Relocation</span></div>
+      <div class="about-stat-row"><span>Availability</span><span>Full-time roles &amp; consulting</span></div>
+      <div class="about-stat-row"><span>Education</span><span>BSc. Economics, Babcock University</span></div>
+      <div class="about-stat-row"><span>Certifications</span><span>Google UX Design · Google AI · Figma to Webflow</span></div>
     </div>
   </div>
 </section>
@@ -1799,22 +1440,26 @@
 <section id="contact">
   <p class="section-label">Let's talk</p>
   <h2 class="contact-title" data-reveal>Ready when <span class="highlight">you are.</span></h2>
-  <p class="contact-intro">I'm actively looking for UI/UX or Product Design roles globally. If you're building something great, let's connect.</p>
+  <p class="contact-intro">Hiring a design engineer, or need help with product strategy or operations? Send me a note.</p>
   <div class="contact-links">
     <a href="mailto:tonyliljon@gmail.com" class="contact-link" data-magnetic>✉ tonyliljon@gmail.com</a>
-    <a href="https://tonyliljon.webflow.io" target="_blank" class="contact-link" data-magnetic>🌐 Portfolio</a>
-    <a href="https://www.linkedin.com/in/tonyliljon" target="_blank" class="contact-link" data-magnetic>💼 LinkedIn</a>
+    <a href="https://www.linkedin.com/in/tonyliljon" target="_blank" rel="noopener" class="contact-link" data-magnetic>💼 LinkedIn</a>
   </div>
 </section>
+
+</main>
 
 <!-- ── FOOTER ── -->
 <footer>
   <span>© 2026 Anthony Littlejohn</span>
-  <span class="tagline">I get shit done.</span>
-  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to top</a>
+  <span class="tagline">Design it. Build it. Ship it.</span>
+  <a href="#" id="toTop">↑ Back to top</a>
 </footer>
 
 <script>
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); } });
@@ -1829,23 +1474,24 @@
     progress.style.width = pct + '%';
   }, { passive: true });
 
-  // Experience accordion: one open at a time
-  function toggleXp(head) {
-    const item = head.closest('.xp');
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.xp').forEach(x => {
-      x.classList.remove('open');
-      x.querySelector('.xp-head').setAttribute('aria-expanded', 'false');
-    });
-    if (!wasOpen) {
-      item.classList.add('open');
-      head.setAttribute('aria-expanded', 'true');
-    }
-  }
+  // Back to top
+  document.getElementById('toTop').addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: noMotion ? 'auto' : 'smooth' });
+  });
+
+  // Mobile menu
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  const setMenu = open => {
+    nav.classList.toggle('menu-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
   // Magnetic buttons
-  const fine = window.matchMedia('(pointer: fine)').matches;
-  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (fine && !noMotion) {
     document.querySelectorAll('[data-magnetic]').forEach(el => {
       el.addEventListener('mousemove', e => {
@@ -1888,7 +1534,8 @@
     }
   }
 
-  // Flying mascot: scroll-driven flight along the page edges
+  // Flying mascot: scroll-driven flight along the page edges.
+  // The animation loop only runs while the mascot is catching up to its target, then sleeps until the next scroll.
   const flyer = document.getElementById('flyer');
   if (flyer && !noMotion) {
     const isNarrow = window.matchMedia('(max-width: 768px)').matches;
@@ -1896,15 +1543,14 @@
     // waypoints: [scroll progress, x in vw, y in vh] — hugs the edges, crosses between sections
     const WPTS = [
       [0.050, -12, 40],
-      [0.115,  85, 20],
-      [0.200,  89, 58],
-      [0.285,   6, 66],
-      [0.370,   5, 26],
-      [0.460,  86, 32],
-      [0.560,  90, 62],
-      [0.660,   7, 56],
-      [0.760,   6, 22],
-      [0.860,  85, 28],
+      [0.130,  85, 20],
+      [0.230,  89, 58],
+      [0.330,   6, 66],
+      [0.430,   5, 26],
+      [0.530,  86, 32],
+      [0.630,  90, 62],
+      [0.730,   7, 56],
+      [0.830,   6, 22],
       [0.945,  46, 36],
       [1.001,  46, -22]
     ];
@@ -1921,20 +1567,20 @@
       return [WPTS[WPTS.length - 1][1], WPTS[WPTS.length - 1][2]];
     }
 
-    let cx = -300, cy = 300, dir = 1, shown = false;
-    function fly(ts) {
+    let cx = -300, cy = 300, dir = 1, shown = false, running = false;
+    function fly() {
       const h = document.documentElement;
       const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
       const wp = pathAt(p);
       if (!wp) {
         if (shown) { flyer.style.opacity = 0; shown = false; }
-        requestAnimationFrame(fly);
+        running = false;
         return;
       }
-      let txv = wp[0], tyv = wp[1];
+      let txv = wp[0];
       if (isNarrow) txv = 80 + (txv - 50) * 0.14;
       const tx = (txv / 100) * window.innerWidth;
-      const ty = (tyv / 100) * window.innerHeight + Math.sin(ts / 650) * 6;
+      const ty = (wp[1] / 100) * window.innerHeight;
       if (!shown) {
         flyer.style.opacity = 1;
         shown = true;
@@ -1949,66 +1595,66 @@
       const tilt = Math.max(-13, Math.min(13, vy * 2.4)) * dir - (speed > 1.2 ? dir * 2 : 0);
       flyer.style.transform = `translate(${cx - SIZE / 2}px, ${cy - SIZE / 2}px) scaleX(${dir}) rotate(${tilt}deg)`;
       flyer.style.setProperty('--trailO', Math.min(1, speed / 8).toFixed(2));
+      if (Math.abs(tx - cx) < 0.5 && Math.abs(ty - cy) < 0.5) { running = false; return; }
       requestAnimationFrame(fly);
     }
-    requestAnimationFrame(fly);
+    const wake = () => { if (!running) { running = true; requestAnimationFrame(fly); } };
+    window.addEventListener('scroll', wake, { passive: true });
+    window.addEventListener('resize', wake);
+    wake();
   }
 
   // Lightbox
-  function openLightbox(src, label) {
-    document.getElementById('lightboxImg').src = src;
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  let lastFocus = null;
+  function openLightbox(src, label, alt) {
+    lastFocus = document.activeElement;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || label;
     document.getElementById('lightboxLabel').textContent = label;
-    document.getElementById('lightbox').classList.add('open');
+    lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
   }
   function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
+    if (!lightbox.classList.contains('open')) return;
+    lightbox.classList.remove('open');
     document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  document.querySelectorAll('.mosaic-item').forEach(item => {
+    item.addEventListener('click', () => openLightbox(item.dataset.src, item.dataset.label, item.querySelector('img').alt));
+  });
+  lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'Tab') { e.preventDefault(); lightboxClose.focus(); } // only one control in the dialog
+  });
 
-  // Figma tabs
+  // Figma tabs (arrow keys move between tabs)
+  const figmaTabs = Array.from(document.querySelectorAll('.figma-tab'));
   function switchFigma(index) {
-    document.querySelectorAll('.figma-tab').forEach((t, i) => t.classList.toggle('active', i === index));
-    document.querySelectorAll('.figma-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+    figmaTabs.forEach((t, i) => {
+      const on = i === index;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
   }
-
-  // Projects carousel: auto-loop, pause on hover, arrows nudge
-  let scrollCarousel = () => {};
-  const track = document.getElementById('projectsCarousel');
-  if (track) {
-    const wrap = track.parentElement;
-    if (noMotion) {
-      // reduced motion: plain horizontal scroll, no auto-loop
-      wrap.classList.add('static');
-      scrollCarousel = dir => wrap.scrollBy({ left: dir * 340 });
-    } else {
-      // duplicate cards once for a seamless loop
-      Array.from(track.children).forEach(card => track.appendChild(card.cloneNode(true)));
-      let half = 0;
-      const gap = 20; // 1.25rem
-      const measure = () => { half = (track.scrollWidth + gap) / 2; };
-      measure();
-      window.addEventListener('resize', measure);
-
-      let current = 0, target = 0, paused = false;
-      const SPEED = 0.55; // px per frame
-      wrap.addEventListener('mouseenter', () => paused = true);
-      wrap.addEventListener('mouseleave', () => paused = false);
-      wrap.addEventListener('touchstart', () => paused = true, { passive: true });
-      wrap.addEventListener('touchend', () => setTimeout(() => paused = false, 1200), { passive: true });
-
-      (function frame() {
-        if (!paused) target += SPEED;
-        current += (target - current) * 0.09;
-        const mod = ((current % half) + half) % half;
-        track.style.transform = `translateX(${-mod}px)`;
-        requestAnimationFrame(frame);
-      })();
-
-      scrollCarousel = dir => { target += dir * 340; };
-    }
-  }
+  figmaTabs.forEach((t, i) => {
+    t.addEventListener('click', () => switchFigma(i));
+    t.addEventListener('keydown', e => {
+      let next = null;
+      if (e.key === 'ArrowRight') next = (i + 1) % figmaTabs.length;
+      if (e.key === 'ArrowLeft') next = (i - 1 + figmaTabs.length) % figmaTabs.length;
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = figmaTabs.length - 1;
+      if (next !== null) { e.preventDefault(); switchFigma(next); figmaTabs[next].focus(); }
+    });
+  });
 </script>
 </body>
 </html>
