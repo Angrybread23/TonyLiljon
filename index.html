@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anthony Littlejohn — Design Engineer &amp; Product Strategy Consultant</title>
-  <meta name="description" content="Anthony Littlejohn designs products, builds them with code, no-code and AI, and consults on the product strategy and operations that get them shipped. 10+ years across Web3, gaming, SaaS and B2B." />
+  <title>Anthony Littlejohn — Design Engineer, Product Strategy &amp; Ops</title>
+  <meta name="description" content="Anthony Littlejohn designs products, builds them with code, no-code and AI, and runs the product strategy and operations that get them shipped. 10+ years across Web3, gaming, SaaS and B2B." />
   <meta name="theme-color" content="#0d0d0d" />
-  <!-- Social previews. og:image should be an absolute URL once the site's domain is final. -->
-  <meta property="og:type" content="website" />
+    <meta property="og:type" content="website" />
   <meta property="og:title" content="Anthony Littlejohn — Design Engineer" />
-  <meta property="og:description" content="I design it, build it and ship it. Design engineering, product strategy and ops consulting." />
-  <meta property="og:image" content="hero_bg.webp" />
+  <meta property="og:description" content="I design it, build it and ship it. Design engineering, product strategy and ops." />
+  <meta property="og:url" content="https://tonyliljon.xyz/" />
+  <meta property="og:image" content="https://tonyliljon.xyz/hero_bg.webp" />
+  <link rel="canonical" href="https://tonyliljon.xyz/" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0d0d'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='38' fill='%23c8f23a'%3ET.%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -492,6 +493,41 @@
       .pillars { grid-template-columns: 1fr; }
     }
 
+    .combo {
+      margin-top: 1.1rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.25rem 2rem;
+    }
+    .combo-text h3 { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; margin-bottom: 0.85rem; }
+    .combo-text p { color: var(--gray); font-size: 0.92rem; line-height: 1.75; }
+    .combo-text p + p { margin-top: 0.75rem; }
+    .combo-text strong { color: var(--ink); font-weight: 500; }
+    .combo-steps { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .combo-steps li {
+      display: grid;
+      grid-template-columns: 2rem 5.5rem 1fr;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .combo-steps li:last-child { border-bottom: none; }
+    .combo-steps span { font-family: var(--display); font-weight: 800; color: var(--accent); font-size: 0.78rem; }
+    .combo-steps strong { font-family: var(--display); font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+    @media (max-width: 900px) {
+      .combo { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.75rem 1.4rem; }
+      .combo-steps li { grid-template-columns: 1.75rem 4.75rem 1fr; }
+    }
+
     /* ─── BUILT & LIVE ─── */
     #built { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
     .builds {
@@ -560,8 +596,6 @@
       transition: opacity 0.2s, gap 0.25s;
     }
     .build-link:hover { opacity: 0.85; gap: 0.65rem; }
-    .build-link.pending { background: transparent; color: var(--gray); border: 1px dashed var(--gray-light); cursor: default; }
-    .build-link.pending:hover { opacity: 1; gap: 0.4rem; }
     @media (max-width: 1000px) {
       .builds { grid-template-columns: 1fr 1fr; }
     }
@@ -997,7 +1031,7 @@
         <span class="line"><span>Design</span></span>
         <span class="line"><span class="highlight">Engineer.</span></span>
       </h1>
-      <p class="hero-kicker"><span class="plus">+</span>Product Strategy &amp; Ops Consulting</p>
+      <p class="hero-kicker"><span class="plus">+</span>Product Strategy &amp; Ops</p>
       <p class="hero-desc">
         I <strong>design products, then build and ship them</strong> with code, no-code and AI tools.
         10+ years across Web3, gaming, SaaS and B2B means I also bring
@@ -1053,8 +1087,8 @@
 <!-- ── MARQUEE ── -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>Design Engineering</span><span>Product Strategy</span><span>Ops Consulting</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
-    <span>Design Engineering</span><span>Product Strategy</span><span>Ops Consulting</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
+    <span>Design Engineering</span><span>Product Strategy</span><span>Operations</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
+    <span>Design Engineering</span><span>Product Strategy</span><span>Operations</span><span>AI-Assisted Builds</span><span>UI/UX</span><span>No-Code</span><span>Design Systems</span><span>Web3</span><span>Gaming</span><span>SaaS</span>
   </div>
 </div>
 
@@ -1062,7 +1096,7 @@
 <section id="services">
   <p class="section-label">What I do</p>
   <h2 class="section-title" data-reveal>Design it. Build it. <span class="dim">Run it.</span></h2>
-  <p class="section-intro" data-reveal>Three things I'm hired for, often all at once.</p>
+  <p class="section-intro" data-reveal>Three skill sets, one person. Here's how they fit together.</p>
 
   <div class="pillars" data-reveal>
     <article class="pillar">
@@ -1083,12 +1117,26 @@
     </article>
     <article class="pillar">
       <span class="pillar-num">03</span>
-      <h3>Ops Consulting</h3>
+      <h3>Operations</h3>
       <p>The systems behind the product: growth, partnerships, content and day-to-day operations. I've run ops at Web3 startups and for 100+ client businesses.</p>
       <div class="pills">
         <span class="pill">Growth Strategy</span><span class="pill">Partnerships</span><span class="pill">AI Workflows</span><span class="pill">Brand Systems</span>
       </div>
     </article>
+  </div>
+
+  <div class="combo" data-reveal>
+    <div class="combo-text">
+      <h3>Why one person doing all three matters</h3>
+      <p>Most products lose time in the handoffs: strategy to design, design to engineering, launch to operations. I cover the whole loop, so <strong>nothing gets lost in translation</strong>. I can test an idea against the market, design the experience, build a working version with AI-assisted code, and then run the growth and operations around it.</p>
+      <p>For a business, that means <strong>faster validation, fewer people to coordinate, and products that are designed to be run</strong>, not just launched.</p>
+    </div>
+    <ol class="combo-steps">
+      <li><span>01</span><strong>Strategy</strong>Find the problem worth solving and the market for it.</li>
+      <li><span>02</span><strong>Design</strong>Shape the flows and UI in Figma.</li>
+      <li><span>03</span><strong>Build</strong>Ship a working product with code, no-code and AI.</li>
+      <li><span>04</span><strong>Run</strong>Set up the growth, content and operations behind it.</li>
+    </ol>
   </div>
 </section>
 
@@ -1096,11 +1144,11 @@
 <section id="built">
   <p class="section-label">Built &amp; live</p>
   <h2 class="section-title" data-reveal>Things I've built <span class="dim">that people use.</span></h2>
-  <p class="section-intro" data-reveal>Working products I designed and built end to end, with AI as my pair programmer.</p>
+  <p class="section-intro" data-reveal>Live products I designed and built end to end, with AI as my pair programmer. Click through and try them.</p>
 
   <div class="builds" data-reveal>
 
-    <!-- 1. Confluence. TODO: add live URL and swap the SVG for a screenshot (<img src="confluence_thumb.webp" alt="…">) -->
+    <!-- 1. Confluence. TODO: swap the SVG for a screenshot (<img src="confluence_thumb.webp" alt="…">) -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Live</span>
@@ -1123,12 +1171,12 @@
         <h3 class="build-title">Confluence</h3>
         <p class="build-desc">A trading bot and tracker that logs trading calls by date, so traders can see which callers are actually right and act on better information.</p>
         <div class="build-actions">
-          <span class="build-link pending" aria-disabled="true">Live link coming soon</span>
+          <a class="build-link" href="https://trade-tracker-tawny-eta.vercel.app/" target="_blank" rel="noopener">Open Confluence →</a>
         </div>
       </div>
     </article>
 
-    <!-- 2. X score card. TODO: confirm product name, add live URL and screenshot -->
+    <!-- 2. Ronke Score. TODO: swap the SVG for a screenshot -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Live</span>
@@ -1146,16 +1194,16 @@
       </div>
       <div class="build-body">
         <p class="build-category">Social · API integration</p>
-        <h3 class="build-title">X Score Cards</h3>
+        <h3 class="build-title">Ronke Score</h3>
         <p class="build-desc">Pulls a user's data from the X (Twitter) API and turns it into a scored, shareable card people post to show off their profile.</p>
         <p class="build-proof">Used by hundreds of people on X.</p>
         <div class="build-actions">
-          <span class="build-link pending" aria-disabled="true">Live link coming soon</span>
+          <a class="build-link" href="https://ronke-score.vercel.app/" target="_blank" rel="noopener">Open Ronke Score →</a>
         </div>
       </div>
     </article>
 
-    <!-- 3. Web game. TODO: confirm game name, add live URL and screenshot -->
+    <!-- 3. Axie Clash. TODO: swap the SVG for a screenshot -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Playable</span>
@@ -1174,10 +1222,10 @@
       </div>
       <div class="build-body">
         <p class="build-category">Gaming · Browser</p>
-        <h3 class="build-title">Web Game Demo</h3>
-        <p class="build-desc">A playable game demo running live in the browser, designed and built end to end, from game feel and UI to the code.</p>
+        <h3 class="build-title">Axie Clash</h3>
+        <p class="build-desc">A playable browser game demo, live on the web, designed and built end to end, from game feel and UI to the code.</p>
         <div class="build-actions">
-          <span class="build-link pending" aria-disabled="true">Live link coming soon</span>
+          <a class="build-link" href="https://axie-clash.vercel.app/" target="_blank" rel="noopener">Play Axie Clash →</a>
         </div>
       </div>
     </article>
@@ -1329,7 +1377,7 @@
     <div class="xp-row current">
       <span class="xp-year">Current</span>
       <div><div class="xp-co">Independent</div><div class="xp-role">Design Engineer &amp; Product Consultant</div></div>
-      <p class="xp-note">Designing and shipping live apps with AI-assisted code, and consulting teams on product strategy and operations.</p>
+      <p class="xp-note">Designing and shipping live apps with AI-assisted code, and helping teams with product strategy and operations.</p>
     </div>
     <div class="xp-row current">
       <span class="xp-year">Apr 2025 – Present</span>
@@ -1371,7 +1419,7 @@
 
   <div class="about-grid" data-reveal>
     <div class="about-text">
-      <p>I'm <strong>Anthony Littlejohn</strong>, a <strong>Design Engineer</strong> who also consults on product strategy and operations. I've spent 10+ years across Web3, gaming, SaaS and B2B, first as a designer, then running operations, and now building the products myself.</p>
+      <p>I'm <strong>Anthony Littlejohn</strong>, a <strong>Design Engineer</strong> who also works on product strategy and operations. I've spent 10+ years across Web3, gaming, SaaS and B2B, first as a designer, then running operations, and now building the products myself.</p>
       <p>AI changed how I work. I use it to <strong>go from idea to a live, working product</strong>, which lets me test real things with real users instead of handing over static files. Pair that with an operator's view of how businesses run, and I can take a product from strategy to shipped.</p>
       <p>I'm looking for a team or client that wants someone who can <strong>think, design and build</strong>.</p>
       <p>Outside of work: gaming, boxing, and watching food recipes on YouTube.</p>
