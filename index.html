@@ -552,7 +552,6 @@
       overflow: hidden;
     }
     .build-visual img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-    .build-visual svg { width: 100%; height: 100%; display: block; }
     .build-status {
       position: absolute;
       top: 0.85rem; left: 0.85rem;
@@ -1147,23 +1146,11 @@
 
   <div class="builds" data-reveal>
 
-    <!-- 1. Trade Tracker. TODO: swap the SVG for a screenshot (<img src="tradetracker_thumb.webp" alt="…">) -->
+    <!-- 1. Trade Tracker -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Live</span>
-        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a price chart with trading calls marked">
-          <g stroke="#2a2a2a" stroke-width="1">
-            <line x1="20" y1="50" x2="300" y2="50"/><line x1="20" y1="95" x2="300" y2="95"/><line x1="20" y1="140" x2="300" y2="140"/>
-          </g>
-          <polyline fill="none" stroke="#c8f23a" stroke-width="2.5" stroke-linejoin="round" points="20,150 55,132 85,140 115,104 145,112 175,80 205,92 235,58 265,66 300,40"/>
-          <polygon fill="rgba(200,242,58,0.08)" points="20,150 55,132 85,140 115,104 145,112 175,80 205,92 235,58 265,66 300,40 300,175 20,175"/>
-          <g fill="#0d0d0d" stroke="#c8f23a" stroke-width="2">
-            <circle cx="115" cy="104" r="5"/><circle cx="175" cy="80" r="5"/><circle cx="235" cy="58" r="5"/>
-          </g>
-          <rect x="196" y="112" width="104" height="44" rx="8" fill="#161616" stroke="#2a2a2a"/>
-          <text x="208" y="130" fill="#8a8a8a" font-family="DM Sans, sans-serif" font-size="10">Call · 12 Oct</text>
-          <text x="208" y="147" fill="#c8f23a" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14">+18.4%</text>
-        </svg>
+        <img src="tradetracker_thumb.webp" alt="Trade Tracker screener showing market regime, watchlist performance and scored tokens" loading="lazy" />
       </div>
       <div class="build-body">
         <p class="build-category">Trading · Web app</p>
@@ -1175,21 +1162,11 @@
       </div>
     </article>
 
-    <!-- 2. Ronke Score. TODO: swap the SVG for a screenshot -->
+    <!-- 2. Ronke Score -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Live</span>
-        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a shareable score card for an X profile">
-          <rect x="70" y="22" width="180" height="156" rx="14" fill="#161616" stroke="#c8f23a" stroke-opacity="0.5"/>
-          <circle cx="104" cy="58" r="16" fill="#2a2a2a"/>
-          <rect x="128" y="48" width="70" height="8" rx="4" fill="#f0ede8"/>
-          <rect x="128" y="62" width="46" height="6" rx="3" fill="#666"/>
-          <text x="160" y="118" text-anchor="middle" fill="#c8f23a" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="40">92</text>
-          <text x="160" y="134" text-anchor="middle" fill="#8a8a8a" font-family="DM Sans, sans-serif" font-size="9" letter-spacing="2">SCORE</text>
-          <rect x="88" y="148" width="144" height="5" rx="2.5" fill="#2a2a2a"/><rect x="88" y="148" width="118" height="5" rx="2.5" fill="#c8f23a"/>
-          <rect x="88" y="160" width="144" height="5" rx="2.5" fill="#2a2a2a"/><rect x="88" y="160" width="84" height="5" rx="2.5" fill="#c8f23a" fill-opacity="0.6"/>
-          <text x="238" y="44" text-anchor="end" fill="#f0ede8" font-family="Arial, sans-serif" font-weight="700" font-size="14">𝕏</text>
-        </svg>
+        <img src="ronkescore_thumb.webp" alt="Ronke Score card showing a holder score, rank, percentile and holding breakdown" loading="lazy" style="object-fit:contain; object-position:center; background:#0b1d2e;" />
       </div>
       <div class="build-body">
         <p class="build-category">Social · API integration</p>
@@ -1202,22 +1179,11 @@
       </div>
     </article>
 
-    <!-- 3. Axie Clash. TODO: swap the SVG for a screenshot -->
+    <!-- 3. Axie Clash -->
     <article class="build">
       <div class="build-visual">
         <span class="build-status">Playable</span>
-        <svg viewBox="0 0 320 200" role="img" aria-label="Illustration of a browser game scene with a play button">
-          <rect x="0" y="150" width="320" height="50" fill="#1e1e1e"/>
-          <g fill="#2a2a2a">
-            <rect x="30" y="118" width="32" height="32"/><rect x="62" y="118" width="32" height="32" fill="#232323"/>
-            <rect x="230" y="102" width="32" height="48"/><rect x="262" y="86" width="32" height="64" fill="#232323"/>
-          </g>
-          <rect x="120" y="126" width="22" height="24" rx="3" fill="#c8f23a"/>
-          <rect x="126" y="132" width="4" height="4" fill="#0d0d0d"/>
-          <g fill="#c8f23a" fill-opacity="0.7"><rect x="178" y="96" width="8" height="8"/><rect x="196" y="84" width="8" height="8"/><rect x="214" y="72" width="8" height="8"/></g>
-          <circle cx="160" cy="70" r="26" fill="rgba(13,13,13,0.85)" stroke="#c8f23a" stroke-width="2"/>
-          <polygon points="152,58 152,82 172,70" fill="#c8f23a"/>
-        </svg>
+        <img src="axieclash_thumb.webp" alt="Axie Clash game showing an isometric base with buildings and a tutorial prompt" loading="lazy" style="object-position:center;" />
       </div>
       <div class="build-body">
         <p class="build-category">Gaming · Browser</p>
