@@ -601,103 +601,119 @@
       .builds { grid-template-columns: 1fr; }
     }
 
-    /* ─── DESIGN WORK (mosaic) ─── */
-    #design { background: var(--paper); }
-    .mosaic {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 0.85rem;
+    /* ─── DESIGN WORK (pinned horizontal gallery) ─── */
+    /* Static layout first (phones, reduced motion, no JS); .sw--pinned upgrades it on desktop. */
+    #design { background: var(--paper); padding: 6.5rem 0; }
+    .sw-sticky { position: relative; }
+    .sw-track {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.25rem, 2.6vw, 2.75rem);
+      padding: 0 var(--gutter);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: none;
     }
-    .mosaic-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius);
-      border: 1px solid var(--hairline);
-      cursor: pointer;
-      background: var(--surface);
-      padding: 0;
-      font: inherit;
-      color: inherit;
-      text-align: left;
+    .sw-track::-webkit-scrollbar { display: none; }
+    .sw-intro { flex: 0 0 min(82vw, 440px); scroll-snap-align: start; }
+    .sw-title {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      margin-bottom: 1.25rem;
+    }
+    .sw-title .dim { color: var(--gray); }
+    .sw-title .ch {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(0.25em);
+      transition: opacity 0.6s ease, filter 0.7s ease, transform 0.7s ease;
+      transition-delay: calc(var(--i) * 28ms);
+    }
+    .sw-title.lit .ch { opacity: 1; filter: blur(0); transform: none; }
+    .sw-sub { color: var(--gray); font-size: 0.95rem; max-width: 380px; }
+    .sw-count { margin-top: 1.75rem; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); display: flex; align-items: center; gap: 0.75rem; }
+    .sw-count::after { content: ''; width: 64px; height: 1px; background: var(--accent); }
+
+    .sw-card {
+      flex: 0 0 clamp(270px, 30vw, 470px);
+      scroll-snap-align: start;
+      margin: 0;
+      will-change: transform;
+    }
+    .sw-card:nth-of-type(even) { --lift: 7vh; }
+    .sw-card:nth-of-type(odd) { --lift: -5vh; }
+    .sw-media {
       display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      padding: 0;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      cursor: zoom-in;
+      position: relative;
     }
-    .mosaic-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-    .mosaic-item:nth-child(2) { grid-column: span 5; }
-    .mosaic-item:nth-child(3) { grid-column: span 5; }
-    .mosaic-item:nth-child(4) { grid-column: span 4; }
-    .mosaic-item:nth-child(5) { grid-column: span 4; }
-    .mosaic-item:nth-child(6) { grid-column: span 4; }
-    .mosaic-item img {
+    .sw-media img {
       width: 100%;
       height: 100%;
-      min-height: 200px;
       object-fit: cover;
       object-position: top;
       display: block;
-      transition: transform 0.55s ease;
+      transform: scale(1.08) translateX(var(--px, 0px));
+      transition: transform 0.6s ease;
     }
-    .mosaic-item:nth-child(4) img,
-    .mosaic-item:nth-child(6) img { object-position: center; }
-    .mosaic-item:nth-child(6) img { background: #111; }
-    .mosaic-overlay {
+    .sw-media.center img { object-position: center; background: #111; }
+    .sw-media:hover img, .sw-media:focus-visible img { transform: scale(1.13) translateX(var(--px, 0px)); }
+    .sw-media::after {
+      content: '⤢';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 52%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.25rem;
-    }
-    .mosaic-item:hover .mosaic-overlay,
-    .mosaic-item:focus-visible .mosaic-overlay { opacity: 1; }
-    .mosaic-item:hover img { transform: scale(1.04); }
-    .mosaic-label {
-      font-family: var(--display);
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 0.15rem;
-    }
-    .mosaic-sub { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
-    .mosaic-expand {
-      position: absolute;
-      top: 1rem; right: 1rem;
+      top: 0.9rem; right: 0.9rem;
       width: 32px; height: 32px;
+      border-radius: 50%;
       background: rgba(13,13,13,0.8);
       border: 1px solid var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: var(--accent);
-      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
       opacity: 0;
-      transform: translateY(-6px);
-      transition: opacity 0.3s, transform 0.3s;
+      transition: opacity 0.3s;
     }
-    .mosaic-item:hover .mosaic-expand,
-    .mosaic-item:focus-visible .mosaic-expand { opacity: 1; transform: translateY(0); }
-    @media (hover: none) {
-      .mosaic-overlay { opacity: 1; }
+    .sw-media:hover::after, .sw-media:focus-visible::after { opacity: 1; }
+    .sw-card figcaption {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.15rem 1rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--hairline);
+      margin-top: 0.9rem;
     }
-    @media (max-width: 768px) {
-      .mosaic { grid-template-columns: 1fr 1fr; }
-      .mosaic-item { grid-column: span 2 !important; grid-row: span 1 !important; }
-      .mosaic-item:nth-child(n+3) { grid-column: span 1 !important; }
-    }
+    .sw-name { font-family: var(--display); font-weight: 800; font-size: 1.05rem; }
+    .sw-meta { grid-column: 1; font-size: 0.8rem; color: var(--gray); }
+    .sw-num { grid-column: 2; grid-row: 1 / span 2; align-self: start; font-family: var(--display); font-weight: 800; font-size: 0.8rem; color: var(--accent); }
+
+    .sw-end { flex: 0 0 min(82vw, 420px); scroll-snap-align: start; }
+    .sw-end p { color: var(--gray); font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .sw-end .more-work { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* pinned (desktop): vertical scroll drives the track sideways */
+    .sw--pinned .sw-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; }
+    .sw--pinned .sw-track { overflow: visible; scroll-snap-type: none; padding-left: var(--gutter); padding-right: 12vw; will-change: transform; }
+    .sw--pinned .sw-card { transform: translateY(var(--lift)); }
+    .sw--pinned { padding: 0; }
 
     .more-work {
-      margin-top: 2.25rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid var(--hairline);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 0.6rem 0.75rem;
     }
-    .more-work-label { font-size: 0.78rem; color: var(--gray); margin-right: 0.5rem; }
     .more-work a {
       border: 1px solid var(--hairline);
       background: var(--surface);
@@ -799,49 +815,126 @@
     .figma-label a { color: var(--gray); text-decoration: none; font-size: 0.8rem; white-space: nowrap; }
     .figma-label a:hover { color: var(--accent); }
 
-    /* ─── EXPERIENCE (compact) ─── */
-    #experience { background: var(--paper); }
-    .xp-list { border-top: 1px solid var(--hairline); }
-    .xp-row {
-      display: grid;
-      grid-template-columns: 150px 220px 1fr;
-      gap: 1.5rem;
-      align-items: baseline;
-      padding: 1.35rem 0;
-      border-bottom: 1px solid var(--hairline);
+    /* ─── EXPERIENCE (roles float across a pinned stage) ─── */
+    /* Static layout first: a simple card list. .xf--pinned turns it into the floating stage. */
+    #experience { background: var(--paper); border-top: 1px solid var(--hairline); }
+    .xf-stage { position: relative; }
+    .xf-bg {
+      /* Background slot: add an image or video later, e.g.
+         background: url('experience_bg.webp') center / cover no-repeat; */
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(70% 60% at 50% 45%, rgba(200,242,58,0.07) 0%, rgba(13,13,13,0) 70%);
+      pointer-events: none;
     }
-    .xp-year { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.04em; }
-    .xp-co {
+    .xf-head { position: relative; margin-bottom: 2.5rem; }
+    .xf-title {
       font-family: var(--display);
       font-weight: 800;
-      font-size: 1rem;
       text-transform: uppercase;
-      letter-spacing: 0.01em;
+      font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
     }
-    .xp-role { font-size: 0.82rem; color: var(--gray); margin-top: 0.15rem; }
-    .xp-note { font-size: 0.9rem; color: var(--ink); line-height: 1.6; }
-    .xp-note strong { color: var(--accent); font-weight: 600; }
-    .xp-row.current .xp-year { color: var(--accent); }
-    @media (max-width: 860px) {
-      .xp-row { grid-template-columns: 1fr; gap: 0.35rem; }
+    .xf-title .dim { color: var(--gray); }
+    .xf-meta { margin-top: 1rem; color: var(--gray); font-size: 0.9rem; }
+    .xf-list { list-style: none; position: relative; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .xf-item {
+      background: rgba(22,22,22,0.92);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      backdrop-filter: blur(6px);
     }
+    .xf-item.current { border-color: rgba(200,242,58,0.45); }
+    .xf-year { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+    .xf-item.current .xf-year { color: var(--accent); }
+    .xf-co { font-family: var(--display); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin-top: 0.35rem; letter-spacing: -0.01em; }
+    .xf-role { font-size: 0.85rem; color: var(--gray); margin-bottom: 0.75rem; }
+    .xf-note { font-size: 0.88rem; line-height: 1.6; }
+    .xf-note strong { color: var(--accent); font-weight: 600; }
+    .xf-progress { display: none; }
 
-    /* ─── ABOUT + CONTACT ─── */
-    #about { background: var(--surface); border-top: 1px solid var(--hairline); }
+    .xf--pinned { padding: 0; }
+    .xf--pinned .xf-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+    .xf--pinned .xf-head {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 var(--gutter);
+    }
+    .xf--pinned .xf-head .section-label { justify-content: center; }
+    .xf--pinned .xf-title { font-size: clamp(3rem, 9vw, 9rem); line-height: 0.92; transition: opacity 0.3s; }
+    .xf--pinned .xf-list { position: absolute; inset: 0; display: block; }
+    .xf--pinned .xf-item {
+      position: absolute;
+      left: 0;
+      top: var(--lane, 30%);
+      width: clamp(280px, 27vw, 400px);
+      will-change: transform, opacity;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+    }
+    .xf--pinned .xf-progress {
+      display: flex;
+      position: absolute;
+      left: var(--gutter); right: var(--gutter); bottom: 2.25rem;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .xf-bar { flex: 1; height: 1px; background: var(--hairline); position: relative; }
+    .xf-bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent); }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--surface); border-top: 1px solid var(--hairline); padding-top: 8rem; padding-bottom: 7rem; }
+    .ab-statement {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4.6vw, 4.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      max-width: 1180px;
+      margin: 1.5rem 0 4.5rem;
+    }
+    .ab-statement em { font-style: normal; }
+    .ab-statement .w { opacity: 0.14; transition: opacity 0.25s linear, color 0.25s linear; }
+    .ab-statement .w.on { opacity: 1; }
+    .ab-statement .w.hl.on { color: var(--accent); }
     .about-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 4.5rem;
       align-items: start;
     }
-    .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
     .about-text p strong { color: var(--ink); }
+    .about-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .about-pills span {
+      border: 1px solid var(--hairline);
+      background: var(--paper);
+      border-radius: 100px;
+      padding: 0.4rem 0.95rem;
+      font-size: 0.8rem;
+      color: var(--ink);
+      transition: border-color 0.25s, color 0.25s, transform 0.25s;
+    }
+    .about-pills span:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
     .about-card {
       background: var(--paper);
       border: 1px solid var(--hairline);
       border-radius: var(--radius);
       padding: 2.25rem;
+      transition: border-color 0.3s;
     }
+    .about-card:hover { border-color: rgba(200,242,58,0.4); }
     .about-card-title {
       font-family: var(--display);
       font-size: 0.72rem;
@@ -864,6 +957,7 @@
     .about-stat-row span:last-child { color: var(--ink); font-weight: 500; text-align: right; }
     @media (max-width: 860px) {
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      #about { padding-top: 5rem; padding-bottom: 5rem; }
     }
 
     #contact {
@@ -976,6 +1070,9 @@
       .hero h1 .line > span { transform: none; }
       .hero-badge, .hero-kicker, .hero-desc, .hero-actions, .hero-stats, .hero-visual { opacity: 1; }
       [data-reveal] { opacity: 1; transform: none; }
+      .sw-title .ch { opacity: 1; filter: none; transform: none; }
+      .ab-statement .w { opacity: 1; }
+      .ab-statement .w.hl { color: var(--accent); }
     }
     @media (max-width: 768px) {
       section { padding: 4.5rem var(--gutter); }
@@ -1198,70 +1295,63 @@
   </div>
 </section>
 
-<!-- ── DESIGN WORK ── -->
-<section id="design">
-  <p class="section-label">Design work</p>
-  <h2 class="section-title" data-reveal>A glimpse of <span class="dim">what I've designed.</span></h2>
-  <p class="section-intro" data-reveal>Product, web and brand work across Web3, travel, fintech and gaming. Click any piece to enlarge it.</p>
-
-  <div class="mosaic">
-    <button class="mosaic-item" data-reveal data-src="sukuri_thumb.webp" data-label="Sukuri Protocol, Dashboard UI">
-      <img src="sukuri_thumb.webp" alt="Sukuri Protocol dashboard" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">Sukuri Protocol</span>
-        <span class="mosaic-sub">Web3 SaaS dashboard, sole designer</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-    <button class="mosaic-item" data-reveal data-src="weivsync_thumb.webp" data-label="WeivSync, Travel App Onboarding">
-      <img src="weivsync_thumb.webp" alt="WeivSync onboarding screens" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">WeivSync</span>
-        <span class="mosaic-sub">Travel app, onboarding flow</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-    <button class="mosaic-item" data-reveal data-src="purrcoin_thumb.webp" data-label="Purrcoin, Web3 Landing Page">
-      <img src="purrcoin_thumb.webp" alt="Purrcoin landing page" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">Purrcoin ($PURR)</span>
-        <span class="mosaic-sub">Web3 landing page</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-    <button class="mosaic-item" data-reveal data-src="xnaira_thumb.webp" data-label="XNaira, Crypto Exchange">
-      <img src="xnaira_thumb.webp" alt="XNaira landing page" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">XNaira</span>
-        <span class="mosaic-sub">Crypto &amp; gift card exchange</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-    <button class="mosaic-item" data-reveal data-src="ronke_thumb.webp" data-label="Ronke Rice Farmers, Web3 Game UI">
-      <img src="ronke_thumb.webp" alt="Ronke Rice Farmers game interface" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">Ronke Rice Farmers</span>
-        <span class="mosaic-sub">Web3 game UI</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-    <button class="mosaic-item" data-reveal data-src="logofolio_thumb.webp" data-label="Logofolio, Selected Brand Identities">
-      <img src="logofolio_thumb.webp" alt="Grid of logos designed for client brands" loading="lazy" />
-      <span class="mosaic-overlay">
-        <span class="mosaic-label">Logofolio</span>
-        <span class="mosaic-sub">Selected brand identities</span>
-      </span>
-      <span class="mosaic-expand" aria-hidden="true">⤢</span>
-    </button>
-  </div>
-
-  <div class="more-work">
-    <span class="more-work-label">More case studies on Behance:</span>
-    <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" rel="noopener">Transcend <span>· HealthTech</span></a>
-    <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" rel="noopener">Afrofans <span>· Creator platform</span></a>
-    <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" rel="noopener">Skateverse <span>· Web3 game</span></a>
-    <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" rel="noopener">Suntok <span>· Web</span></a>
-    <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" rel="noopener">Steelseries <span>· Product page</span></a>
+<!-- ── DESIGN WORK (pinned: scroll moves the gallery sideways) ── -->
+<section id="design" class="sw">
+  <div class="sw-sticky">
+    <div class="sw-track" id="swTrack">
+      <div class="sw-intro">
+        <p class="section-label">Design work</p>
+        <h2 class="sw-title" id="swTitle">A glimpse of <span class="dim">what I've designed.</span></h2>
+        <p class="sw-sub">Product, web and brand work across Web3, travel, fintech and gaming. Click any piece to enlarge it.</p>
+        <p class="sw-count">06 selected pieces</p>
+      </div>
+      <figure class="sw-card">
+        <button class="sw-media" data-src="sukuri_thumb.webp" data-label="Sukuri Protocol, Dashboard UI" aria-label="Enlarge Sukuri Protocol">
+          <img src="sukuri_thumb.webp" alt="Sukuri Protocol dashboard" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">Sukuri Protocol</span><span class="sw-meta">Web3 SaaS dashboard · sole designer</span><span class="sw-num">01</span></figcaption>
+      </figure>
+      <figure class="sw-card">
+        <button class="sw-media" data-src="weivsync_thumb.webp" data-label="WeivSync, Travel App Onboarding" aria-label="Enlarge WeivSync">
+          <img src="weivsync_thumb.webp" alt="WeivSync onboarding screens" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">WeivSync</span><span class="sw-meta">Travel app · onboarding flow</span><span class="sw-num">02</span></figcaption>
+      </figure>
+      <figure class="sw-card">
+        <button class="sw-media" data-src="purrcoin_thumb.webp" data-label="Purrcoin, Web3 Landing Page" aria-label="Enlarge Purrcoin ($PURR)">
+          <img src="purrcoin_thumb.webp" alt="Purrcoin landing page" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">Purrcoin ($PURR)</span><span class="sw-meta">Web3 landing page</span><span class="sw-num">03</span></figcaption>
+      </figure>
+      <figure class="sw-card">
+        <button class="sw-media center" data-src="xnaira_thumb.webp" data-label="XNaira, Crypto Exchange" aria-label="Enlarge XNaira">
+          <img src="xnaira_thumb.webp" alt="XNaira landing page" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">XNaira</span><span class="sw-meta">Crypto &amp; gift card exchange</span><span class="sw-num">04</span></figcaption>
+      </figure>
+      <figure class="sw-card">
+        <button class="sw-media" data-src="ronke_thumb.webp" data-label="Ronke Rice Farmers, Web3 Game UI" aria-label="Enlarge Ronke Rice Farmers">
+          <img src="ronke_thumb.webp" alt="Ronke Rice Farmers game interface" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">Ronke Rice Farmers</span><span class="sw-meta">Web3 game UI</span><span class="sw-num">05</span></figcaption>
+      </figure>
+      <figure class="sw-card">
+        <button class="sw-media center" data-src="logofolio_thumb.webp" data-label="Logofolio, Selected Brand Identities" aria-label="Enlarge Logofolio">
+          <img src="logofolio_thumb.webp" alt="Grid of logos designed for client brands" loading="lazy" />
+        </button>
+        <figcaption><span class="sw-name">Logofolio</span><span class="sw-meta">Selected brand identities</span><span class="sw-num">06</span></figcaption>
+      </figure>
+      <div class="sw-end">
+        <p>More case studies live on Behance.</p>
+        <div class="more-work">
+          <a href="https://www.behance.net/gallery/176087013/Transcend-Case-Study" target="_blank" rel="noopener">Transcend <span>· HealthTech</span></a>
+          <a href="https://www.behance.net/gallery/170705033/Afrofans-Branding-UIUX" target="_blank" rel="noopener">Afrofans <span>· Creator platform</span></a>
+          <a href="https://www.behance.net/gallery/173224813/Skateverse-UIUX" target="_blank" rel="noopener">Skateverse <span>· Web3 game</span></a>
+          <a href="https://www.behance.net/gallery/170705291/Suntok-Web-Design-Development" target="_blank" rel="noopener">Suntok <span>· Web</span></a>
+          <a href="https://www.behance.net/gallery/173225225/Steelseries-Product-Page" target="_blank" rel="noopener">Steelseries <span>· Product page</span></a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1332,67 +1422,81 @@
   </div>
 </section>
 
-<!-- ── EXPERIENCE (compact) ── -->
-<section id="experience">
-  <p class="section-label">Experience</p>
-  <h2 class="section-title" data-reveal>Where I've <span class="dim">made an impact.</span></h2>
-  <p class="section-intro" data-reveal>The short version. Full details are on my résumé, available on request.</p>
-
-  <div class="xp-list" data-reveal>
-    <div class="xp-row current">
-      <span class="xp-year">Current</span>
-      <div><div class="xp-co">Independent</div><div class="xp-role">Design Engineer &amp; Product Consultant</div></div>
-      <p class="xp-note">Designing and shipping live apps with AI-assisted code, and helping teams with product strategy and operations.</p>
+<!-- ── EXPERIENCE (pinned: roles float across the stage) ── -->
+<section id="experience" class="xf">
+  <div class="xf-stage">
+    <div class="xf-bg" aria-hidden="true"></div>
+    <div class="xf-head">
+      <p class="section-label">Experience</p>
+      <h2 class="xf-title">Where I've <span class="dim">made an impact.</span></h2>
+      <p class="xf-meta">10+ years · 8 chapters · Full details on my résumé, available on request.</p>
     </div>
-    <div class="xp-row current">
-      <span class="xp-year">Apr 2025 – Present</span>
-      <div><div class="xp-co">Ronin Radio</div><div class="xp-role">Designer &amp; Operations Lead</div></div>
-      <p class="xp-note">Built the brand identity from scratch and run day-to-day social and sponsorship operations.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">Sep 2024 – Nov 2025</span>
-      <div><div class="xp-co">WeivSync</div><div class="xp-role">Senior Product Designer (Contract)</div></div>
-      <p class="xp-note">End-to-end flows and high-fidelity UI for a travel app, from discovery to booking.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">Aug 2024 – Nov 2025</span>
-      <div><div class="xp-co">Bloom Studio</div><div class="xp-role">Senior UI/UX Designer (Contract)</div></div>
-      <p class="xp-note">Made pitches <strong>30–40% more efficient</strong> by rebuilding the deck; designed game UI and landing pages; advised leadership on positioning.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">Dec 2022 – Jul 2024</span>
-      <div><div class="xp-co">Freelance</div><div class="xp-role">Product Designer &amp; Consultant</div></div>
-      <p class="xp-note">Product design, branding and consulting projects for clients between full-time roles.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">Dec 2021 – Nov 2022</span>
-      <div><div class="xp-co">Sukuri Protocol</div><div class="xp-role">Product Designer (Sole Designer)</div></div>
-      <p class="xp-note">Designed two Web3 SaaS products and their design system; cut design review cycles by <strong>~30%</strong> with interactive prototypes.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">2020 – 2021</span>
-      <div><div class="xp-co">Nestcoin</div><div class="xp-role">Business Operations Manager</div></div>
-      <p class="xp-note">Led product strategy, UX research and developer acquisition for a Web3 gaming platform, growing weekly active users.</p>
-    </div>
-    <div class="xp-row">
-      <span class="xp-year">2015 – Apr 2020</span>
-      <div><div class="xp-co">TLjGraphics Studio</div><div class="xp-role">Founder, Design &amp; Business Consulting</div></div>
-      <p class="xp-note">Ran my own studio for 5 years, delivering brand, product and operations work for <strong>100+ businesses</strong>.</p>
-    </div>
+    <ol class="xf-list">
+    <li class="xf-item current">
+      <p class="xf-year">Current</p>
+      <h3 class="xf-co">Independent</h3>
+      <p class="xf-role">Design Engineer &amp; Product Consultant</p>
+      <p class="xf-note">Designing and shipping live apps with AI-assisted code, and helping teams with product strategy and operations.</p>
+    </li>
+    <li class="xf-item current">
+      <p class="xf-year">Apr 2025 – Present</p>
+      <h3 class="xf-co">Ronin Radio</h3>
+      <p class="xf-role">Designer &amp; Operations Lead</p>
+      <p class="xf-note">Built the brand identity from scratch and run day-to-day social and sponsorship operations.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">Sep 2024 – Nov 2025</p>
+      <h3 class="xf-co">WeivSync</h3>
+      <p class="xf-role">Senior Product Designer (Contract)</p>
+      <p class="xf-note">End-to-end flows and high-fidelity UI for a travel app, from discovery to booking.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">Aug 2024 – Nov 2025</p>
+      <h3 class="xf-co">Bloom Studio</h3>
+      <p class="xf-role">Senior UI/UX Designer (Contract)</p>
+      <p class="xf-note">Made pitches <strong>30–40% more efficient</strong> by rebuilding the deck; designed game UI and landing pages; advised leadership on positioning.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">Dec 2022 – Jul 2024</p>
+      <h3 class="xf-co">Freelance</h3>
+      <p class="xf-role">Product Designer &amp; Consultant</p>
+      <p class="xf-note">Product design, branding and consulting projects for clients between full-time roles.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">Dec 2021 – Nov 2022</p>
+      <h3 class="xf-co">Sukuri Protocol</h3>
+      <p class="xf-role">Product Designer (Sole Designer)</p>
+      <p class="xf-note">Designed two Web3 SaaS products and their design system; cut design review cycles by <strong>~30%</strong> with interactive prototypes.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">2020 – 2021</p>
+      <h3 class="xf-co">Nestcoin</h3>
+      <p class="xf-role">Business Operations Manager</p>
+      <p class="xf-note">Led product strategy, UX research and developer acquisition for a Web3 gaming platform, growing weekly active users.</p>
+    </li>
+    <li class="xf-item">
+      <p class="xf-year">2015 – Apr 2020</p>
+      <h3 class="xf-co">TLjGraphics Studio</h3>
+      <p class="xf-role">Founder, Design &amp; Business Consulting</p>
+      <p class="xf-note">Ran my own studio for 5 years, delivering brand, product and operations work for <strong>100+ businesses</strong>.</p>
+    </li>
+    </ol>
+    <div class="xf-progress" aria-hidden="true"><span id="xfNow">01</span><div class="xf-bar"><span id="xfBar"></span></div><span>08</span></div>
   </div>
 </section>
 
 <!-- ── ABOUT ── -->
 <section id="about">
-  <p class="section-label">About</p>
-  <h2 class="section-title" data-reveal>The person <span class="dim">behind the work.</span></h2>
+  <p class="section-label">About · The person behind the work</p>
+  <p class="ab-statement" id="abStatement">I'm Anthony Littlejohn, a <em>design engineer</em> who thinks like an <em>operator</em>. Ten years of designing products, running operations and building my own studio taught me how products really get made. Now I <em>design it, build it and ship it</em>, with AI as my pair programmer.</p>
 
   <div class="about-grid" data-reveal>
     <div class="about-text">
-      <p>I'm <strong>Anthony Littlejohn</strong>, a <strong>Design Engineer</strong> who also works on product strategy and operations. I've spent 10+ years across Web3, gaming, SaaS and B2B, first as a designer, then running operations, and now building the products myself.</p>
-      <p>AI changed how I work. I use it to <strong>go from idea to a live, working product</strong>, which lets me test real things with real users instead of handing over static files. Pair that with an operator's view of how businesses run, and I can take a product from strategy to shipped.</p>
+      <p>I started as a designer, ran operations at Web3 startups, and built a studio that served <strong>100+ businesses</strong>. That mix means I don't just hand over files: I understand <strong>what engineers need, what the business needs</strong>, and how to get a product live.</p>
       <p>I'm looking for a team or client that wants someone who can <strong>think, design and build</strong>.</p>
-      <p>Outside of work: gaming, boxing, and watching food videos on YouTube.</p>
+      <div class="about-pills" aria-label="Outside of work">
+        <span>🎮 Gaming</span><span>🥊 Boxing</span><span>🍳 Food videos on YouTube</span>
+      </div>
     </div>
 
     <div class="about-card">
@@ -1594,7 +1698,7 @@
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
   }
-  document.querySelectorAll('.mosaic-item').forEach(item => {
+  document.querySelectorAll('.sw-media').forEach(item => {
     item.addEventListener('click', () => openLightbox(item.dataset.src, item.dataset.label, item.querySelector('img').alt));
   });
   lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
@@ -1603,6 +1707,135 @@
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'Tab') { e.preventDefault(); lightboxClose.focus(); } // only one control in the dialog
   });
+
+  // ── Scroll-driven sections: design gallery, floating experience, about statement ──
+  const pinMQ = window.matchMedia('(min-width: 900px)');
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  const sectionProgress = el => {
+    const r = el.getBoundingClientRect();
+    const span = el.offsetHeight - window.innerHeight;
+    return span > 0 ? clamp01(-r.top / span) : 0;
+  };
+
+  // Design: split the title into letters that sharpen in when it enters view
+  const swTitle = document.getElementById('swTitle');
+  if (swTitle) {
+    let n = 0;
+    const split = node => Array.from(node.childNodes).forEach(c => {
+      if (c.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const word = document.createElement('span');
+          word.style.whiteSpace = 'nowrap';
+          for (const ch of part) {
+            const sp = document.createElement('span');
+            sp.className = 'ch'; sp.textContent = ch; sp.style.setProperty('--i', n++);
+            word.appendChild(sp);
+          }
+          frag.appendChild(word);
+        });
+        c.replaceWith(frag);
+      } else split(c);
+    });
+    swTitle.setAttribute('aria-label', swTitle.textContent);
+    split(swTitle);
+    new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { swTitle.classList.add('lit'); o.disconnect(); } }), { threshold: 0.4 }).observe(swTitle);
+  }
+
+  // About: wrap each word so the statement fills in as you scroll
+  const abStatement = document.getElementById('abStatement');
+  let abWords = [];
+  if (abStatement) {
+    const out = [];
+    abStatement.childNodes.forEach(c => {
+      const hl = c.nodeType === 1;
+      c.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        out.push(/^\s+$/.test(part) ? part : `<span class="w${hl ? ' hl' : ''}">${part}</span>`);
+      });
+    });
+    abStatement.innerHTML = out.join('');
+    abWords = Array.from(abStatement.querySelectorAll('.w'));
+  }
+
+  const sw = document.getElementById('design');
+  const swTrack = document.getElementById('swTrack');
+  const swCards = sw ? Array.from(sw.querySelectorAll('.sw-card')) : [];
+  const xf = document.getElementById('experience');
+  const xfItems = xf ? Array.from(xf.querySelectorAll('.xf-item')) : [];
+  const xfTitle = xf ? xf.querySelector('.xf-title') : null;
+  const xfNow = document.getElementById('xfNow');
+  const xfBar = document.getElementById('xfBar');
+  const LANES = ['16%', '52%', '30%', '62%', '20%', '48%', '34%', '58%'];
+  const DEPTH = [1, 0.88, 0.96, 0.9];
+  let swDist = 0, pinned = false;
+
+  function layout() {
+    pinned = pinMQ.matches && !noMotion;
+    if (sw) {
+      sw.classList.toggle('sw--pinned', pinned);
+      swTrack.style.transform = '';
+      if (pinned) {
+        swDist = Math.max(0, swTrack.scrollWidth - window.innerWidth);
+        sw.style.height = (swDist + window.innerHeight) + 'px';
+      } else sw.style.height = '';
+    }
+    if (xf) {
+      xf.classList.toggle('xf--pinned', pinned);
+      xfItems.forEach((it, i) => { it.style.transform = ''; it.style.opacity = ''; it.style.setProperty('--lane', LANES[i % LANES.length]); });
+      xf.style.height = pinned ? (xfItems.length * 55 + 120) + 'vh' : '';
+    }
+    tick();
+  }
+
+  function tick() {
+    const vw = window.innerWidth;
+    if (pinned && sw) {
+      const p = sectionProgress(sw);
+      swTrack.style.transform = `translate3d(${-p * swDist}px,0,0)`;
+      swCards.forEach(c => {
+        const r = c.getBoundingClientRect();
+        const off = (r.left + r.width / 2 - vw / 2) / vw; // -0.5..0.5 across the screen
+        c.querySelector('img').style.setProperty('--px', (off * -28).toFixed(1) + 'px');
+      });
+    }
+    if (pinned && xf) {
+      const p = sectionProgress(xf);
+      const n = xfItems.length, W = 2.2; // each role is on stage for W "slots"
+      const u = p * (n - 1 + W);
+      xfItems.forEach((it, i) => {
+        const t = (u - i) / W; // 0 = entering right, 1 = leaving left
+        const w = it.offsetWidth;
+        const x = vw + 40 - t * (vw + w + 80);
+        const d = DEPTH[i % DEPTH.length];
+        const fade = t < 0.08 ? t / 0.08 : t > 0.92 ? (1 - t) / 0.08 : 1;
+        it.style.opacity = (t <= 0 || t >= 1) ? 0 : clamp01(fade) * (0.55 + 0.45 * d);
+        it.style.transform = `translate3d(${x}px, ${Math.sin((t + i) * 3) * 14}px, 0) scale(${d})`;
+      });
+      const active = Math.min(n, Math.max(1, Math.round(u - W / 2 + 1)));
+      if (xfNow) xfNow.textContent = String(active).padStart(2, '0');
+      if (xfBar) xfBar.style.width = (p * 100).toFixed(1) + '%';
+      if (xfTitle) xfTitle.style.opacity = (0.35 + 0.65 * (1 - Math.min(1, p * 6)) + (p > 0.92 ? (p - 0.92) / 0.08 * 0.65 : 0)).toFixed(2);
+    }
+    if (abWords.length && !noMotion) {
+      const r = abStatement.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = clamp01((vh * 0.85 - r.top) / (r.height + vh * 0.45));
+      const lit = Math.round(p * abWords.length);
+      abWords.forEach((w, i) => w.classList.toggle('on', i < lit));
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(() => { tick(); ticking = false; }); }
+  }, { passive: true });
+  window.addEventListener('resize', layout);
+  pinMQ.addEventListener('change', layout);
+  window.addEventListener('load', layout);
+  layout();
 
   // Figma tabs (arrow keys move between tabs)
   const figmaTabs = Array.from(document.querySelectorAll('.figma-tab'));
