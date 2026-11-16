@@ -1148,7 +1148,7 @@
     <li><a href="#about">About</a></li>
   </ul>
   <div class="nav-right">
-    <a href="mailto:tonyliljon@gmail.com" class="nav-cta" data-magnetic>Hire me →</a>
+    <a href="#contact" class="nav-cta" data-email data-magnetic>Hire me →</a>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
@@ -1178,7 +1178,7 @@
       </p>
       <div class="hero-actions">
         <a href="#built" class="btn-primary" data-magnetic>See what I've built</a>
-        <a href="mailto:tonyliljon@gmail.com" class="btn-ghost" data-magnetic>Get in touch</a>
+        <a href="#contact" class="btn-ghost" data-email data-magnetic>Get in touch</a>
       </div>
       <div class="hero-stats">
         <div>
@@ -1561,7 +1561,7 @@
   <h2 class="contact-title" data-reveal>Ready when <span class="highlight">you are.</span></h2>
   <p class="contact-intro">Hiring a design engineer, or need help with product strategy or operations? Send me a note.</p>
   <div class="contact-links">
-    <a href="mailto:tonyliljon@gmail.com" class="contact-link" data-magnetic>✉ tonyliljon@gmail.com</a>
+    <a href="#contact" class="contact-link" data-email data-magnetic>✉ Contact me</a>
     <a href="https://www.linkedin.com/in/anthony-littlejohn-9a4aa592/" target="_blank" rel="noopener" class="contact-link" data-magnetic>💼 LinkedIn</a>
   </div>
 </section>
@@ -1934,6 +1934,13 @@
     if (noMotion) { draw(0); window.addEventListener('scroll', () => draw(0), { passive: true }); }
     else requestAnimationFrame(step);
   }
+
+  // Email links: the address is assembled only on click, so it never sits in the page for scrapers
+  const EMAIL_PARTS = ['tonyliljon', 'gmail', 'com'];
+  document.querySelectorAll('[data-email]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = 'mailto:' + EMAIL_PARTS[0] + '@' + EMAIL_PARTS[1] + '.' + EMAIL_PARTS[2];
+  }));
 
   // Figma tabs (arrow keys move between tabs)
   const figmaTabs = Array.from(document.querySelectorAll('.figma-tab'));
