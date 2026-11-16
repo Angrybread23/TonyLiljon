@@ -6,6 +6,3 @@ A single static page: `index.html` plus the `.webp` images beside it. No build s
 
 ## Sections
 What I do · Built & live · Design work · Figma files · Experience · About · Contact
-
-## Résumé
-`resume/Anthony_Littlejohn_Resume.docx` — the detailed version of the experience summarised on the site. The independent role's start date is still a `[Start]` placeholder.
